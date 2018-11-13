@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Catalogex</string>
+    <string name="app_motto">Simple, Fast &amp; Flexible</string>
+    <string name="credits_title">Informacje</string>
+    <string name="catalog_button_text">Katalogi</string>
+    <string name="todo_button_text">Lista - To Do</string>
+    <string name="credits_button_text">O Aplikacji</string>
+    <string name="exit_button_text">Wyjście</string>
+    <string name="autor_text_view">Autor:</string>
+    <string name="app_version_text_view">Wersja aplikacji:</string>
+    <string name="author_PG">Patryk Gałąska</string>
+    <string name="version">v 1.1</string>
+    <string name="back_button">Powrót</string>
+    <string name="email_Address">patrgal311@student.polsl.pl</string>
+    <string name="adres_email_title">Adres e-mail:</string>
+    <string name="title_activity_create_template_screen">Wzór elementu</string>
+    <string name="name_TextView">Nazwa:</string>
+    <string name="zdjecie_przedmiotu">Zdjęcie przedmiotu</string>
+    <string name="anuluj_button">Anuluj</string>
+    <string name="zatwierd_button">Zatwierdź</string>
+    <string name="kategoria">Kategoria:</string>
+    <string name="priorytet_text">Ocena:</string>
+    <string name="informacje_dodatkowe">Informacje dodatkowe:</string>
+    <string name="usu_element">Usuń element</string>
+    <string name="dodawanie_informacji">Dodawanie informacji</string>
+    <string name="choose_from_galery">Wybierz z galeri</string>
+    <string name="make_photo">Zrób zdjęcie</string>
+</resources>
