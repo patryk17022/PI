@@ -14,10 +14,17 @@
         <activity
             android:name=".CreditsScreen"
             android:label="@string/credits_title"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".CreateTemplateScreen"
             android:label="@string/title_activity_create_template_screen"
+            android:theme="@style/AppTheme">
+
+        </activity>
+        <activity android:name=".CreateCategoryScreen" />
+        <activity
+            android:name=".categoryElementListScreen"
+            android:label="@string/title_activity_category_element_list_screen"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

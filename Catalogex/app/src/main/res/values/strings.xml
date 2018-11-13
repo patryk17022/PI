@@ -25,4 +25,14 @@
     <string name="dodawanie_informacji">Dodawanie informacji</string>
     <string name="choose_from_galery">Wybierz z galeri</string>
     <string name="make_photo">Zrób zdjęcie</string>
+    <string name="edit">Edytuj</string>
+    <string name="delete">Usuń</string>
+    <string name="name">Nazwa</string>
+    <string name="category">Kategoria</string>
+    <string name="elements">Elementy</string>
+    <string name="searchOption">Szukaj</string>
+    <string name="sort">Sortuj</string>
+    <string name="filtr">Filtruj</string>
+    <string name="title_activity_category_element_list_screen">Lista</string>
+    <string name="action_settings">Settings</string>
 </resources>
