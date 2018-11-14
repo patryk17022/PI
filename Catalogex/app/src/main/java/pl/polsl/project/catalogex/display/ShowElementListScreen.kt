@@ -9,7 +9,6 @@ import kotlinx.android.synthetic.main.activity_category_element_list_screen.*
 import pl.polsl.project.catalogex.R
 
 
-//TODO: przytrzymaj element zeby usubac i edytowac i dodac do elementy listy todo
 class ShowElementListScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

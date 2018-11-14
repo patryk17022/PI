@@ -11,7 +11,13 @@
 
         <activity
             android:name=".display.ShowMainScreen"
-            android:theme="@style/MainScreenTheme" />
+            android:theme="@style/MainScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".display.ShowCreditsScreen"
@@ -21,52 +27,52 @@
         <activity
             android:name=".create.CreateTemplateScreen"
             android:label="@string/title_activity_create_template_screen"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".create.CreateCategoryScreen"
-            android:label="@string/title_activity_create_template_screen" />
+            android:label="@string/title_activity_create_category_screen"
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".display.ShowCategoryListScreen"
-            android:label="@string/title_activity_category_element_list_screen"
-            android:theme="@style/AppTheme"/>
+            android:label="@string/title_activity_category_list_screen"
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".display.ShowElementListScreen"
-            android:label="@string/title_activity_category_element_list_screen"
-            android:theme="@style/AppTheme"/>
+            android:label="@string/title_activity_element_list_screen"
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".display.ShowElementInformationScreen"
-            android:label="@string/title_activity_create_template_screen"
-            android:theme="@style/AppTheme"/>
+            android:label="@string/title_activity_element_information_screen"
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".create.CreateElementScreen"
             android:label="@string/title_activity_create_template_screen"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".edit.EditElementScreen"
-            android:label="@string/title_activity_create_template_screen"
-            android:theme="@style/AppTheme"/>
+            android:label="@string/title_activity_edit_element_screen"
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".edit.EditCategoryScreen"
-            android:label="@string/title_activity_create_template_screen"
-            android:theme="@style/AppTheme"/>
+            android:label="@string/title_activity_edit_category_screen"
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".edit.EditTemplateScreen"
-            android:label="@string/title_activity_create_template_screen"
-            android:theme="@style/AppTheme"/>
+            android:label="@string/title_activity_edit_template_screen"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".display.ShowTodoScreen"
+            android:label="@string/todo_button_text"
+            android:theme="@style/AppTheme" />
 
     </application>
 
