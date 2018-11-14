@@ -1,11 +1,12 @@
-package pl.polsl.project.catalogex
+package pl.polsl.project.catalogex.edit
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import pl.polsl.project.catalogex.R
 
-//dodaj wzor w spinnerze jako ostatnia opcja
 
-class CreateCategoryScreen : AppCompatActivity() {
+//TODO: zablokowac radio buttony tylko zmiana nazwy
+class EditCategoryScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

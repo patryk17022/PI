@@ -1,12 +1,13 @@
-package pl.polsl.project.catalogex
+package pl.polsl.project.catalogex.display
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import pl.polsl.project.catalogex.R
 
-class MainScreen : AppCompatActivity() {
+class ShowCreditsScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_screen)
+        setContentView(R.layout.activity_credits_screen)
     }
 }

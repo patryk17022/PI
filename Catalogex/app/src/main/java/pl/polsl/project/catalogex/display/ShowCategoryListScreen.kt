@@ -1,4 +1,4 @@
-package pl.polsl.project.catalogex
+package pl.polsl.project.catalogex.display
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -6,13 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu
 
 import kotlinx.android.synthetic.main.activity_category_element_list_screen.*
+import pl.polsl.project.catalogex.R
 
-class categoryElementListScreen : AppCompatActivity() {
+
+//TODO: przytrzymaj element zeby usubac i edytowac
+class ShowCategoryListScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_element_list_screen)
-
 
         buttonAddList.setOnClickListener { view ->
             Snackbar.make(view, "SOME ACTION", Snackbar.LENGTH_LONG)
@@ -27,5 +29,4 @@ class categoryElementListScreen : AppCompatActivity() {
 
         return true
     }
-
 }
