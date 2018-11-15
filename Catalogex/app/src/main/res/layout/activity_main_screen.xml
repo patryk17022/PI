@@ -36,6 +36,7 @@
             android:id="@+id/catalogButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="categoryScreenShow"
             android:text="@string/catalog_button_text"
             android:textAllCaps="true" />
 
@@ -43,6 +44,7 @@
             android:id="@+id/todoButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="todoScreenShow"
             android:text="@string/todo_button_text"
             android:textAllCaps="true" />
 
@@ -50,12 +52,14 @@
             android:id="@+id/creditsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="creditsScreenShow"
             android:text="@string/credits_button_text" />
 
         <Button
             android:id="@+id/exitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="exitButton"
             android:text="@string/exit_button_text" />
     </LinearLayout>
 

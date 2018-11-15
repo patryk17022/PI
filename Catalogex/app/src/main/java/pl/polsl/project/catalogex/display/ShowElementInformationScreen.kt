@@ -20,6 +20,17 @@ class ShowElementInformationScreen : AppCompatActivity() {
 
         return true
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.edit -> {
+
+
+            }
+
+        }
+        return true
+    }
 }
 
 

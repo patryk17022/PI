@@ -91,6 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="72dp"
+        android:onClick="backButton"
         android:text="@string/back_button"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"

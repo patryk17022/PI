@@ -28,6 +28,7 @@
     <string name="choose_from_galery">Wybierz z galeri</string>
     <string name="make_photo">Zrób zdjęcie</string>
     <string name="edit">Edytuj</string>
+    <string name="add">Dodaj</string>
     <string name="delete">Usuń</string>
     <string name="name">Nazwa</string>
     <string name="category">Kategoria</string>
@@ -50,5 +51,8 @@
     <string name="choose_template_element">Wybierz wzór dla elementów:</string>
     <string name="add_to_todo_list">Dodaj do listy TODO</string>
     <string name="back_to_category">Przenieś do kategori</string>
+
+    <string name="addNewTemplate">Dodaj nowy wzór</string>
+
 
 </resources>

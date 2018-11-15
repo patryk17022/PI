@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <ImageButton
-        android:id="@+id/deleteElement2"
+        android:id="@+id/editNameElement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="13dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/background_light"
         android:contentDescription="@string/edit"
+        app:layout_constraintBottom_toTopOf="@+id/elementText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_edit" />
 
     <TextView
@@ -138,7 +138,7 @@
         app:layout_constraintTop_toBottomOf="@+id/addtionalInformationText" />
 
     <ImageButton
-        android:id="@+id/addDeatureButton"
+        android:id="@+id/addFeatureButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="13dp"
@@ -155,7 +155,7 @@
         android:layout_width="160dp"
         android:layout_height="24dp"
         android:layout_marginStart="13dp"
-        android:isIndicator="true"
+        android:isIndicator="false"
         android:numStars="10"
         android:rating="10"
         android:stepSize="1"
