@@ -53,6 +53,8 @@
     <string name="back_to_category">Przenieś do kategori</string>
 
     <string name="addNewTemplate">Dodaj nowy wzór</string>
+    <string name="example_Text">Przykladowy Tekst</string>
+    <string name="options">Opcje</string>
 
 
 </resources>

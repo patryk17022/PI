@@ -17,6 +17,7 @@ class ShowElementListScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_element_list_screen)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val listItems = ArrayList<String>(10)
 

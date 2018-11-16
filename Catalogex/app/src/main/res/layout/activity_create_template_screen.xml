@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginEnd="13dp"
-        android:text="ElementName"
+        android:text="@string/example_Text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/elementImage"
@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginEnd="13dp"
-        android:text="KategoriaName"
+        android:text="@string/example_Text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/elementImage"
         app:layout_constraintTop_toBottomOf="@+id/categoryNameText" />

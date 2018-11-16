@@ -1,12 +1,17 @@
 package pl.polsl.project.catalogex.listElements
 
+import android.app.Activity
 import android.content.Context
 import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
+import pl.polsl.project.catalogex.create.CreateElementScreen
+import pl.polsl.project.catalogex.dialogs.CameraScreenChooseDialogFragment
+import pl.polsl.project.catalogex.dialogs.TextInputDialog
 
 enum class DetailListMode(val mode: Int){
     NONE_BUTTON(0),
@@ -52,12 +57,14 @@ class  ElementDetailListViewAdapter : BaseAdapter {
     private var context: Context? = null
     private var layoutInflater : LayoutInflater? = null
     private var mode :DetailListMode? = null
+    private var activity :Activity? = null
 
-    constructor(context: Context, detailList: ArrayList<ElementDetailListView>, layoutInflater: LayoutInflater, mode:DetailListMode) : super() {
+    constructor(context: Context, detailList: ArrayList<ElementDetailListView>, layoutInflater: LayoutInflater,activity :Activity, mode:DetailListMode) : super() {
         this.detailList = detailList
         this.context = context
         this.layoutInflater = layoutInflater
         this.mode = mode
+        this.activity = activity
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
@@ -117,12 +124,15 @@ class  ElementDetailListViewAdapter : BaseAdapter {
         }
 
         vh.imAdd.setOnClickListener { view ->
-            Toast.makeText(context,(currentElement as ElementDetailListView).detail,Toast.LENGTH_LONG).show()
+            (activity as CreateElementScreen).onAddButton(position)
+
             true
         }
 
         return view
     }
+
+
 
     override fun getItem(position: Int): Any {
         return detailList[position]

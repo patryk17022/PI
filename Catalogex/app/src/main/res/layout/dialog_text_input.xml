@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/DialogTheme">
+
+    <TextView
+        android:id="@+id/LabelFeature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/example_Text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/featureValueInput"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:ems="10"
+        android:hint="@string/credits_title"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LabelFeature"
+        tools:targetApi="o" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="18dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/featureValueInput">
+
+        <Button
+            android:id="@+id/acceptButtonDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/accept_button"
+            tools:layout_editor_absoluteX="85dp"
+            tools:layout_editor_absoluteY="77dp" />
+
+        <Button
+            android:id="@+id/cancleButtonDialog"
+            android:layout_width="111dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cancle_button"
+            tools:layout_editor_absoluteX="189dp"
+            tools:layout_editor_absoluteY="77dp" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -21,7 +21,6 @@ class CreateTemplateScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_template_screen)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         editNameElement.visibility = View.INVISIBLE
         ratingBarElement.setIsIndicator(true)
@@ -33,7 +32,7 @@ class CreateTemplateScreen : AppCompatActivity() {
             listItems.add(ElementDetailListView(i,"title" + i,"123123"))
         }
 
-        val adapter =  ElementDetailListViewAdapter(this,listItems,layoutInflater, DetailListMode.EDIT_DELETE_BUTTON)
+        val adapter =  ElementDetailListViewAdapter(this,listItems,layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
         featureList.adapter = adapter
 
 
