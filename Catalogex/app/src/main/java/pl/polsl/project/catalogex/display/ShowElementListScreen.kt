@@ -14,6 +14,11 @@ import pl.polsl.project.catalogex.create.CreateElementScreen
 
 class ShowElementListScreen : AppCompatActivity() {
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_element_list_screen)

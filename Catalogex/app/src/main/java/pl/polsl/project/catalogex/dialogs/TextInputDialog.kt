@@ -14,13 +14,14 @@ import kotlinx.android.synthetic.main.dialog_text_input.*
 
 
 interface TextInputDialogInterface {
-    fun doPositiveClick(tag:String, input:String)
-    fun doNegativeClick(tag:String, input:String)
+    fun doPositiveClick(tag:String, input:String, position: Int)
+    fun doNegativeClick(tag:String, input:String, position: Int)
 }
 
 class TextInputDialog : DialogFragment() {
 
     var labelText: String? = null
+    var position: Int = -1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -34,7 +35,7 @@ class TextInputDialog : DialogFragment() {
 
         cancleButtonDialog.setOnClickListener{ view -> dismiss() }
 
-        acceptButtonDialog.setOnClickListener{ view -> ( activity as TextInputDialogInterface).doPositiveClick(tag!!,featureValueInput.text.toString()); dismiss()}
+        acceptButtonDialog.setOnClickListener{ view -> ( activity as TextInputDialogInterface).doPositiveClick(tag!!,featureValueInput.text.toString(),position!!); dismiss()}
     }
 
 }

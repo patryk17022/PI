@@ -15,6 +15,11 @@
         <activity
             android:name=".display.ShowMainScreen"
             android:theme="@style/MainScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -27,11 +32,7 @@
             android:name=".create.CreateTemplateScreen"
             android:label="@string/title_activity_create_template_screen"
             android:theme="@style/AppTheme" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity

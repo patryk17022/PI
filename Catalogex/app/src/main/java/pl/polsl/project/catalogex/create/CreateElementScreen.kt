@@ -17,12 +17,21 @@ import pl.polsl.project.catalogex.dialogs.TextInputDialogInterface
 import pl.polsl.project.catalogex.listElements.DetailListMode
 import pl.polsl.project.catalogex.listElements.ElementDetailListView
 import pl.polsl.project.catalogex.listElements.ElementDetailListViewAdapter
+import pl.polsl.project.catalogex.listElements.ElementDetailsInterface
 
 //TODO aktualizacja informacji o obiekcie + dodawnie zdjecia
 
-class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface {
+class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, ElementDetailsInterface {
 
-    var listItems : ArrayList<ElementDetailListView>? = null
+    private val fm = supportFragmentManager
+    var listItems : ArrayList<ElementDetailListView>? =  ArrayList<ElementDetailListView>()
+    var nameItem: String=""
+
+    fun updateView(){
+        val adapter =  ElementDetailListViewAdapter(this,listItems!!,layoutInflater,this,DetailListMode.ADD_BUTTON)
+        featureList.adapter = adapter
+        elementText.text=nameItem
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -35,24 +44,23 @@ class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface {
 
         addFeatureButton.visibility = View.INVISIBLE
 
-        //TODO lista cech
-        listItems = ArrayList<ElementDetailListView>(10)
 
         for (i in 0 until 10) {
             listItems!!.add(ElementDetailListView(i,"title" + i,"123123"))
         }
 
-        val adapter =  ElementDetailListViewAdapter(this,listItems!!,layoutInflater,this,DetailListMode.ADD_BUTTON)
-        featureList.adapter = adapter
+
+        updateView()
 
         elementImage.setOnClickListener{onImageScelect()}
         editNameElement.setOnClickListener{editNameButton()}
         cancleButtonTemplate.setOnClickListener{ view -> finish()}
+
+        editNameButton()
     }
 
 
     fun onImageScelect(){
-        val fm = supportFragmentManager
         val editNameDialogFragment = CameraScreenChooseDialogFragment()
         editNameDialogFragment.packageManager = packageManager
         editNameDialogFragment.image= elementImage
@@ -61,27 +69,31 @@ class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface {
     }
 
     fun editNameButton(){
-        val fm = supportFragmentManager
         val inputText = TextInputDialog()
         inputText.labelText = getString(R.string.name_label)
         inputText.show(fm, "textNameInput")
     }
 
-    fun onAddButton(position: Int){
-        val fm = supportFragmentManager
+    override fun onAddButton(position: Int){
         val inputText = TextInputDialog()
         inputText.labelText = listItems!!.get(position).title
+        inputText.position=position
         inputText.show(fm, "textInput")
+
     }
 
-    override fun doPositiveClick(tag:String, input:String){
-        if(tag== "textInput")
-            Toast.makeText(this,input,Toast.LENGTH_LONG).show()
-        else
-            Toast.makeText(this,"NEW NAME: "+input,Toast.LENGTH_LONG).show()
+    override fun doPositiveClick(tag:String, input:String, position: Int){
+        if(tag== "textInput") {
+            listItems!!.get(position).detail = input
+        }
+        else {
+            nameItem = input
+        }
+
+        updateView()
     }
 
-    override fun doNegativeClick(tag:String, input:String){
+    override fun doNegativeClick(tag:String, input:String, position: Int){
 
     }
 

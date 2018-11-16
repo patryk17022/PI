@@ -16,6 +16,11 @@ import pl.polsl.project.catalogex.create.CreateCategoryScreen
 
 class ShowCategoryListScreen : AppCompatActivity() {
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_element_list_screen)
@@ -48,6 +53,8 @@ class ShowCategoryListScreen : AppCompatActivity() {
             true
         }
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater

@@ -6,6 +6,26 @@ import android.os.Bundle
 import android.view.View
 import pl.polsl.project.catalogex.R
 
+/*TODO:
+
+1. poruszanie sie miedzy ekranami
+2. sprawdzicz czy wszystko jest zaimplementowane
+3. poprawic diagram
+4. zrobic zrzuty ekranu
+5. zaczac obkadzac wszystko !
+6. TESTY
+
+
+CreateTemplateScreen
+wszystkie displaye
+wszystkie edity
+
+zbudowac system zarzadzania danymi
+podlaczyc pod ekrany
+przechowywanie na dysku
+
+https://material.io/tools/icons/?style=round
+*/
 
 class ShowMainScreen : AppCompatActivity() {
 

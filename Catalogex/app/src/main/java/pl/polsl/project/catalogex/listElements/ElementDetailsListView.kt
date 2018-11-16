@@ -13,6 +13,12 @@ import pl.polsl.project.catalogex.create.CreateElementScreen
 import pl.polsl.project.catalogex.dialogs.CameraScreenChooseDialogFragment
 import pl.polsl.project.catalogex.dialogs.TextInputDialog
 
+interface ElementDetailsInterface {
+    fun onEditButton(position: Int){}
+    fun onDeleteButton(position: Int){}
+    fun onAddButton(position: Int){}
+}
+
 enum class DetailListMode(val mode: Int){
     NONE_BUTTON(0),
     EDIT_BUTTON(1),
@@ -85,8 +91,6 @@ class  ElementDetailListViewAdapter : BaseAdapter {
         vh.tvTitle.text = detailList[position].title
         vh.tvValue.text = detailList[position].detail
 
-        val currentElement = getItem(position)
-
         when(mode){
             DetailListMode.NONE_BUTTON -> {
                 vh.imDelete.visibility = View.GONE
@@ -114,17 +118,17 @@ class  ElementDetailListViewAdapter : BaseAdapter {
 
 
         vh.imEdit.setOnClickListener { view ->
-                Toast.makeText(context,(currentElement as ElementDetailListView).title,Toast.LENGTH_LONG).show()
+            (activity as ElementDetailsInterface).onEditButton(position)
             true
         }
 
         vh.imDelete.setOnClickListener { view ->
-                Toast.makeText(context,(currentElement as ElementDetailListView).detail,Toast.LENGTH_LONG).show()
+            (activity as ElementDetailsInterface).onDeleteButton(position)
             true
         }
 
         vh.imAdd.setOnClickListener { view ->
-            (activity as CreateElementScreen).onAddButton(position)
+            (activity as ElementDetailsInterface).onAddButton(position)
 
             true
         }

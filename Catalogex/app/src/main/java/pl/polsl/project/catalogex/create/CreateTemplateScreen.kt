@@ -8,10 +8,21 @@ import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.listElements.DetailListMode
 import pl.polsl.project.catalogex.listElements.ElementDetailListView
 import pl.polsl.project.catalogex.listElements.ElementDetailListViewAdapter
+import pl.polsl.project.catalogex.listElements.ElementDetailsInterface
 
 //TODO dodawnie wzoru - zatwierdz przycisk plus i takie tam
 
-class CreateTemplateScreen : AppCompatActivity() {
+class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface {
+
+
+    val listItems = ArrayList<ElementDetailListView>()
+
+    fun updateFeatureList(){
+
+        val adapter =  ElementDetailListViewAdapter(this,listItems,layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
+        featureList.adapter = adapter
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -25,16 +36,7 @@ class CreateTemplateScreen : AppCompatActivity() {
         editNameElement.visibility = View.INVISIBLE
         ratingBarElement.setIsIndicator(true)
 
-        //TODO lista cech
-        val listItems = ArrayList<ElementDetailListView>(10)
-
-        for (i in 0 until 10) {
-            listItems.add(ElementDetailListView(i,"title" + i,"123123"))
-        }
-
-        val adapter =  ElementDetailListViewAdapter(this,listItems,layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
-        featureList.adapter = adapter
-
+        updateFeatureList()
 
         addFeatureButton.setOnClickListener{ view -> addFeatureToElement()}
 
@@ -43,7 +45,27 @@ class CreateTemplateScreen : AppCompatActivity() {
     }
 
     fun addFeatureToElement(){
+        var feature = ElementDetailListView(0,"","")
 
+      //  feature.id = listItems.get(listItems.size-1).id!! + 1
+       // feature.detail = getString(R.string.example_Text)
+
+        //TODO TU skonczylem dodawnie elementu nazwa itd
+
+
+
+        listItems.add(feature)
+        updateFeatureList()
+    }
+
+    override fun onDeleteButton(position: Int){
+        listItems.removeAt(position)
+        updateFeatureList()
+    }
+
+    override fun onEditButton(position: Int){
+        listItems.removeAt(position)
+        updateFeatureList()
     }
 }
 
