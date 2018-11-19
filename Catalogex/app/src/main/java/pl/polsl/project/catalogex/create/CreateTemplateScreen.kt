@@ -52,7 +52,8 @@ class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface {
 
         //TODO TU skonczylem dodawnie elementu nazwa itd
 
-
+        feature.title = getString(R.string.example_Text)
+        feature.detail = getString(R.string.example_Text)
 
         listItems.add(feature)
         updateFeatureList()

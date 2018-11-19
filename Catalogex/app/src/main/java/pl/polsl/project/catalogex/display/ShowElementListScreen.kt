@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu
 import android.widget.ArrayAdapter
+import android.widget.PopupMenu
 
 import kotlinx.android.synthetic.main.activity_category_element_list_screen.*
 import kotlinx.android.synthetic.main.content_category_element_list_screen.*
@@ -32,6 +33,13 @@ class ShowElementListScreen : AppCompatActivity() {
 
         val adapter =  ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listItems)
         listKategoryScreen.adapter = adapter
+
+        listKategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
+            val popup = PopupMenu(applicationContext, view)
+            popup.menuInflater.inflate(R.menu.element_menu_element_popup, popup.menu)
+            popup.show()
+            true
+        }
 
         listKategoryScreen.setOnItemClickListener{ adapterView, view, i, l ->
             val intent = Intent(this, ShowElementInformationScreen::class.java)

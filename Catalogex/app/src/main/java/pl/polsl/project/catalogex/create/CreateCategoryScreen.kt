@@ -73,6 +73,7 @@ class CreateCategoryScreen : AppCompatActivity(), AdapterView.OnItemSelectedList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_category_screen)
 
+
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         templateLabelCategory.visibility = View.INVISIBLE
         templateSpinner.visibility = View.INVISIBLE
