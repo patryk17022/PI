@@ -5,8 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
+import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.listElements.DetailListMode
-import pl.polsl.project.catalogex.listElements.ElementDetailListView
 import pl.polsl.project.catalogex.listElements.ElementDetailListViewAdapter
 import pl.polsl.project.catalogex.listElements.ElementDetailsInterface
 
@@ -14,13 +15,14 @@ import pl.polsl.project.catalogex.listElements.ElementDetailsInterface
 
 class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface {
 
+    val template = Element()
 
-    val listItems = ArrayList<ElementDetailListView>()
 
     fun updateFeatureList(){
 
-        val adapter =  ElementDetailListViewAdapter(this,listItems,layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
+        val adapter =  ElementDetailListViewAdapter(this, template.list,layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
         featureList.adapter = adapter
+
     }
 
 
@@ -45,7 +47,7 @@ class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface {
     }
 
     fun addFeatureToElement(){
-        var feature = ElementDetailListView(0,"","")
+        var feature = Feature(0,"","")
 
       //  feature.id = listItems.get(listItems.size-1).id!! + 1
        // feature.detail = getString(R.string.example_Text)
@@ -55,17 +57,17 @@ class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface {
         feature.title = getString(R.string.example_Text)
         feature.detail = getString(R.string.example_Text)
 
-        listItems.add(feature)
+        template.list.add(feature)
         updateFeatureList()
     }
 
     override fun onDeleteButton(position: Int){
-        listItems.removeAt(position)
+        template.list.removeAt(position)
         updateFeatureList()
     }
 
     override fun onEditButton(position: Int){
-        listItems.removeAt(position)
+        template.list.removeAt(position)
         updateFeatureList()
     }
 }

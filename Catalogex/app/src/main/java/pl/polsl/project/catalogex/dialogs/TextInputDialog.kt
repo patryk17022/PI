@@ -1,15 +1,11 @@
 package pl.polsl.project.catalogex.dialogs
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.dialog_choose_photo.*
 import pl.polsl.project.catalogex.R
-import android.content.DialogInterface
 import kotlinx.android.synthetic.main.dialog_text_input.*
 
 

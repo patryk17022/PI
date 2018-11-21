@@ -1,21 +1,15 @@
 package pl.polsl.project.catalogex.create
 
-import android.content.DialogInterface
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.ImageView
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_create_category_screen.*
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
+import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.dialogs.CameraScreenChooseDialogFragment
 import pl.polsl.project.catalogex.dialogs.TextInputDialog
 import pl.polsl.project.catalogex.dialogs.TextInputDialogInterface
 import pl.polsl.project.catalogex.listElements.DetailListMode
-import pl.polsl.project.catalogex.listElements.ElementDetailListView
 import pl.polsl.project.catalogex.listElements.ElementDetailListViewAdapter
 import pl.polsl.project.catalogex.listElements.ElementDetailsInterface
 
@@ -24,7 +18,7 @@ import pl.polsl.project.catalogex.listElements.ElementDetailsInterface
 class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, ElementDetailsInterface {
 
     private val fm = supportFragmentManager
-    var listItems : ArrayList<ElementDetailListView>? =  ArrayList<ElementDetailListView>()
+    var listItems : ArrayList<Feature>? =  ArrayList<Feature>()
     var nameItem: String=""
 
     fun updateView(){
@@ -46,7 +40,7 @@ class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, Eleme
 
 
         for (i in 0 until 10) {
-            listItems!!.add(ElementDetailListView(i,"title" + i,"123123"))
+            listItems!!.add(Feature(i,"title" + i,"123123"))
         }
 
 

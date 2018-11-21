@@ -1,8 +1,9 @@
 package pl.polsl.project.catalogex.listElements
 
+import android.app.Activity
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -10,18 +11,11 @@ import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
 import pl.polsl.project.catalogex.R
+import pl.polsl.project.catalogex.data.Element
 
-class CategoryElementListView {
-
-    var id: Int? = null
-    var title: String? = null
-
-    constructor(id: Int, title: String) {
-        this.id = id
-        this.title = title
-    }
+interface CategoryElementInterface{
+    fun setListElement(postion:Int)
 }
-
 
 private class CategoryElementListViewHolder(view: View?) {
     val tvTitle: TextView
@@ -35,14 +29,16 @@ private class CategoryElementListViewHolder(view: View?) {
 
 class  CategoryElementListViewAdapter : BaseAdapter {
 
-    private var categoryList = ArrayList<CategoryElementListView>()
+    private var categoryList = ArrayList<Element>()
     private var context: Context? = null
     private var layoutInflater : LayoutInflater? = null
+    private var activity : Activity? = null
 
-    constructor(context: Context, categoryList: ArrayList<CategoryElementListView>, layoutInflater: LayoutInflater) : super() {
+    constructor(context: Context, categoryList: ArrayList<Element>, layoutInflater: LayoutInflater, activity: Activity) : super() {
         this.categoryList = categoryList
         this.context = context
         this.layoutInflater = layoutInflater
+        this.activity = activity
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
@@ -65,7 +61,8 @@ class  CategoryElementListViewAdapter : BaseAdapter {
         vh.imButton.setOnClickListener { view ->
             val popup = PopupMenu(context, view)
             popup.menuInflater.inflate(R.menu.element_menu_todo_popup, popup.menu)
-
+            (activity as CategoryElementInterface).setListElement(position)
+            popup.setOnMenuItemClickListener(activity as PopupMenu.OnMenuItemClickListener)
             popup.show()
             true
         }
@@ -84,4 +81,5 @@ class  CategoryElementListViewAdapter : BaseAdapter {
     override fun getCount(): Int {
         return categoryList.size
     }
+
 }

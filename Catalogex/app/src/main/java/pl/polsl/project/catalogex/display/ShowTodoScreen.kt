@@ -1,49 +1,87 @@
 package pl.polsl.project.catalogex.display
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
 import kotlinx.android.synthetic.main.activity_todo_screen.*
 import pl.polsl.project.catalogex.R
-import java.util.*
-import java.util.Arrays.asList
-import java.util.Arrays.asList
-import android.widget.AdapterView.OnItemLongClickListener
-import android.R.id.button1
-import android.view.Gravity
-import android.widget.*
-import pl.polsl.project.catalogex.listElements.CategoryElementListView
+import android.view.MenuItem
+import android.widget.PopupMenu
+import pl.polsl.project.catalogex.data.Category
+import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.listElements.CategoryElementInterface
 import pl.polsl.project.catalogex.listElements.CategoryElementListViewAdapter
+import kotlin.collections.ArrayList
 
 
+class ShowTodoScreen : AppCompatActivity(), CategoryElementInterface, PopupMenu.OnMenuItemClickListener {
 
-class ShowTodoScreen : AppCompatActivity() {
+    var todoList: Category? = null
+    var menuPopupPosition: Int = -1
+
+    fun updateView(){
+        val adapter = CategoryElementListViewAdapter(this, todoList!!.list as ArrayList<Element>,layoutInflater,this)
+        listTodo.adapter = adapter
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todo_screen)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
+        if(todoList == null) todoList = ShowMainScreen.todoList
 
-
-
-        //TODO: test - delete
-
-        val listItems = ArrayList<CategoryElementListView>(10)
-
-        for (i in 0 until 10) {
-            listItems.add(CategoryElementListView(i,"TODO: "+i))
+        //TODO nie dziala :P)
+        listTodo.setOnItemClickListener{ adapterView, view, i, l ->
+            val intent = Intent(this, ShowElementInformationScreen::class.java)
+            ShowMainScreen.actualElement = todoList!!.list.get(i)
+            startActivity(intent)
         }
-
-        val adapter = CategoryElementListViewAdapter(this, listItems,layoutInflater)
-        listTodo.adapter = adapter
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.element_menu_lists, menu)
-
         return true
     }
+
+    override fun setListElement(postion: Int) {
+        menuPopupPosition = postion
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateView()
+    }
+
+    //TODO listy
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+
+
+            android.R.id.home -> {
+                finish()
+            }
+
+        }
+        return true
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+            R.id.addToDoList -> {
+                var elem = todoList!!.list.get(menuPopupPosition) as Element
+                todoList!!.list.remove(elem)
+                elem.category!!.list.add(elem)
+                updateView()
+            }
+
+        }
+        return true
+    }
+
 }

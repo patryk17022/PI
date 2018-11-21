@@ -2,16 +2,12 @@ package pl.polsl.project.catalogex.listElements
 
 import android.app.Activity
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
-import pl.polsl.project.catalogex.create.CreateElementScreen
-import pl.polsl.project.catalogex.dialogs.CameraScreenChooseDialogFragment
-import pl.polsl.project.catalogex.dialogs.TextInputDialog
+import pl.polsl.project.catalogex.data.Feature
 
 interface ElementDetailsInterface {
     fun onEditButton(position: Int){}
@@ -26,20 +22,6 @@ enum class DetailListMode(val mode: Int){
     ADD_BUTTON(3),
     EDIT_DELETE_BUTTON(4)
 }
-
-class ElementDetailListView {
-
-    var id: Int? = null
-    var title: String? = null
-    var detail: String? = null
-
-    constructor(id: Int, title: String, detail: String) {
-        this.id = id
-        this.title = title
-        this.detail = detail
-    }
-}
-
 
 private class ElementDetailListViewHolder(view: View?) {
     val tvTitle: TextView
@@ -59,13 +41,13 @@ private class ElementDetailListViewHolder(view: View?) {
 
 class  ElementDetailListViewAdapter : BaseAdapter {
 
-    private var detailList = ArrayList<ElementDetailListView>()
+    private var detailList = ArrayList<Feature>()
     private var context: Context? = null
     private var layoutInflater : LayoutInflater? = null
     private var mode :DetailListMode? = null
     private var activity :Activity? = null
 
-    constructor(context: Context, detailList: ArrayList<ElementDetailListView>, layoutInflater: LayoutInflater,activity :Activity, mode:DetailListMode) : super() {
+    constructor(context: Context, detailList: ArrayList<Feature>, layoutInflater: LayoutInflater,activity :Activity, mode:DetailListMode) : super() {
         this.detailList = detailList
         this.context = context
         this.layoutInflater = layoutInflater
@@ -116,7 +98,6 @@ class  ElementDetailListViewAdapter : BaseAdapter {
             }
         }
 
-
         vh.imEdit.setOnClickListener { view ->
             (activity as ElementDetailsInterface).onEditButton(position)
             true
@@ -135,8 +116,6 @@ class  ElementDetailListViewAdapter : BaseAdapter {
 
         return view
     }
-
-
 
     override fun getItem(position: Int): Any {
         return detailList[position]

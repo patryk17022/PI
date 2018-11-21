@@ -7,19 +7,13 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.DialogFragment
 import android.support.v4.content.ContextCompat
 import android.view.*
-import android.widget.ImageButton
 import android.widget.ImageView
-import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import kotlinx.android.synthetic.main.dialog_choose_photo.*
 import pl.polsl.project.catalogex.R
-import android.widget.Toast
 import android.graphics.BitmapFactory
-import android.R.attr.data
-import java.io.FileNotFoundException
 
 
 class CameraScreenChooseDialogFragment : DialogFragment() {
@@ -85,6 +79,7 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data!!.extras.get("data") as Bitmap
             image!!.setImageBitmap(imageBitmap)
@@ -103,8 +98,10 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+
         if(requestCode == REQUEST_IMAGE_CAPTURE && !grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             makePhoto()
+
         if(requestCode == RESULT_LOAD_IMG && !grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             chooseFromGallery()
     }
