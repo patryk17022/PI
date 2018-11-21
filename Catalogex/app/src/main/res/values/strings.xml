@@ -52,9 +52,11 @@
     <string name="add_to_todo_list">Dodaj do listy TODO</string>
     <string name="back_to_category">Przenieś do kategori</string>
 
-    <string name="addNewTemplate">Dodaj nowy wzór</string>
+    <string name="addNewTemplate">Nie wybrano</string>
+    <string name="noTemplate">Dodaj nowy wzór</string>
+    <string name="noTextEntered">Nie wprowadzono tekstu</string>
+    <string name="noCategoryName">Wprowadz nazwę kategorii</string>
     <string name="example_Text">Przykladowy Tekst</string>
     <string name="options">Opcje</string>
-
 
 </resources>

@@ -17,7 +17,7 @@ import pl.polsl.project.catalogex.create.CreateCategoryScreen
 import pl.polsl.project.catalogex.data.Category
 
 
-class ShowCategoryListScreen : AppCompatActivity() {
+class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
 
     var listOfCategory : Category? = null
 
@@ -88,6 +88,17 @@ class ShowCategoryListScreen : AppCompatActivity() {
 
             android.R.id.home -> {
                 finish()
+            }
+
+        }
+        return true
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+            R.id.edit -> {
+
             }
 
         }

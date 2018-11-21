@@ -12,19 +12,9 @@ import pl.polsl.project.catalogex.data.ListItem
 
 /*TODO:
 
-
+4. CreateElemenetScreen wszystkie Show i edity i potem te menu rozwiajne
 3. poprawic diagram
-4. zrobic zrzuty ekranu
-5. zaczac obkadzac wszystko !
-6. TESTY
 
-
-CreateTemplateScreen
-wszystkie displaye
-wszystkie edity
-
-zbudowac system zarzadzania danymi
-podlaczyc pod ekrany
 przechowywanie na dysku
 
 https://material.io/tools/icons/?style=round
@@ -45,11 +35,14 @@ class ShowMainScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
 
+        mainCategory.title = getString(R.string.title_activity_category_list_screen)
+        todoList.title = getString(R.string.todo_button_text)
+
 
 
         for(i in 0 until 10){
             var test = Category()
-            test.title = "KUPA" + i.toString()
+            test.title = "Kategoria: " + i.toString()
             mainCategory.list.add(test)
         }
 
@@ -57,7 +50,7 @@ class ShowMainScreen : AppCompatActivity() {
 
         for(i in 0 until 10){
             var test = Category()
-            test.title = "POD KUPA " + i.toString()
+            test.title = "POD Kategoira; " + i.toString()
             cat.list.add(test)
         }
 
@@ -66,9 +59,9 @@ class ShowMainScreen : AppCompatActivity() {
             for(k in 0 until 10) {
                 var test = Element()
                      for(f in 0 until 10) {
-                         test.addFeature(Feature(f,"Feature " + i, i.toString()))
+                         test.addFeature(Feature(f,"Informacja:  " + f, f.toString()))
                      }
-                test.title = "POD KUPA ELEMENT " + k.toString()
+                test.title = "Element:  " + k.toString()
                 test.category = mainCategory.list.get(i) as Category
                 (mainCategory.list.get(i) as Category).list.add(test)
                 (mainCategory.list.get(i) as Category).template = Element()

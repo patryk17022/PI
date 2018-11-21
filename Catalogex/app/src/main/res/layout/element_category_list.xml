@@ -14,7 +14,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="26dp"
         android:layout_marginBottom="16dp"
-        android:background="@color/colorPrimaryDarkMain"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/options"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

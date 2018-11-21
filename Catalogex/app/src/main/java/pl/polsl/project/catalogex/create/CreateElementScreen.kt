@@ -17,7 +17,6 @@ import pl.polsl.project.catalogex.listElements.ElementDetailsInterface
 
 class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, ElementDetailsInterface {
 
-    private val fm = supportFragmentManager
     var listItems : ArrayList<Feature>? =  ArrayList<Feature>()
     var nameItem: String=""
 
@@ -58,21 +57,21 @@ class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, Eleme
         val editNameDialogFragment = CameraScreenChooseDialogFragment()
         editNameDialogFragment.packageManager = packageManager
         editNameDialogFragment.image= elementImage
-        editNameDialogFragment.show(fm, "photoGallery")
+        editNameDialogFragment.show(supportFragmentManager, "photoGallery")
 
     }
 
     fun editNameButton(){
         val inputText = TextInputDialog()
         inputText.labelText = getString(R.string.name_label)
-        inputText.show(fm, "textNameInput")
+        inputText.show(supportFragmentManager, "textNameInput")
     }
 
     override fun onAddButton(position: Int){
         val inputText = TextInputDialog()
         inputText.labelText = listItems!!.get(position).title
         inputText.position=position
-        inputText.show(fm, "textInput")
+        inputText.show(supportFragmentManager, "textInput")
 
     }
 
