@@ -7,16 +7,28 @@
     android:layout_height="match_parent">
 
 
+    <ImageView
+        android:id="@+id/deletePhotoButton"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:contentDescription="@string/exit_button_text"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/elementImage"
+        app:layout_constraintTop_toTopOf="@+id/elementImage"
+        app:srcCompat="@drawable/delete" />
+
     <ImageButton
         android:id="@+id/editNameElement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="3dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/edit"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/elementText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        app:srcCompat="@drawable/edit" />
 
     <TextView
         android:id="@+id/elementNameText"
@@ -40,10 +52,10 @@
         android:clickable="true"
         android:contentDescription="@string/element_photo"
         android:focusable="true"
-        android:scaleType="center"
+        android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:srcCompat="@drawable/add_photo" />
 
     <Button
         android:id="@+id/cancleButtonTemplate"
@@ -139,15 +151,17 @@
 
     <ImageButton
         android:id="@+id/addFeatureButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
         android:layout_marginEnd="13dp"
-        android:layout_marginBottom="9dp"
+        android:layout_marginBottom="5dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/adding_information"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/featureList"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:layout_constraintStart_toStartOf="@+id/editNameElement"
+        app:srcCompat="@drawable/add_note" />
 
     <RatingBar
         android:id="@+id/ratingBarElement"

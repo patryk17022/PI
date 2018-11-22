@@ -1,6 +1,7 @@
 package pl.polsl.project.catalogex.dialogs
 
 import android.Manifest
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,18 +11,21 @@ import android.provider.MediaStore
 import android.support.v4.app.DialogFragment
 import android.support.v4.content.ContextCompat
 import android.view.*
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.dialog_choose_photo.*
 import pl.polsl.project.catalogex.R
 import android.graphics.BitmapFactory
 
+interface ImageTakenInterface{
+    fun imageHasBeenTaken(bitmap: Bitmap)
+}
 
 class CameraScreenChooseDialogFragment : DialogFragment() {
 
     val REQUEST_IMAGE_CAPTURE = 1
     val RESULT_LOAD_IMG = 2
     var packageManager: PackageManager? = null
-    var image:ImageView? = null
+    var activity: Activity? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -82,17 +86,16 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data!!.extras.get("data") as Bitmap
-            image!!.setImageBitmap(imageBitmap)
-            image!!.scaleType = ImageView.ScaleType.FIT_CENTER
+            (activity!! as ImageTakenInterface).imageHasBeenTaken(imageBitmap)
+            dismiss()
 
         }else if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK) {
 
             val imageUri = data!!.data
             val imageStream = activity!!.contentResolver.openInputStream(imageUri)
             val selectedImage = BitmapFactory.decodeStream(imageStream)
-            image!!.setImageBitmap(selectedImage)
-            image!!.scaleType = ImageView.ScaleType.FIT_CENTER
-
+            (activity!! as ImageTakenInterface).imageHasBeenTaken(selectedImage)
+            dismiss()
         }
 
     }

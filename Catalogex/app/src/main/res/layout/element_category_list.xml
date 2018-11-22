@@ -9,17 +9,18 @@
 
     <ImageButton
         android:id="@+id/dropDownListCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="26dp"
         android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/options"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_dashboard_black_24dp" />
+        app:srcCompat="@drawable/menu" />
 
     <TextView
         android:id="@+id/informationText"
@@ -30,6 +31,16 @@
         android:layout_marginBottom="18dp"
         android:text="@string/example_Text"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/elementInfoButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dropDownListCategory"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

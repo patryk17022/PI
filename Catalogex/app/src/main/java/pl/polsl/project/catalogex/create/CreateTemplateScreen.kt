@@ -39,6 +39,7 @@ class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, TextI
         ratingBarElement.setIsIndicator(true)
 
         inputText.labelText = getString(R.string.name_label)
+        inputText.activity = this
 
         updateFeatureList()
 

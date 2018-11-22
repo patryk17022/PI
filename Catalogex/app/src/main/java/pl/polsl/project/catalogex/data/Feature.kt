@@ -5,7 +5,7 @@ class Feature{
     var title: String = ""
     var detail: String = ""
 
-    constructor(id: Int, title: String, detail: String) {
+    constructor(id: Int?, title: String, detail: String) {
         this.id = id
         this.title = title
         this.detail = detail

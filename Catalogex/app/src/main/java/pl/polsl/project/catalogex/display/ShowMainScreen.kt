@@ -11,11 +11,13 @@ import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.data.ListItem
 
 /*TODO:
+wpisywanie - otwarcie klawiatury - TextInputDialog
+Edity
+Gorne menusy typu sortowanie filtrowanie szukanie itd
+Dodac zarzadzanie templatami
+przechowywanie danych
 
-4. CreateElemenetScreen wszystkie Show i edity i potem te menu rozwiajne
-3. poprawic diagram
-
-przechowywanie na dysku
+poprawic diagram
 
 https://material.io/tools/icons/?style=round
 */
@@ -39,7 +41,7 @@ class ShowMainScreen : AppCompatActivity() {
         todoList.title = getString(R.string.todo_button_text)
 
 
-
+        //TEST--------------------------------------------------------------------------------------
         for(i in 0 until 10){
             var test = Category()
             test.title = "Kategoria: " + i.toString()
@@ -67,8 +69,7 @@ class ShowMainScreen : AppCompatActivity() {
                 (mainCategory.list.get(i) as Category).template = Element()
             }
         }
-
-
+        //TEST--------------------------------------------------------------------------------------
 
     }
 

@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.PopupMenu
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.edit.EditElementScreen
 import pl.polsl.project.catalogex.listElements.CategoryElementInterface
 import pl.polsl.project.catalogex.listElements.CategoryElementListViewAdapter
 import kotlin.collections.ArrayList
@@ -32,13 +33,6 @@ class ShowTodoScreen : AppCompatActivity(), CategoryElementInterface, PopupMenu.
 
         if(todoList == null) todoList = ShowMainScreen.todoList
 
-        //TODO nie dziala :P)
-        listTodo.setOnItemClickListener{ adapterView, view, i, l ->
-            val intent = Intent(this, ShowElementInformationScreen::class.java)
-            ShowMainScreen.actualElement = todoList!!.list.get(i)
-            startActivity(intent)
-        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -56,11 +50,9 @@ class ShowTodoScreen : AppCompatActivity(), CategoryElementInterface, PopupMenu.
         updateView()
     }
 
-    //TODO listy
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-
-
 
             android.R.id.home -> {
                 finish()
@@ -71,16 +63,27 @@ class ShowTodoScreen : AppCompatActivity(), CategoryElementInterface, PopupMenu.
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
+        var elem = todoList!!.list.get(menuPopupPosition) as Element
         when (item.itemId) {
 
+            R.id.edit -> {
+                val intent = Intent(this, EditElementScreen::class.java)
+                ShowMainScreen.actualElement = elem
+                startActivity(intent)
+            }
+
+            R.id.delete -> {
+                todoList!!.list.remove(elem)
+            }
+
             R.id.addToDoList -> {
-                var elem = todoList!!.list.get(menuPopupPosition) as Element
                 todoList!!.list.remove(elem)
                 elem.category!!.list.add(elem)
-                updateView()
+                elem.todo = false
             }
 
         }
+        updateView()
         return true
     }
 

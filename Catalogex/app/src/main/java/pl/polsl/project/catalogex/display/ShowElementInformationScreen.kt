@@ -1,6 +1,7 @@
 package pl.polsl.project.catalogex.display
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.*
@@ -17,6 +18,23 @@ class ShowElementInformationScreen : AppCompatActivity() {
     var element : Element? = null
 
     fun updateView(){
+
+        ratingBarElement.rating = element!!.indicator.toFloat()
+
+        if(element!!.todo == true){
+            categoryText.text = "TODO: " + element!!.category!!.title
+        }else {
+            categoryText.text = element!!.category!!.title
+        }
+
+        elementText.text = element!!.title
+
+        if(element!!.image != null){
+            elementImage.setImageBitmap(element!!.image)
+        } else {
+            elementImage.setImageBitmap(BitmapFactory.decodeResource(resources, R.drawable.image))
+        }
+
         val adapter =  ElementDetailListViewAdapter(this,element!!.list,layoutInflater,this, DetailListMode.NONE_BUTTON)
         featureList.adapter = adapter
     }
@@ -36,15 +54,7 @@ class ShowElementInformationScreen : AppCompatActivity() {
         acceptButtonTemplate.visibility = View.INVISIBLE
         cancleButtonTemplate.visibility = View.INVISIBLE
         ratingBarElement.setIsIndicator(true)
-        ratingBarElement.numStars = element!!.indicator
-        categoryText.text = element!!.category!!.title
-        elementText.text = element!!.title
 
-        if(element!!.image != null){
-            elementImage.setImageBitmap(element!!.image)
-        }
-
-        if(element == null) element = ShowMainScreen.actualElement as Element
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -62,12 +72,18 @@ class ShowElementInformationScreen : AppCompatActivity() {
         when (item.itemId) {
             R.id.edit -> {
                 val intent = Intent(this, EditElementScreen::class.java)
-                ShowMainScreen.actualElement = element!!
-                startActivityForResult(intent,1)
+                ShowMainScreen.actualElement = element
+                startActivity(intent)
             }
 
             R.id.delete -> {
-                element!!.category!!.list.remove(element!!)
+
+                if(element!!.todo == true) {
+                    ShowMainScreen.todoList.list.remove(element!!)
+                }else {
+                    element!!.category!!.list.remove(element!!)
+                }
+
                 finish()
             }
 
@@ -76,6 +92,7 @@ class ShowElementInformationScreen : AppCompatActivity() {
             }
 
         }
+        updateView()
         return true
     }
 

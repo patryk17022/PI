@@ -10,20 +10,20 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginBottom="12dp"
         android:text="@string/accept_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/templateSpinner" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/cancleButton"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
         android:layout_marginEnd="18dp"
+        android:layout_marginBottom="12dp"
         android:text="@string/cancle_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/templateSpinner" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <RadioGroup
         android:id="@+id/optionGroup"

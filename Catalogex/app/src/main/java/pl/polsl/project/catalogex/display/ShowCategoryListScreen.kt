@@ -2,24 +2,24 @@ package pl.polsl.project.catalogex.display
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
-
 import kotlinx.android.synthetic.main.activity_category_element_list_screen.*
-import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import kotlinx.android.synthetic.main.content_category_element_list_screen.*
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.create.CreateCategoryScreen
 import pl.polsl.project.catalogex.data.Category
+import pl.polsl.project.catalogex.edit.EditCategoryScreen
+import pl.polsl.project.catalogex.edit.EditElementScreen
 
 
 class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
 
     var listOfCategory : Category? = null
+    var menuPopupPosition: Int = -1
 
     fun updateView(){
         val listItems = ArrayList<String>(0)
@@ -65,6 +65,8 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         listKategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
             val popup = PopupMenu(applicationContext, view)
             popup.menuInflater.inflate(R.menu.element_menu_options, popup.menu)
+            menuPopupPosition = i
+            popup.setOnMenuItemClickListener(this)
             popup.show()
             true
         }
@@ -82,7 +84,6 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         updateView()
     }
 
-    //TODO listy
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
@@ -95,13 +96,21 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
+        var categ = listOfCategory!!.list.get(menuPopupPosition)
         when (item.itemId) {
 
             R.id.edit -> {
+                val intent = Intent(this, EditCategoryScreen::class.java)
+                ShowMainScreen.actualElement = categ
+                startActivity(intent)
+            }
 
+            R.id.delete -> {
+                listOfCategory!!.list.remove(categ)
             }
 
         }
+        updateView()
         return true
     }
 }

@@ -12,7 +12,8 @@ import kotlinx.android.synthetic.main.content_category_element_list_screen.*
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.create.CreateElementScreen
 import pl.polsl.project.catalogex.data.Category
-
+import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.edit.EditElementScreen
 
 
 class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
@@ -76,7 +77,6 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         updateView()
     }
 
-    //TODO listy
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -90,16 +90,27 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
+        var elem = listOfElements!!.list.get(menuPopupPosition) as Element
         when (item.itemId) {
 
+            R.id.edit -> {
+                val intent = Intent(this, EditElementScreen::class.java)
+                ShowMainScreen.actualElement = elem
+                startActivity(intent)
+            }
+
+            R.id.delete -> {
+                listOfElements!!.list.remove(elem)
+            }
+
             R.id.addToDoList -> {
-                var elem = listOfElements!!.list.get(menuPopupPosition)
                 listOfElements!!.list.remove(elem)
                 ShowMainScreen.todoList.list.add(elem)
-                updateView()
+                elem.todo = true
             }
 
         }
+        updateView()
         return true
     }
 }
