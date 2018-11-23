@@ -19,16 +19,18 @@ import pl.polsl.project.catalogex.listElements.DetailListMode
 import pl.polsl.project.catalogex.listElements.ElementDetailListViewAdapter
 import pl.polsl.project.catalogex.listElements.ElementDetailsInterface
 
-class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, ElementDetailsInterface, ImageTakenInterface {
+open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, ElementDetailsInterface, ImageTakenInterface {
 
     var category: Category? = null
     var element: Element? = null
     val inputText = TextInputDialog()
 
-    fun updateView(){
+    open fun updateView(){
         val adapter =  ElementDetailListViewAdapter(this,element!!.list,layoutInflater,this,DetailListMode.ADD_BUTTON)
         featureList.adapter = adapter
         elementText.text = element!!.title
+        categoryText.text = category!!.title
+        ratingBarElement.rating = element!!.indicator.toFloat()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -44,7 +46,7 @@ class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, Eleme
 
         addFeatureButton.visibility = View.INVISIBLE
 
-        element = category!!.template!!.copy()
+        element = category!!.template!!.copy() as Element
         element!!.category = category
         inputText.activity = this
 

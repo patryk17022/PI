@@ -71,7 +71,6 @@ class  CategoryElementListViewAdapter : BaseAdapter {
         vh.button.setOnClickListener{ view ->
             val intent = Intent(context, ShowElementInformationScreen::class.java)
             ShowMainScreen.actualElement = categoryList.get(position)
-            intent.putExtra("TODO", true)
             activity!!.startActivity(intent)
         }
 

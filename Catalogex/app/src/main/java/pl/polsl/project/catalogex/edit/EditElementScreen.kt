@@ -1,25 +1,33 @@
 package pl.polsl.project.catalogex.edit
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.view.*
-import pl.polsl.project.catalogex.R
+
+import kotlinx.android.synthetic.main.activity_create_template_screen.*
+import pl.polsl.project.catalogex.create.CreateElementScreen
+import pl.polsl.project.catalogex.data.Element
 
 
-//TODO: schowac przyciski do edycji i usowania strzalka do powrotu
-class EditElementScreen : AppCompatActivity() {
+class EditElementScreen : CreateElementScreen() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_template_screen)
+
+        var index = intent.getIntExtra("ELEMENT_NUMBER",-1)
+        var elementOld = category!!.list.get(index) as Element
+        element = elementOld.copy() as Element
+
+        acceptButtonTemplate.setOnClickListener { view ->
+            element!!.indicator = ratingBarElement.rating.toInt()
+            element!!.insertValuesFrom(elementOld)
+            finish()
+        }
+
+        updateView()
+        inputText.dismiss()
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.element_menu_options, menu)
-
-        return true
-    }
 }
 
 

@@ -14,7 +14,7 @@ import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.display.ShowMainScreen
 
-class CreateCategoryScreen : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+open class CreateCategoryScreen : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     val ADD_NEW_TEMPLATE = 1;
 

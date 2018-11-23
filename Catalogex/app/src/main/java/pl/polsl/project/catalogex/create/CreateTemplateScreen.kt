@@ -15,9 +15,9 @@ import pl.polsl.project.catalogex.listElements.DetailListMode
 import pl.polsl.project.catalogex.listElements.ElementDetailListViewAdapter
 import pl.polsl.project.catalogex.listElements.ElementDetailsInterface
 
-class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, TextInputDialogInterface {
+open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, TextInputDialogInterface {
 
-    val template = Element()
+    var template = Element()
     val inputText = TextInputDialog()
 
     fun updateFeatureList(){

@@ -95,7 +95,8 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
 
             R.id.edit -> {
                 val intent = Intent(this, EditElementScreen::class.java)
-                ShowMainScreen.actualElement = elem
+                ShowMainScreen.actualElement = listOfElements
+                intent.putExtra("ELEMENT_NUMBER", listOfElements!!.list.indexOf(elem))
                 startActivity(intent)
             }
 

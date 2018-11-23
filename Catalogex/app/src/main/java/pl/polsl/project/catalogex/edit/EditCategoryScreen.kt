@@ -1,32 +1,54 @@
 package pl.polsl.project.catalogex.edit
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_category_screen.*
 import pl.polsl.project.catalogex.R
-import android.widget.RadioButton
+import pl.polsl.project.catalogex.create.CreateCategoryScreen
+import pl.polsl.project.catalogex.data.Category
 
 
-class EditCategoryScreen : AppCompatActivity() {
+class EditCategoryScreen : CreateCategoryScreen() {
+
+    var category: Category? = null
+
+    fun updateView(){
+        nameCategoryText.setText(category!!.title)
+
+        categoryOptionRadio.isEnabled = false
+        elementOptionRadio.isEnabled = false
+        templateSpinner.isEnabled = false
+
+        if(category!!.template != null){
+            elementOptionRadio.isChecked = true
+            templateSpinner.visibility = View.VISIBLE
+            templateLabelCategory.visibility = View.VISIBLE
+
+            var index = templateList!!.indexOf(category!!.template)+1
+            templateSpinner.setSelection(index)
+
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_category_screen)
 
-        for (i in 0 until optionGroup.getChildCount()) {
-            (optionGroup.getChildAt(i) as RadioButton).isEnabled = false
+        var index = intent.getIntExtra("CATEGORY_NUMBER",-1)
+        category = parentCategory!!.list.get(index) as Category
+
+        acceptButton.setOnClickListener{ view ->
+            if(!nameCategoryText.text.toString().isEmpty()) {
+
+                category!!.title = nameCategoryText.text.toString()
+                finish()
+
+            }else{
+                Toast.makeText(this,getString(R.string.noCategoryName), Toast.LENGTH_SHORT).show()
+            }
         }
 
-        if(elementOptionRadio.isChecked) {
-            templateLabelCategory.visibility = View.VISIBLE
-            templateSpinner.visibility = View.VISIBLE
-        }
-        else {
-            templateLabelCategory.visibility = View.INVISIBLE
-            templateSpinner.visibility = View.INVISIBLE
-        }
-
-        cancleButton.setOnClickListener{ view -> finish()}
+        updateView()
     }
 }

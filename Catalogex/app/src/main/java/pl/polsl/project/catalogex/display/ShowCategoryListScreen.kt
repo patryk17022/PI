@@ -101,7 +101,8 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
             R.id.edit -> {
                 val intent = Intent(this, EditCategoryScreen::class.java)
-                ShowMainScreen.actualElement = categ
+                ShowMainScreen.actualElement = listOfCategory
+                intent.putExtra("CATEGORY_NUMBER", listOfCategory!!.list.indexOf(categ))
                 startActivity(intent)
             }
 

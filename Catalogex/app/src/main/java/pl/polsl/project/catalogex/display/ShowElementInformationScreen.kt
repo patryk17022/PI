@@ -19,6 +19,7 @@ class ShowElementInformationScreen : AppCompatActivity() {
 
     fun updateView(){
 
+        supportActionBar!!.title = element!!.title
         ratingBarElement.rating = element!!.indicator.toFloat()
 
         if(element!!.todo == true){
@@ -47,8 +48,6 @@ class ShowElementInformationScreen : AppCompatActivity() {
 
         if(element == null) element = ShowMainScreen.actualElement as Element
 
-        supportActionBar!!.title = element!!.title
-
         editNameElement.visibility = View.INVISIBLE
         addFeatureButton.visibility = View.INVISIBLE
         acceptButtonTemplate.visibility = View.INVISIBLE
@@ -72,7 +71,8 @@ class ShowElementInformationScreen : AppCompatActivity() {
         when (item.itemId) {
             R.id.edit -> {
                 val intent = Intent(this, EditElementScreen::class.java)
-                ShowMainScreen.actualElement = element
+                ShowMainScreen.actualElement = element!!.category
+                intent.putExtra("ELEMENT_NUMBER", element!!.category!!.list.indexOf(element!!))
                 startActivity(intent)
             }
 

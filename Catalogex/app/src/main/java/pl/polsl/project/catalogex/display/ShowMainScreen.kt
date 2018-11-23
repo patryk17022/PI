@@ -11,11 +11,12 @@ import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.data.ListItem
 
 /*TODO:
-wpisywanie - otwarcie klawiatury - TextInputDialog
-Edity
 Gorne menusy typu sortowanie filtrowanie szukanie itd
 Dodac zarzadzanie templatami
 przechowywanie danych
+
+powiekszanie zdjęcia ?
+
 
 poprawic diagram
 

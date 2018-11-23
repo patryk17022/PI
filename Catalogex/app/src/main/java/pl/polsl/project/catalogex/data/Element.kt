@@ -26,14 +26,26 @@ class Element:ListItem{
         list.removeAt(index)
     }
 
-    fun copy():Element{
+    override fun copy():ListItem{
         var element = Element(title,category,indicator)
-        element.image = image
 
         for(i in 0 until list.size){
             element.list.add(Feature(list.get(i).id, list.get(i).title, list.get(i).detail))
         }
 
+        element.image = image
+        element.todo = todo
+
         return element
+    }
+
+     override fun insertValuesFrom(lItem: ListItem){
+         var elem = lItem as Element
+         elem.title = title
+         elem.category = category
+         elem.indicator = indicator
+         elem.list = list
+         elem.image = image
+         elem.todo = todo
     }
 }

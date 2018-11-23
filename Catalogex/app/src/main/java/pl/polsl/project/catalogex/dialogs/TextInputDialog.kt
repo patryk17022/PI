@@ -42,28 +42,44 @@ class TextInputDialog : DialogFragment() {
             true
         }
 
-        cancleButtonDialog.setOnClickListener{ view -> dismiss() }
+        cancleButtonDialog.setOnClickListener{ view ->
+        softKeyboard(featureValueInput,true)
+            dismiss() }
 
-        acceptButtonDialog.setOnClickListener{ view -> acceptAction()}
+        acceptButtonDialog.setOnClickListener{ acceptAction()}
+
+
+
     }
 
     fun acceptAction(){
-        ( activity as TextInputDialogInterface).doPositiveClick(tag!!,featureValueInput.text.toString(),position!!)
+        ( activity as TextInputDialogInterface).doPositiveClick(tag!!,featureValueInput.text.toString(),position)
+        softKeyboard(featureValueInput,false)
         dismiss()
     }
 
     override fun onResume() {
         super.onResume()
         featureValueInput.text = null
-        showSoftKeyboard(featureValueInput)
+        softKeyboard(featureValueInput,true)
     }
 
-    //TODO NIE DZIALA
-    fun showSoftKeyboard(view: View) {
+    override fun onPause() {
+        softKeyboard(featureValueInput,false)
+        super.onPause()
+    }
+
+    fun softKeyboard(view: View, show:Boolean) {
         if(activity != null) {
             if (view.requestFocus()) {
                 val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+
+                if(show)
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0)
+                else {
+                    imm.hideSoftInputFromWindow(activity!!.window.decorView.rootView.windowToken, 0)
+                    imm.hideSoftInputFromWindow(view.windowToken, 0)
+                }
             }
         }
     }
