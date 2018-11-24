@@ -1,13 +1,13 @@
 package pl.polsl.project.catalogex.data
 
 open class ListItem {
-    var title: String = ""
+    var title: String
 
-    constructor(title: String){
+    constructor(title: String) {
         this.title = title
     }
 
-    open fun copy():ListItem{
+    open fun copy(): ListItem {
         var listItem = ListItem(title)
         return listItem
     }

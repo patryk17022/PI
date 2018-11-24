@@ -46,8 +46,13 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
 
         addFeatureButton.visibility = View.INVISIBLE
 
-        element = category!!.template!!.copy() as Element
-        element!!.category = category
+        if(category!! != ShowMainScreen.todoList) {
+            element = category!!.template!!.copy() as Element
+            element!!.category = category
+        } else{
+            element = Element()
+        }
+
         inputText.activity = this
 
         updateView()

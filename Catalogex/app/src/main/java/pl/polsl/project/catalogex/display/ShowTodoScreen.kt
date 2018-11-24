@@ -68,7 +68,8 @@ class ShowTodoScreen : AppCompatActivity(), CategoryElementInterface, PopupMenu.
 
             R.id.edit -> {
                 val intent = Intent(this, EditElementScreen::class.java)
-                ShowMainScreen.actualElement = elem
+                ShowMainScreen.actualElement = todoList
+                intent.putExtra("ELEMENT_NUMBER", todoList!!.list.indexOf(elem))
                 startActivity(intent)
             }
 
