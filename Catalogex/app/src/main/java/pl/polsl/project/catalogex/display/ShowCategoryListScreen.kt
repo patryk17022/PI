@@ -3,32 +3,35 @@ package pl.polsl.project.catalogex.display
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
+import android.widget.AbsListView
 import android.widget.PopupMenu
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_category_element_list_screen.*
 import kotlinx.android.synthetic.main.content_category_element_list_screen.*
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.create.CreateCategoryScreen
 import pl.polsl.project.catalogex.data.Category
+import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.edit.EditCategoryScreen
-import pl.polsl.project.catalogex.edit.EditElementScreen
+import pl.polsl.project.catalogex.listElements.CategoryListView
 
 
-class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
+class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener {
 
     var listOfCategory : Category? = null
     var menuPopupPosition: Int = -1
 
+    companion object {
+        var isSelectionMode: Boolean = false
+    }
+
     fun updateView(){
-        val listItems = ArrayList<String>(0)
 
-        for (i in listOfCategory!!.list) {
-            listItems.add(i.title)
-        }
-
-        val adapter =  ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listItems)
+        val adapter = CategoryListView(layoutInflater, listOfCategory!!.list)
         listKategoryScreen.adapter = adapter
     }
 
@@ -70,6 +73,9 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             popup.show()
             true
         }
+
+        listKategoryScreen.setMultiChoiceModeListener(this)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -91,6 +97,10 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
                 finish()
             }
 
+            R.id.delete ->{
+                listKategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
+            }
+
         }
         return true
     }
@@ -107,11 +117,77 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             }
 
             R.id.delete -> {
-                listOfCategory!!.list.remove(categ)
+                Toast.makeText(this, getString(R.string.deleted_category) +": " + categ.title,Toast.LENGTH_LONG) .show()
+                deleteCategory(categ as Category)
             }
 
         }
         updateView()
         return true
     }
+
+    fun deleteCategory(category: Category){
+
+        deleteFromTodo(category)
+        listOfCategory!!.list.remove(category)
+    }
+
+    fun deleteFromTodo(category:Category){
+        if(category.template == null){
+            for(i in 0 until category.list.size)
+            {
+                deleteCategory(category.list.get(i) as Category)
+            }
+        }else {
+            var array = ShowMainScreen.todoList.list
+            var todel = ArrayList<ListItem>()
+            for (elem in array) {
+                if ((elem as Element).category == category) {
+                    todel.add(elem)
+                }
+            }
+            array.removeAll(todel)
+        }
+    }
+
+    override fun onItemCheckedStateChanged(p0: ActionMode?, p1: Int, p2: Long, p3: Boolean) {
+
+    }
+
+    override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
+        val inflater = menuInflater
+        menuInflater.inflate(R.menu.multichoice_menu,p1)
+        isSelectionMode = true
+        updateView()
+        return true
+    }
+
+    override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean {
+        return true
+    }
+
+    override fun onDestroyActionMode(p0: ActionMode?) {
+        isSelectionMode = false
+        updateView()
+        (listKategoryScreen.adapter as CategoryListView).selectedList.clear()
+    }
+
+    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+        when(item!!.itemId){
+            R.id.action_delete ->{
+                var selected = (listKategoryScreen.adapter as CategoryListView).selectedList
+                Toast.makeText(this, getString(R.string.deleted_category_list) +": " + selected.size.toString(),Toast.LENGTH_LONG) .show()
+
+                for(i in 0 until selected.size){
+                    deleteCategory(selected.get(i) as Category)
+                }
+
+                selected.clear()
+                mode!!.finish()
+            }
+        }
+
+        return true
+    }
+
 }

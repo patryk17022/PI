@@ -2,7 +2,6 @@ package pl.polsl.project.catalogex.display
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import pl.polsl.project.catalogex.R
 
 class ShowCreditsScreen : AppCompatActivity() {
@@ -12,7 +11,4 @@ class ShowCreditsScreen : AppCompatActivity() {
         setContentView(R.layout.activity_credits_screen)
     }
 
-    fun backButton(view: View) {
-        finish()
-    }
 }

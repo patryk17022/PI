@@ -11,13 +11,11 @@ import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.data.ListItem
 
 /*TODO:
-Gorne menusy typu sortowanie filtrowanie szukanie i usuwanie
-Przemyslec powroty na gornym menu (gdzie maja byc gdzie nie i czy przyciski)
-Jeśli usuwasz kategorie to co z lista to do !!!! (może w to do ogarnąć jakoś lepiej np dodać liste list ??)
-Dodac zarzadzanie templatami
+Gorne menusy typu sortowanie filtrowanie szukanie
+Dodac zarzadzanie templatami (edit template nie testowane)
 przechowywanie danych
+dodaj przenies do to do dla elementu i dla wielu elementow
 powiekszanie zdjęcia (moze bys spoko)
-zmienic ikonke
 
 poprawic diagram
 

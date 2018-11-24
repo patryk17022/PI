@@ -9,31 +9,36 @@ import android.view.ViewGroup
 import android.widget.*
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.data.ListItem
+import pl.polsl.project.catalogex.display.ShowCategoryListScreen
 import pl.polsl.project.catalogex.display.ShowElementInformationScreen
 import pl.polsl.project.catalogex.display.ShowMainScreen
 
-interface CategoryElementInterface{
+interface TodoElementInterface{
     fun setListElement(postion:Int)
 }
 
-private class CategoryElementListViewHolder(view: View?) {
+private class TodoElementListViewHolder(view: View?) {
     val tvTitle: TextView
     val imButton: ImageButton
     val button: Button
+    val check: CheckBox
 
     init {
         this.tvTitle = view?.findViewById(R.id.informationText) as TextView
         this.imButton = view?.findViewById(R.id.dropDownListCategory) as ImageButton
         this.button = view?.findViewById(R.id.elementInfoButton) as Button
+        this.check = view?.findViewById(R.id.checkBox) as CheckBox
     }
 }
 
-class  CategoryElementListViewAdapter : BaseAdapter {
+class  TodoElementListViewAdapter : BaseAdapter {
 
     private var categoryList = ArrayList<Element>()
     private var context: Context? = null
     private var layoutInflater : LayoutInflater? = null
     private var activity : Activity? = null
+    var selectedList: ArrayList<ListItem> = ArrayList()
 
     constructor(context: Context, categoryList: ArrayList<Element>, layoutInflater: LayoutInflater, activity: Activity) : super() {
         this.categoryList = categoryList
@@ -45,16 +50,16 @@ class  CategoryElementListViewAdapter : BaseAdapter {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
         val view: View?
-        val vh: CategoryElementListViewHolder
+        val vh: TodoElementListViewHolder
 
         if (convertView == null) {
             view = layoutInflater?.inflate(R.layout.element_category_list, parent, false)
-            vh = CategoryElementListViewHolder(view)
+            vh = TodoElementListViewHolder(view)
             view?.tag = vh
 
         } else {
             view = convertView
-            vh = view.tag as CategoryElementListViewHolder
+            vh = view.tag as TodoElementListViewHolder
         }
 
         vh.tvTitle.text = categoryList[position].title
@@ -62,7 +67,7 @@ class  CategoryElementListViewAdapter : BaseAdapter {
         vh.imButton.setOnClickListener { view ->
             val popup = PopupMenu(context, view)
             popup.menuInflater.inflate(R.menu.element_menu_todo_popup, popup.menu)
-            (activity as CategoryElementInterface).setListElement(position)
+            (activity as TodoElementInterface).setListElement(position)
             popup.setOnMenuItemClickListener(activity as PopupMenu.OnMenuItemClickListener)
             popup.show()
             true
@@ -72,6 +77,22 @@ class  CategoryElementListViewAdapter : BaseAdapter {
             val intent = Intent(context, ShowElementInformationScreen::class.java)
             ShowMainScreen.actualElement = categoryList.get(position)
             activity!!.startActivity(intent)
+        }
+
+        if(ShowCategoryListScreen.isSelectionMode){
+            vh.check.visibility = View.VISIBLE
+            vh.imButton.visibility = View.GONE
+        }else{
+            vh.check.visibility = View.GONE
+            vh.imButton.visibility = View.VISIBLE
+        }
+
+        vh.check.setOnCheckedChangeListener { compoundButton, b ->
+            if(b){
+                selectedList.add(categoryList.get(position))
+            } else{
+                selectedList.remove(categoryList.get(position))
+            }
         }
 
         return view

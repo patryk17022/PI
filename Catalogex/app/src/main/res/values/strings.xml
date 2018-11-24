@@ -54,9 +54,18 @@
 
     <string name="addNewTemplate">Nie wybrano</string>
     <string name="noTemplate">Dodaj nowy wzór</string>
-    <string name="noTextEntered">Nie wprowadzono tekstu</string>
+    <string name="noNameEntered">Nie wprowadzono nazwy wzoru</string>
     <string name="noCategoryName">Wprowadz nazwę kategorii</string>
+    <string name="noElementName">Wprowadz nazwę elementu</string>
     <string name="example_Text">Przykladowy Tekst</string>
     <string name="options">Opcje</string>
+
+    <string name="deleted_category_list">Usunięta liczba kategorii</string>
+    <string name="deleted_element_list">Usunięta liczba elementów</string>
+    <string name="deleted_category">Usunięta kategorię</string>
+    <string name="deleted_element">Usunięto element</string>
+    <string name="added_element">Dodano element</string>
+    <string name="added_category">Dodano kategorię</string>
+    <string name="added_template">Dodano wzór</string>
 
 </resources>

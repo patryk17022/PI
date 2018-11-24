@@ -77,10 +77,11 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
                 template.title = input
                 ShowMainScreen.listOfTemplate.add(template)
                 setResult(RESULT_OK,null)
+                Toast.makeText(this, getString(R.string.added_template) + ": " + template.title, Toast.LENGTH_LONG).show()
                 finish()
             }
         }else{
-            Toast.makeText(this,getString(R.string.noTextEntered),Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,getString(R.string.noNameEntered),Toast.LENGTH_SHORT).show()
         }
     }
 

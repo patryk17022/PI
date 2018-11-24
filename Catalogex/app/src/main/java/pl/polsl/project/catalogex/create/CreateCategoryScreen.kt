@@ -21,11 +21,6 @@ open class CreateCategoryScreen : AppCompatActivity(), AdapterView.OnItemSelecte
     var parentCategory: Category? = null
     var templateList: ArrayList<Element>? = null
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
-
     override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
         if(pos == templateSpinner.adapter.count-1) {
             val intent = Intent(this, CreateTemplateScreen::class.java)
@@ -65,7 +60,6 @@ open class CreateCategoryScreen : AppCompatActivity(), AdapterView.OnItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_category_screen)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         if(parentCategory == null) {
             parentCategory = ShowMainScreen.actualElement as Category
@@ -102,6 +96,7 @@ open class CreateCategoryScreen : AppCompatActivity(), AdapterView.OnItemSelecte
                 }
 
                 parentCategory!!.list.add(cat)
+                Toast.makeText(this, getString(R.string.added_category) +": " + nameCategoryText.text.toString(),Toast.LENGTH_LONG) .show()
                 finish()
             }else{
                 Toast.makeText(this,getString(R.string.noCategoryName),Toast.LENGTH_SHORT).show()

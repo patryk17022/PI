@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_create_category_screen.*
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.Category
@@ -64,9 +66,14 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
         editNameButton()
 
         acceptButtonTemplate.setOnClickListener { view ->
-            element!!.indicator = ratingBarElement.rating.toInt()
-            category!!.list.add(element!!)
-            finish()
+            if(!elementText.text.toString().isEmpty()) {
+                element!!.indicator = ratingBarElement.rating.toInt()
+                category!!.list.add(element!!)
+                Toast.makeText(this, getString(R.string.added_element) + ": " + element!!.title, Toast.LENGTH_LONG).show()
+                finish()
+            }else{
+                Toast.makeText(this,getString(R.string.noElementName),Toast.LENGTH_SHORT).show()
+            }
         }
 
         deletePhotoButton.setOnClickListener{ view ->
