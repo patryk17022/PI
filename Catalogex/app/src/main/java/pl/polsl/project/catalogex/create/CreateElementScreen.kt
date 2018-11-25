@@ -7,19 +7,18 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_create_category_screen.*
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
+import pl.polsl.project.catalogex.`interface`.ElementDetailsInterface
+import pl.polsl.project.catalogex.`interface`.ImageTakenInterface
+import pl.polsl.project.catalogex.`interface`.TextInputDialogInterface
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.dialogs.CameraScreenChooseDialogFragment
-import pl.polsl.project.catalogex.dialogs.ImageTakenInterface
 import pl.polsl.project.catalogex.dialogs.TextInputDialog
-import pl.polsl.project.catalogex.dialogs.TextInputDialogInterface
 import pl.polsl.project.catalogex.display.ShowMainScreen
-import pl.polsl.project.catalogex.listElements.DetailListMode
-import pl.polsl.project.catalogex.listElements.ElementDetailListViewAdapter
-import pl.polsl.project.catalogex.listElements.ElementDetailsInterface
+import pl.polsl.project.catalogex.enums.DetailListMode
+import pl.polsl.project.catalogex.listElements.ElementDetails.ElementDetailListViewAdapter
 
 open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, ElementDetailsInterface, ImageTakenInterface {
 
@@ -28,7 +27,7 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
     val inputText = TextInputDialog()
 
     open fun updateView(){
-        val adapter =  ElementDetailListViewAdapter(this,element!!.list,layoutInflater,this,DetailListMode.ADD_BUTTON)
+        val adapter = ElementDetailListViewAdapter(this, element!!.list, layoutInflater, this, DetailListMode.ADD_BUTTON)
         featureList.adapter = adapter
         elementText.text = element!!.title
         categoryText.text = category!!.title
@@ -82,7 +81,6 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
             elementImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
             deletePhotoButton.visibility = View.INVISIBLE
         }
-
     }
 
     override fun imageHasBeenTaken(bitmap: Bitmap) {
@@ -90,16 +88,13 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
         elementImage.setImageBitmap(bitmap)
         elementImage.scaleType = ImageView.ScaleType.FIT_CENTER
         deletePhotoButton.visibility = View.VISIBLE
-
     }
 
-
     fun onImageScelect(){
-        val editNameDialogFragment = CameraScreenChooseDialogFragment()
-        editNameDialogFragment.packageManager = packageManager
-        editNameDialogFragment.activity= this
-        editNameDialogFragment.show(supportFragmentManager, "photoGallery")
-
+        val choosePhoto = CameraScreenChooseDialogFragment()
+        choosePhoto.packageManager = packageManager
+        choosePhoto.activity= this
+        choosePhoto.show(supportFragmentManager, "photoGallery")
     }
 
     fun editNameButton(){
@@ -123,10 +118,6 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
         }
 
         updateView()
-    }
-
-    override fun doNegativeClick(tag:String, input:String, position: Int){
-
     }
 
 }

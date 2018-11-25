@@ -9,7 +9,6 @@ import pl.polsl.project.catalogex.data.Element
 
 class EditElementScreen : CreateElementScreen() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,7 +26,6 @@ class EditElementScreen : CreateElementScreen() {
         inputText.dismiss()
 
     }
-
 }
 
 

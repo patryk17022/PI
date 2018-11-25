@@ -10,5 +10,4 @@ class ShowCreditsScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_credits_screen)
     }
-
 }

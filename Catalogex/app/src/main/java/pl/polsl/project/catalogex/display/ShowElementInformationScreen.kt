@@ -9,8 +9,8 @@ import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.edit.EditElementScreen
-import pl.polsl.project.catalogex.listElements.DetailListMode
-import pl.polsl.project.catalogex.listElements.ElementDetailListViewAdapter
+import pl.polsl.project.catalogex.enums.DetailListMode
+import pl.polsl.project.catalogex.listElements.ElementDetails.ElementDetailListViewAdapter
 
 
 class ShowElementInformationScreen : AppCompatActivity() {
@@ -36,7 +36,7 @@ class ShowElementInformationScreen : AppCompatActivity() {
             elementImage.setImageBitmap(BitmapFactory.decodeResource(resources, R.drawable.image))
         }
 
-        val adapter =  ElementDetailListViewAdapter(this,element!!.list,layoutInflater,this, DetailListMode.NONE_BUTTON)
+        val adapter = ElementDetailListViewAdapter(this, element!!.list, layoutInflater, this, DetailListMode.NONE_BUTTON)
         featureList.adapter = adapter
     }
 

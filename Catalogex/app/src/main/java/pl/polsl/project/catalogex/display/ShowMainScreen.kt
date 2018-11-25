@@ -11,15 +11,15 @@ import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.data.ListItem
 
 /*TODO:
-Gorne menusy typu sortowanie filtrowanie szukanie
-Dodac zarzadzanie templatami (edit template nie testowane)
+filtrowanie
+to do -> sortowanie (do tego potrzeba zrobic displaylist)
 przechowywanie danych
+Dodac zarzadzanie templatami (edit template nie testowane)
 dodaj przenies do to do dla elementu i dla wielu elementow
 powiekszanie zdjęcia (moze bys spoko)
+zapisywanie stanu sortowania?
 
 poprawic diagram
-
-https://material.io/tools/icons/?style=round
 */
 
 class ShowMainScreen : AppCompatActivity() {

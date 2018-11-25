@@ -1,4 +1,4 @@
-package pl.polsl.project.catalogex.listElements
+package pl.polsl.project.catalogex.listElements.TodoElement
 
 import android.app.Activity
 import android.content.Context
@@ -8,29 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import pl.polsl.project.catalogex.R
+import pl.polsl.project.catalogex.`interface`.TodoElementInterface
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.display.ShowCategoryListScreen
 import pl.polsl.project.catalogex.display.ShowElementInformationScreen
 import pl.polsl.project.catalogex.display.ShowMainScreen
-
-interface TodoElementInterface{
-    fun setListElement(postion:Int)
-}
-
-private class TodoElementListViewHolder(view: View?) {
-    val tvTitle: TextView
-    val imButton: ImageButton
-    val button: Button
-    val check: CheckBox
-
-    init {
-        this.tvTitle = view?.findViewById(R.id.informationText) as TextView
-        this.imButton = view?.findViewById(R.id.dropDownListCategory) as ImageButton
-        this.button = view?.findViewById(R.id.elementInfoButton) as Button
-        this.check = view?.findViewById(R.id.checkBox) as CheckBox
-    }
-}
 
 class  TodoElementListViewAdapter : BaseAdapter {
 

@@ -2,32 +2,49 @@ package pl.polsl.project.catalogex.display
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SearchView
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.AbsListView
-import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_category_element_list_screen.*
 import kotlinx.android.synthetic.main.content_category_element_list_screen.*
 import pl.polsl.project.catalogex.R
+import pl.polsl.project.catalogex.`interface`.ReturnDialogInterface
 import pl.polsl.project.catalogex.create.CreateElementScreen
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.data.ListItem
+import pl.polsl.project.catalogex.dialogs.SortDialog
 import pl.polsl.project.catalogex.edit.EditElementScreen
-import pl.polsl.project.catalogex.listElements.CategoryListView
+import pl.polsl.project.catalogex.listElements.CategoryList.CategoryListView
 
 
-class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener {
+class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
     var listOfElements : Category? = null
+    var displayedList: ArrayList<ListItem> = ArrayList()
     var menuPopupPosition: Int = -1
+    var searchWindow : SearchView? = null
+    val sortDialog = SortDialog()
 
-    fun updateView(){
 
-        val adapter =  CategoryListView(layoutInflater, listOfElements!!.list)
+    fun updateView(text: String = ""){
+
+        displayedList.clear()
+        for(item in listOfElements!!.list){
+
+            if(text.isEmpty()) displayedList.add(item) else
+                if(item.title.toUpperCase().contains(text.toUpperCase()))
+                    displayedList.add(item)
+        }
+
+        sortDialog.sortTable(displayedList)
+
+        val adapter = CategoryListView(layoutInflater, displayedList)
         listKategoryScreen.adapter = adapter
     }
 
@@ -44,7 +61,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         listKategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
             val popup = PopupMenu(applicationContext, view)
             popup.menuInflater.inflate(R.menu.element_menu_element_popup, popup.menu)
-            menuPopupPosition = i
+            menuPopupPosition = listOfElements!!.list.indexOf(displayedList.get(i))
             popup.setOnMenuItemClickListener(this)
             popup.show()
             true
@@ -52,7 +69,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
 
         listKategoryScreen.setOnItemClickListener{ adapterView, view, i, l ->
             val intent = Intent(this, ShowElementInformationScreen::class.java)
-            ShowMainScreen.actualElement = listOfElements!!.list.get(i)
+            ShowMainScreen.actualElement = listOfElements!!.list.get(listOfElements!!.list.indexOf(displayedList.get(i)))
             startActivity(intent)
         }
 
@@ -70,12 +87,29 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         val inflater = menuInflater
         inflater.inflate(R.menu.element_menu_lists, menu)
         inflater.inflate(R.menu.element_menu_search, menu)
+
+        searchWindow = menu.findItem(R.id.action_search).actionView as SearchView
+        searchWindow!!.setOnQueryTextListener(
+                object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(p0: String?): Boolean {
+                        return true
+                    }
+
+                    override fun onQueryTextChange(enteredText: String): Boolean {
+                        updateView(enteredText)
+                        return true
+                    }
+
+                })
+
         return true
     }
 
     override fun onResume() {
         super.onResume()
         updateView()
+
+        closeSearchWindow()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -83,7 +117,15 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         when (item.itemId) {
 
             android.R.id.home -> {
-                finish()
+                if (searchWindow!!.isIconified()) {
+                    finish()
+                }
+            }
+
+            R.id.sort ->{
+                sortDialog.rating = true
+                sortDialog.activity = this
+                sortDialog.show(supportFragmentManager, "sort")
             }
 
             R.id.delete ->{
@@ -91,7 +133,17 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
             }
 
         }
+
+        closeSearchWindow()
+
         return super.onOptionsItemSelected(item)
+    }
+
+    fun closeSearchWindow(){
+        if(searchWindow != null) {
+            searchWindow!!.setIconified(true)
+            searchWindow!!.onActionViewCollapsed()
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -163,5 +215,9 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         }
 
         return true
+    }
+
+    override fun doReturn() {
+        updateView()
     }
 }

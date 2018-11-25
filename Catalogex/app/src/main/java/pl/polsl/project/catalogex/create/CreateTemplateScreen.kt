@@ -6,14 +6,14 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
+import pl.polsl.project.catalogex.`interface`.ElementDetailsInterface
+import pl.polsl.project.catalogex.`interface`.TextInputDialogInterface
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.dialogs.TextInputDialog
-import pl.polsl.project.catalogex.dialogs.TextInputDialogInterface
 import pl.polsl.project.catalogex.display.ShowMainScreen
-import pl.polsl.project.catalogex.listElements.DetailListMode
-import pl.polsl.project.catalogex.listElements.ElementDetailListViewAdapter
-import pl.polsl.project.catalogex.listElements.ElementDetailsInterface
+import pl.polsl.project.catalogex.enums.DetailListMode
+import pl.polsl.project.catalogex.listElements.ElementDetails.ElementDetailListViewAdapter
 
 open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, TextInputDialogInterface {
 
@@ -21,7 +21,7 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
     val inputText = TextInputDialog()
 
     fun updateFeatureList(){
-        val adapter =  ElementDetailListViewAdapter(this, template.list,layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
+        val adapter = ElementDetailListViewAdapter(this, template.list, layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
         featureList.adapter = adapter
 
     }
@@ -83,10 +83,6 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
         }else{
             Toast.makeText(this,getString(R.string.noNameEntered),Toast.LENGTH_SHORT).show()
         }
-    }
-
-    override fun doNegativeClick(tag: String, input: String, position: Int) {
-
     }
 
     override fun onDeleteButton(position: Int){

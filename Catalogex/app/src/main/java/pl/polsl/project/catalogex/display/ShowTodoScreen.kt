@@ -11,11 +11,11 @@ import android.view.MenuItem
 import android.widget.AbsListView
 import android.widget.PopupMenu
 import android.widget.Toast
+import pl.polsl.project.catalogex.`interface`.TodoElementInterface
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.edit.EditElementScreen
-import pl.polsl.project.catalogex.listElements.TodoElementInterface
-import pl.polsl.project.catalogex.listElements.TodoElementListViewAdapter
+import pl.polsl.project.catalogex.listElements.TodoElement.TodoElementListViewAdapter
 import kotlin.collections.ArrayList
 
 
@@ -25,7 +25,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
     var menuPopupPosition: Int = -1
 
     fun updateView(){
-        val adapter = TodoElementListViewAdapter(this, todoList!!.list as ArrayList<Element>,layoutInflater,this)
+        val adapter = TodoElementListViewAdapter(this, todoList!!.list as ArrayList<Element>, layoutInflater, this)
         listTodo.adapter = adapter
     }
 
@@ -107,7 +107,6 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
     }
 
     override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
-        val inflater = menuInflater
         menuInflater.inflate(R.menu.multichoice_menu,p1)
         ShowCategoryListScreen.isSelectionMode = true
         updateView()
@@ -138,7 +137,6 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
                 mode!!.finish()
             }
         }
-
         return true
     }
 

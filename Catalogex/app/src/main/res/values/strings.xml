@@ -42,7 +42,7 @@
     <string name="cancle_button">Anuluj</string>
     <string name="accept_button">Zatwierdź</string>
     <string name="category_title">Kategoria:</string>
-    <string name="rating_label">Ocena:</string>
+    <string name="rating_label">Ocena</string>
     <string name="additional_information">Informacje dodatkowe:</string>
     <string name="delete_element">Usuń element</string>
     <string name="adding_information">Dodawanie informacji</string>
@@ -67,5 +67,9 @@
     <string name="added_element">Dodano element</string>
     <string name="added_category">Dodano kategorię</string>
     <string name="added_template">Dodano wzór</string>
+    <string name="ascending">Rosnące</string>
+    <string name="descending">Malejące</string>
+    <string name="sorting_type">Typ sortowania:</string>
+    <string name="sort_by">Sortuj po:</string>
 
 </resources>

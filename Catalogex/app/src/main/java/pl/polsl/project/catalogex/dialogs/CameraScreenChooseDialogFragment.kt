@@ -14,10 +14,7 @@ import android.view.*
 import kotlinx.android.synthetic.main.dialog_choose_photo.*
 import pl.polsl.project.catalogex.R
 import android.graphics.BitmapFactory
-
-interface ImageTakenInterface{
-    fun imageHasBeenTaken(bitmap: Bitmap)
-}
+import pl.polsl.project.catalogex.`interface`.ImageTakenInterface
 
 class CameraScreenChooseDialogFragment : DialogFragment() {
 

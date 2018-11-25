@@ -1,25 +1,12 @@
-package pl.polsl.project.catalogex.listElements
+package pl.polsl.project.catalogex.listElements.CategoryList
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.CheckBox
-import android.widget.TextView
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.display.ShowCategoryListScreen
-
-
-private class CategoryListViewHolder(view: View?){
-    val tvTitle: TextView
-    val checkBox: CheckBox
-
-    init {
-        this.tvTitle = view?.findViewById(R.id.informationText) as TextView
-        this.checkBox = view?.findViewById(R.id.selectionBox) as CheckBox
-    }
-}
 
 class CategoryListView : BaseAdapter {
 
@@ -77,6 +64,5 @@ class CategoryListView : BaseAdapter {
     override fun getCount(): Int {
         return categoryList.size
     }
-
 
 }

@@ -7,15 +7,9 @@ import android.support.v4.app.DialogFragment
 import android.view.*
 import pl.polsl.project.catalogex.R
 import kotlinx.android.synthetic.main.dialog_text_input.*
-import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager
+import pl.polsl.project.catalogex.`interface`.TextInputDialogInterface
 
-
-interface TextInputDialogInterface {
-    fun doPositiveClick(tag:String, input:String, position: Int)
-    fun doNegativeClick(tag:String, input:String, position: Int)
-}
 
 class TextInputDialog : DialogFragment() {
 
@@ -26,7 +20,6 @@ class TextInputDialog : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_text_input, container)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,13 +35,13 @@ class TextInputDialog : DialogFragment() {
             true
         }
 
-        cancleButtonDialog.setOnClickListener{ view ->
-        softKeyboard(featureValueInput,true)
-            dismiss() }
+        cancleButtonDialog.setOnClickListener{
+            view ->
+            softKeyboard(featureValueInput,true)
+            dismiss()
+        }
 
         acceptButtonDialog.setOnClickListener{ acceptAction()}
-
-
 
     }
 
@@ -83,5 +76,4 @@ class TextInputDialog : DialogFragment() {
             }
         }
     }
-
 }
