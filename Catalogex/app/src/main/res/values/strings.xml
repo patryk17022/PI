@@ -71,5 +71,6 @@
     <string name="descending">Malejące</string>
     <string name="sorting_type">Typ sortowania:</string>
     <string name="sort_by">Sortuj po:</string>
+    <string name="moved">Przenesiono</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package pl.polsl.project.catalogex.data
+import java.io.Serializable
 
-class Feature{
+class Feature: Serializable {
     var id: Int
     var title: String
     var detail: String

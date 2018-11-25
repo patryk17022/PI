@@ -13,17 +13,17 @@ import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.dialogs.TextInputDialog
 import pl.polsl.project.catalogex.display.ShowMainScreen
 import pl.polsl.project.catalogex.enums.DetailListMode
-import pl.polsl.project.catalogex.listElements.ElementDetails.ElementDetailListViewAdapter
+import pl.polsl.project.catalogex.listElements.elementDetails.ElementDetailListViewAdapter
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, TextInputDialogInterface {
 
-    var template = Element()
-    val inputText = TextInputDialog()
+    protected var template = Element()
+    protected val inputText = TextInputDialog()
 
     fun updateFeatureList(){
-        val adapter = ElementDetailListViewAdapter(this, template.list, layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
+        val adapter = ElementDetailListViewAdapter(template.list, layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
         featureList.adapter = adapter
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -38,8 +38,8 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
         editNameElement.visibility = View.INVISIBLE
         ratingBarElement.setIsIndicator(true)
 
-        inputText.labelText = getString(R.string.name_label)
-        inputText.activity = this
+        inputText.setText(getString(R.string.name_label))
+        inputText.setActivity(this)
 
         updateFeatureList()
 
@@ -58,27 +58,32 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
 
     override fun doPositiveClick(tag: String, input: String, position: Int) {
         if(!input.isEmpty()) {
-            if (tag == "addFeature") {
-                var id = 0
+            when (tag) {
+                "addFeature" -> {
+                    var id = 0
 
-                if(template.list.size>0){
-                    id = template.list.get(template.list.size-1).id!! + 1
+                    if(template.list.size>0){
+                        id = template.list.get(template.list.size-1).id + 1
+                    }
+
+                    var feature = Feature(id, input, getString(R.string.example_Text))
+
+                    template.list.add(feature)
+                    updateFeatureList()
+
                 }
 
-                var feature = Feature(id, input, getString(R.string.example_Text))
+                "editFeature" -> {
+                    template.list.get(position).title = input
+                }
 
-                template.list.add(feature)
-                updateFeatureList()
-
-            } else if (tag == "editFeature") {
-                template!!.list.get(position).title = input
-
-            } else if (tag == "addTemplate") {
-                template.title = input
-                ShowMainScreen.listOfTemplate.add(template)
-                setResult(RESULT_OK,null)
-                Toast.makeText(this, getString(R.string.added_template) + ": " + template.title, Toast.LENGTH_LONG).show()
-                finish()
+                "addTemplate" -> {
+                    template.title = input
+                    ShowMainScreen.listOfTemplate.add(template)
+                    setResult(RESULT_OK,null)
+                    Toast.makeText(this, getString(R.string.added_template) + ": " + template.title, Toast.LENGTH_LONG).show()
+                    finish()
+                }
             }
         }else{
             Toast.makeText(this,getString(R.string.noNameEntered),Toast.LENGTH_SHORT).show()
@@ -91,7 +96,7 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
     }
 
     override fun onEditButton(position: Int){
-        inputText.position = position
+        inputText.setPosition(position)
         inputText.show(supportFragmentManager, "editFeature")
     }
 }

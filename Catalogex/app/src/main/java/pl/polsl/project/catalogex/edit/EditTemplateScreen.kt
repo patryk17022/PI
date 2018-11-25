@@ -7,10 +7,10 @@ import pl.polsl.project.catalogex.create.CreateTemplateScreen
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.display.ShowMainScreen
 
-
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class  EditTemplateScreen : CreateTemplateScreen() {
 
-    var oldElement :Element? = null
+    private var oldElement :Element? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +22,8 @@ class  EditTemplateScreen : CreateTemplateScreen() {
 
         ratingBarElement.setIsIndicator(true)
 
-        inputText.labelText = getString(R.string.name_label)
-        inputText.activity = this
+        inputText.setText(getString(R.string.name_label))
+        inputText.setActivity(this)
 
         updateFeatureList()
 
@@ -39,19 +39,19 @@ class  EditTemplateScreen : CreateTemplateScreen() {
         }
 
         editNameElement.setOnClickListener{ view ->
-            inputText.labelText = getString(R.string.name_label)
+            inputText.setText(getString(R.string.name_label))
             inputText.show(supportFragmentManager, "textNameInput")
         }
     }
 
     override fun doPositiveClick(tag: String, input: String, position: Int) {
         super.doPositiveClick(tag, input, position)
+
         if(tag== "textNameInput") {
-            template!!.title = input
+            template.title = input
         }
 
     }
-
 }
 
 

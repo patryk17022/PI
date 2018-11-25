@@ -20,34 +20,33 @@ import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.dialogs.SortDialog
 import pl.polsl.project.catalogex.edit.EditCategoryScreen
-import pl.polsl.project.catalogex.listElements.CategoryList.CategoryListView
+import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
 
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
-    var listOfCategory : Category? = null
-    var displayedList: ArrayList<ListItem> = ArrayList()
-    var menuPopupPosition: Int = -1
-    var searchWindow : SearchView? = null
-    val sortDialog = SortDialog()
-
-    companion object {
-        var isSelectionMode: Boolean = false
-    }
+    private var listOfCategory : Category? = null
+    private var displayedList: ArrayList<ListItem> = ArrayList()
+    private var menuPopupPosition: Int = -1
+    private var searchWindow : SearchView? = null
+    private val sortDialog = SortDialog()
 
     fun updateView(text: String = ""){
 
         displayedList.clear()
         for(item in listOfCategory!!.list){
 
-            if(text.isEmpty()) displayedList.add(item) else
-            if(item.title.toUpperCase().contains(text.toUpperCase()))
+            if(text.isEmpty())
                 displayedList.add(item)
+            else
+                if(item.title.toUpperCase().contains(text.toUpperCase()))
+                    displayedList.add(item)
         }
 
         sortDialog.sortTable(displayedList)
 
-        val adapter = CategoryListView(layoutInflater, displayedList)
+        val adapter = CategoryListViewAdapter(layoutInflater, displayedList)
         listKategoryScreen.adapter = adapter
     }
 
@@ -69,9 +68,10 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         }
 
         listKategoryScreen.setOnItemClickListener{ adapterView, view, i, l ->
-            var intent: Intent? = null
+            var intent: Intent?
 
-            var lelem = listOfCategory!!.list.get(listOfCategory!!.list.indexOf(displayedList.get(i)))
+            var lelem = listOfCategory!!.list.get(listOfCategory!!.list.indexOf(displayedList[i]))
+
             if((lelem as Category).template == null)
             {
                 intent = Intent(this, ShowCategoryListScreen::class.java)
@@ -85,8 +85,8 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
         listKategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
             val popup = PopupMenu(applicationContext, view)
-            popup.menuInflater.inflate(R.menu.element_menu_options, popup.menu)
-            menuPopupPosition = listOfCategory!!.list.indexOf(displayedList.get(i))
+            popup.menuInflater.inflate(R.menu.menu_options, popup.menu)
+            menuPopupPosition = listOfCategory!!.list.indexOf(displayedList[i])
             popup.setOnMenuItemClickListener(this)
             popup.show()
             true
@@ -97,23 +97,24 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.element_menu_lists, menu)
-        inflater.inflate(R.menu.element_menu_search, menu)
+
+        menuInflater.inflate(R.menu.menu_category, menu)
+        menuInflater.inflate(R.menu.menu_search, menu)
 
         searchWindow = menu.findItem(R.id.action_search).actionView as SearchView
         searchWindow!!.setOnQueryTextListener(
-                object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(p0: String?): Boolean {
-                        return true
-                    }
 
-                    override fun onQueryTextChange(enteredText: String): Boolean {
-                        updateView(enteredText)
-                        return true
-                    }
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return true
+                }
 
-                })
+                override fun onQueryTextChange(enteredText: String): Boolean {
+                    updateView(enteredText)
+                    return true
+                }
+            }
+        )
 
         return true
     }
@@ -142,8 +143,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             }
 
             R.id.sort ->{
-                sortDialog.rating = true
-                sortDialog.activity = this
+                sortDialog.setActivity(this)
                 sortDialog.show(supportFragmentManager, "sort")
             }
 
@@ -159,6 +159,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
+
         var categ = listOfCategory!!.list.get(menuPopupPosition)
         when (item.itemId) {
 
@@ -180,54 +181,58 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     }
 
     fun deleteCategory(category: Category){
-
         deleteFromTodo(category)
         listOfCategory!!.list.remove(category)
     }
 
     fun deleteFromTodo(category:Category){
-        if(category.template == null){
+
+        if(category.template == null)
+        {
             for(i in 0 until category.list.size)
             {
                 deleteCategory(category.list.get(i) as Category)
             }
-        }else {
+        }
+        else
+        {
             var array = ShowMainScreen.todoList.list
             var todel = ArrayList<ListItem>()
+
             for (elem in array) {
                 if ((elem as Element).category == category) {
                     todel.add(elem)
                 }
             }
+
             array.removeAll(todel)
         }
     }
 
-    override fun onItemCheckedStateChanged(p0: ActionMode?, p1: Int, p2: Long, p3: Boolean) {
-
-    }
+    override fun onItemCheckedStateChanged(p0: ActionMode?, p1: Int, p2: Long, p3: Boolean) {}
 
     override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
-        menuInflater.inflate(R.menu.multichoice_menu,p1)
-        isSelectionMode = true
+        menuInflater.inflate(R.menu.multichoice_menu_delete,p1)
+        ShowMainScreen.isSelectionMode = true
         updateView()
         return true
     }
 
-    override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean {
-        return true
-    }
+    override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean { return true }
 
     override fun onDestroyActionMode(p0: ActionMode?) {
-        isSelectionMode = false
+        ShowMainScreen.isSelectionMode = false
         updateView()
-        (listKategoryScreen.adapter as CategoryListView).selectedList.clear()
+        (listKategoryScreen.adapter as CategoryListViewAdapter).getSelectedList().clear()
     }
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+
         when(item!!.itemId){
+
             R.id.action_delete ->{
-                var selected = (listKategoryScreen.adapter as CategoryListView).selectedList
+
+                var selected = (listKategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
                 Toast.makeText(this, getString(R.string.deleted_category_list) +": " + selected.size.toString(),Toast.LENGTH_LONG) .show()
 
                 for(i in 0 until selected.size){

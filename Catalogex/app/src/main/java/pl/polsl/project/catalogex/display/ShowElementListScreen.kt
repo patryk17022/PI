@@ -20,17 +20,17 @@ import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.dialogs.SortDialog
 import pl.polsl.project.catalogex.edit.EditElementScreen
-import pl.polsl.project.catalogex.listElements.CategoryList.CategoryListView
+import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
 
-
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
-    var listOfElements : Category? = null
-    var displayedList: ArrayList<ListItem> = ArrayList()
-    var menuPopupPosition: Int = -1
-    var searchWindow : SearchView? = null
-    val sortDialog = SortDialog()
-
+    private var listOfElements : Category? = null
+    private var displayedList: ArrayList<ListItem> = ArrayList()
+    private var menuPopupPosition: Int = -1
+    private var searchWindow : SearchView? = null
+    private val sortDialog = SortDialog()
+    private var multichoiceDelete = false
 
     fun updateView(text: String = ""){
 
@@ -44,7 +44,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
 
         sortDialog.sortTable(displayedList)
 
-        val adapter = CategoryListView(layoutInflater, displayedList)
+        val adapter = CategoryListViewAdapter(layoutInflater, displayedList)
         listKategoryScreen.adapter = adapter
     }
 
@@ -60,7 +60,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
 
         listKategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
             val popup = PopupMenu(applicationContext, view)
-            popup.menuInflater.inflate(R.menu.element_menu_element_popup, popup.menu)
+            popup.menuInflater.inflate(R.menu.menu_element_popup, popup.menu)
             menuPopupPosition = listOfElements!!.list.indexOf(displayedList.get(i))
             popup.setOnMenuItemClickListener(this)
             popup.show()
@@ -84,9 +84,10 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
         val inflater = menuInflater
-        inflater.inflate(R.menu.element_menu_lists, menu)
-        inflater.inflate(R.menu.element_menu_search, menu)
+        inflater.inflate(R.menu.menu_element, menu)
+        inflater.inflate(R.menu.menu_search, menu)
 
         searchWindow = menu.findItem(R.id.action_search).actionView as SearchView
         searchWindow!!.setOnQueryTextListener(
@@ -94,14 +95,12 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
                     override fun onQueryTextSubmit(p0: String?): Boolean {
                         return true
                     }
-
                     override fun onQueryTextChange(enteredText: String): Boolean {
                         updateView(enteredText)
                         return true
                     }
-
-                })
-
+                }
+        )
         return true
     }
 
@@ -123,12 +122,18 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
             }
 
             R.id.sort ->{
-                sortDialog.rating = true
-                sortDialog.activity = this
+                sortDialog.setElement(listOfElements!!.template)
+                sortDialog.setActivity(this)
                 sortDialog.show(supportFragmentManager, "sort")
             }
 
             R.id.delete ->{
+                multichoiceDelete = true
+                listKategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
+            }
+
+            R.id.addToDoList ->{
+                multichoiceDelete = false
                 listKategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
 
@@ -147,6 +152,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
+
         var elem = listOfElements!!.list.get(menuPopupPosition) as Element
         when (item.itemId) {
 
@@ -158,62 +164,79 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
             }
 
             R.id.delete -> {
-                Toast.makeText(this, getString(R.string.deleted_element) +": " + elem.title,Toast.LENGTH_LONG) .show()
                 deleteElement(elem)
+                Toast.makeText(this, getString(R.string.deleted_element) +": " + elem.title,Toast.LENGTH_LONG) .show()
             }
 
             R.id.addToDoList -> {
-                listOfElements!!.list.remove(elem)
-                ShowMainScreen.todoList.list.add(elem)
-                elem.todo = true
+                moveToTODO(elem)
+                Toast.makeText(this, getString(R.string.moved) +": " + elem.title, Toast.LENGTH_LONG) .show()
             }
 
         }
         updateView()
         return true
+    }
+
+    fun moveToTODO(elem:Element){
+        listOfElements!!.list.remove(elem)
+        ShowMainScreen.todoList.list.add(elem)
+        elem.todo = true
     }
 
     fun deleteElement(element: Element){
         listOfElements!!.list.remove(element)
     }
 
-    override fun onItemCheckedStateChanged(p0: ActionMode?, p1: Int, p2: Long, p3: Boolean) {
-
-    }
+    override fun onItemCheckedStateChanged(p0: ActionMode?, p1: Int, p2: Long, p3: Boolean) {}
 
     override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
-        val inflater = menuInflater
-        menuInflater.inflate(R.menu.multichoice_menu,p1)
-        ShowCategoryListScreen.isSelectionMode = true
+
+        if(multichoiceDelete) {
+            menuInflater.inflate(R.menu.multichoice_menu_delete, p1)
+        }else {
+            menuInflater.inflate(R.menu.multichoice_menu_accept, p1)
+        }
+
+        ShowMainScreen.isSelectionMode = true
         updateView()
+
         return true
     }
 
-    override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean {
-        return true
-    }
+    override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean { return true }
 
     override fun onDestroyActionMode(p0: ActionMode?) {
-        ShowCategoryListScreen.isSelectionMode = false
+        ShowMainScreen.isSelectionMode = false
         updateView()
-        (listKategoryScreen.adapter as CategoryListView).selectedList.clear()
+        (listKategoryScreen.adapter as CategoryListViewAdapter).getSelectedList().clear()
     }
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+
+        var selected = (listKategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
+
         when(item!!.itemId){
+
             R.id.action_delete ->{
-                var selected = (listKategoryScreen.adapter as CategoryListView).selectedList
                 Toast.makeText(this, getString(R.string.deleted_element_list) +": " + selected.size.toString(), Toast.LENGTH_LONG) .show()
 
                 for(i in 0 until selected.size){
                     deleteElement(selected.get(i) as Element)
                 }
+            }
 
-                selected.clear()
-                mode!!.finish()
+            R.id.action_accept ->{
+                Toast.makeText(this, getString(R.string.moved) +": " + selected.size.toString(), Toast.LENGTH_LONG) .show()
+
+                for(i in 0 until selected.size){
+                    moveToTODO(selected.get(i) as Element)
+                }
             }
         }
 
+        selected.clear()
+        mode!!.finish()
         return true
     }
 

@@ -1,4 +1,4 @@
-package pl.polsl.project.catalogex.listElements.CategoryList
+package pl.polsl.project.catalogex.listElements.categoryList
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,13 +6,17 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.ListItem
-import pl.polsl.project.catalogex.display.ShowCategoryListScreen
+import pl.polsl.project.catalogex.display.ShowMainScreen
 
-class CategoryListView : BaseAdapter {
+class CategoryListViewAdapter : BaseAdapter {
 
     private var categoryList : ArrayList<ListItem>
     private var layoutInflater : LayoutInflater
-    var selectedList: ArrayList<ListItem> = ArrayList()
+    private var selectedList: ArrayList<ListItem> = ArrayList()
+
+    fun getSelectedList(): ArrayList<ListItem>{
+        return selectedList
+    }
 
     constructor(layoutInflater : LayoutInflater, categoryList: ArrayList<ListItem>) : super() {
         this.categoryList = categoryList
@@ -25,7 +29,7 @@ class CategoryListView : BaseAdapter {
         val vh: CategoryListViewHolder
 
         if (convertView == null) {
-            view = layoutInflater?.inflate(R.layout.element_checkbox_list, parent, false)
+            view = layoutInflater.inflate(R.layout.element_checkbox_list, parent, false)
             vh = CategoryListViewHolder(view)
             view?.tag = vh
 
@@ -36,20 +40,19 @@ class CategoryListView : BaseAdapter {
 
         vh.tvTitle.text = categoryList[position].title
 
-        if(ShowCategoryListScreen.isSelectionMode){
+        if(ShowMainScreen.isSelectionMode)
             vh.checkBox.visibility = View.VISIBLE
-        }else{
+        else
             vh.checkBox.visibility = View.GONE
-        }
 
-        vh.checkBox.setOnCheckedChangeListener { compoundButton, b ->
-            if(b){
-                selectedList.add(categoryList.get(position))
-            } else{
-                selectedList.remove(categoryList.get(position))
-            }
-        }
+        vh.checkBox.setOnCheckedChangeListener {
+            _, b ->
+            if(b)
+                selectedList.add(categoryList[position])
+            else
+                selectedList.remove(categoryList[position])
 
+        }
         return view
     }
 
@@ -64,5 +67,4 @@ class CategoryListView : BaseAdapter {
     override fun getCount(): Int {
         return categoryList.size
     }
-
 }

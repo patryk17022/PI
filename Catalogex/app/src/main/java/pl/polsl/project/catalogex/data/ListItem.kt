@@ -1,6 +1,8 @@
 package pl.polsl.project.catalogex.data
 
-open class ListItem {
+import java.io.Serializable
+
+open class ListItem: Serializable {
     var title: String
 
     constructor(title: String) {

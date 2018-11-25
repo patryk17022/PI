@@ -1,17 +1,18 @@
 package pl.polsl.project.catalogex.data
 
 import android.graphics.Bitmap
+import java.io.Serializable
 
-class Element:ListItem{
+class Element:ListItem, Serializable {
     var list :ArrayList<Feature> = arrayListOf()
-    var category : Category? = null
+    var category : Category = Category()
     var indicator: Int = 0
     var image : Bitmap? = null
     var todo : Boolean = false
 
     constructor() : super("")
 
-    constructor(title: String, category: Category?, indicator:Int) : super(title)
+    constructor(title: String, category: Category, indicator:Int) : super(title)
     {
         this.title = title
         this.category = category
@@ -39,13 +40,13 @@ class Element:ListItem{
         return element
     }
 
-     override fun insertValuesFrom(lItem: ListItem){
-         var elem = lItem as Element
-         elem.title = title
-         elem.category = category
-         elem.indicator = indicator
-         elem.list = list
-         elem.image = image
-         elem.todo = todo
+     override fun insertValuesFrom(elem: ListItem){
+         var listElem = elem as Element
+         listElem.title = title
+         listElem.category = category
+         listElem.indicator = indicator
+         listElem.list = list
+         listElem.image = image
+         listElem.todo = todo
     }
 }

@@ -10,6 +10,6 @@
         android:id="@+id/delete"
         android:title="@string/delete" />
     <item
-        android:id="@+id/addToDoList"
+        android:id="@+id/fromToDo"
         android:title="@string/back_to_category" />
 </menu>

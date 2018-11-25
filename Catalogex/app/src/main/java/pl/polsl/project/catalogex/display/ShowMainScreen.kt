@@ -12,16 +12,13 @@ import pl.polsl.project.catalogex.data.ListItem
 
 /*TODO:
 filtrowanie
-to do -> sortowanie (do tego potrzeba zrobic displaylist)
 przechowywanie danych
 Dodac zarzadzanie templatami (edit template nie testowane)
-dodaj przenies do to do dla elementu i dla wielu elementow
-powiekszanie zdjęcia (moze bys spoko)
-zapisywanie stanu sortowania?
 
 poprawic diagram
 */
 
+@Suppress("UNUSED_PARAMETER")
 class ShowMainScreen : AppCompatActivity() {
 
     companion object {
@@ -31,6 +28,8 @@ class ShowMainScreen : AppCompatActivity() {
         var listOfTemplate : ArrayList<Element> = arrayListOf()
 
         var actualElement : ListItem? = mainCategory
+
+        var isSelectionMode: Boolean = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

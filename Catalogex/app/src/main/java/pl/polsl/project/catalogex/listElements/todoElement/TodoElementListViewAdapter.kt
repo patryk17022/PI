@@ -1,4 +1,4 @@
-package pl.polsl.project.catalogex.listElements.TodoElement
+package pl.polsl.project.catalogex.listElements.todoElement
 
 import android.app.Activity
 import android.content.Context
@@ -11,17 +11,21 @@ import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.`interface`.TodoElementInterface
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
-import pl.polsl.project.catalogex.display.ShowCategoryListScreen
 import pl.polsl.project.catalogex.display.ShowElementInformationScreen
 import pl.polsl.project.catalogex.display.ShowMainScreen
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class  TodoElementListViewAdapter : BaseAdapter {
 
     private var categoryList = ArrayList<Element>()
     private var context: Context? = null
     private var layoutInflater : LayoutInflater? = null
     private var activity : Activity? = null
-    var selectedList: ArrayList<ListItem> = ArrayList()
+    private var selectedList: ArrayList<ListItem> = ArrayList()
+
+    fun getSelectedList():ArrayList<ListItem>{
+        return selectedList
+    }
 
     constructor(context: Context, categoryList: ArrayList<Element>, layoutInflater: LayoutInflater, activity: Activity) : super() {
         this.categoryList = categoryList
@@ -47,22 +51,21 @@ class  TodoElementListViewAdapter : BaseAdapter {
 
         vh.tvTitle.text = categoryList[position].title
 
-        vh.imButton.setOnClickListener { view ->
-            val popup = PopupMenu(context, view)
-            popup.menuInflater.inflate(R.menu.element_menu_todo_popup, popup.menu)
+        vh.imButton.setOnClickListener { viewL ->
+            val popup = PopupMenu(context, viewL)
+            popup.menuInflater.inflate(R.menu.menu_todo_popup, popup.menu)
             (activity as TodoElementInterface).setListElement(position)
             popup.setOnMenuItemClickListener(activity as PopupMenu.OnMenuItemClickListener)
             popup.show()
-            true
         }
 
-        vh.button.setOnClickListener{ view ->
+        vh.button.setOnClickListener{ viewL ->
             val intent = Intent(context, ShowElementInformationScreen::class.java)
-            ShowMainScreen.actualElement = categoryList.get(position)
+            ShowMainScreen.actualElement = categoryList[position]
             activity!!.startActivity(intent)
         }
 
-        if(ShowCategoryListScreen.isSelectionMode){
+        if(ShowMainScreen.isSelectionMode){
             vh.check.visibility = View.VISIBLE
             vh.imButton.visibility = View.GONE
         }else{
@@ -70,12 +73,14 @@ class  TodoElementListViewAdapter : BaseAdapter {
             vh.imButton.visibility = View.VISIBLE
         }
 
-        vh.check.setOnCheckedChangeListener { compoundButton, b ->
-            if(b){
-                selectedList.add(categoryList.get(position))
-            } else{
-                selectedList.remove(categoryList.get(position))
-            }
+        vh.check.setOnCheckedChangeListener {
+            _, b ->
+
+            if(b)
+                selectedList.add(categoryList[position])
+             else
+                selectedList.remove(categoryList[position])
+
         }
 
         return view

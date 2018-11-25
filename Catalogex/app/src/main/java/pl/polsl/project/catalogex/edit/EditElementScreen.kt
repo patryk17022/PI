@@ -6,7 +6,7 @@ import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.create.CreateElementScreen
 import pl.polsl.project.catalogex.data.Element
 
-
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class EditElementScreen : CreateElementScreen() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,6 @@ class EditElementScreen : CreateElementScreen() {
 
         updateView()
         inputText.dismiss()
-
     }
 }
 

@@ -8,12 +8,13 @@ import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.create.CreateCategoryScreen
 import pl.polsl.project.catalogex.data.Category
 
-
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class EditCategoryScreen : CreateCategoryScreen() {
 
-    var category: Category? = null
+    private var category: Category? = null
 
     fun updateView(){
+
         nameCategoryText.setText(category!!.title)
 
         categoryOptionRadio.isEnabled = false
@@ -29,7 +30,6 @@ class EditCategoryScreen : CreateCategoryScreen() {
             templateSpinner.setSelection(index)
 
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,17 +38,17 @@ class EditCategoryScreen : CreateCategoryScreen() {
         var index = intent.getIntExtra("CATEGORY_NUMBER",-1)
         category = parentCategory!!.list.get(index) as Category
 
-        acceptButton.setOnClickListener{ view ->
-            if(!nameCategoryText.text.toString().isEmpty()) {
+        acceptButton.setOnClickListener{
+            viewL ->
 
+            if(!nameCategoryText.text.toString().isEmpty()) {
                 category!!.title = nameCategoryText.text.toString()
                 finish()
-
             }else{
                 Toast.makeText(this,getString(R.string.noCategoryName), Toast.LENGTH_SHORT).show()
             }
-        }
 
+        }
         updateView()
     }
 }

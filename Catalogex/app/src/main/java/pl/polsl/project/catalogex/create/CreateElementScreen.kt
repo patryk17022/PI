@@ -18,16 +18,17 @@ import pl.polsl.project.catalogex.dialogs.CameraScreenChooseDialogFragment
 import pl.polsl.project.catalogex.dialogs.TextInputDialog
 import pl.polsl.project.catalogex.display.ShowMainScreen
 import pl.polsl.project.catalogex.enums.DetailListMode
-import pl.polsl.project.catalogex.listElements.ElementDetails.ElementDetailListViewAdapter
+import pl.polsl.project.catalogex.listElements.elementDetails.ElementDetailListViewAdapter
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, ElementDetailsInterface, ImageTakenInterface {
 
-    var category: Category? = null
-    var element: Element? = null
-    val inputText = TextInputDialog()
+    protected var category: Category? = null
+    protected var element: Element? = null
+    protected val inputText = TextInputDialog()
 
     open fun updateView(){
-        val adapter = ElementDetailListViewAdapter(this, element!!.list, layoutInflater, this, DetailListMode.ADD_BUTTON)
+        val adapter = ElementDetailListViewAdapter(element!!.list, layoutInflater, this, DetailListMode.ADD_BUTTON)
         featureList.adapter = adapter
         elementText.text = element!!.title
         categoryText.text = category!!.title
@@ -49,19 +50,14 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
 
         if(category!! != ShowMainScreen.todoList) {
             element = category!!.template!!.copy() as Element
-            element!!.category = category
+            element!!.category = category!!
         } else{
             element = Element()
         }
 
-        inputText.activity = this
+        inputText.setActivity(this)
 
         updateView()
-
-        elementImage.setOnClickListener{onImageScelect()}
-        editNameElement.setOnClickListener{editNameButton()}
-        cancleButtonTemplate.setOnClickListener{ view -> finish()}
-
         editNameButton()
 
         acceptButtonTemplate.setOnClickListener { view ->
@@ -81,6 +77,10 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
             elementImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
             deletePhotoButton.visibility = View.INVISIBLE
         }
+
+        elementImage.setOnClickListener{onImageScelect()}
+        editNameElement.setOnClickListener{editNameButton()}
+        cancleButtonTemplate.setOnClickListener{view -> finish()}
     }
 
     override fun imageHasBeenTaken(bitmap: Bitmap) {
@@ -92,19 +92,18 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
 
     fun onImageScelect(){
         val choosePhoto = CameraScreenChooseDialogFragment()
-        choosePhoto.packageManager = packageManager
-        choosePhoto.activity= this
+        choosePhoto.setArguments(this,packageManager)
         choosePhoto.show(supportFragmentManager, "photoGallery")
     }
 
     fun editNameButton(){
-        inputText.labelText = getString(R.string.name_label)
+        inputText.setText(getString(R.string.name_label))
         inputText.show(supportFragmentManager, "textNameInput")
     }
 
     override fun onAddButton(position: Int){
-        inputText.labelText = element!!.list.get(position).title
-        inputText.position=position
+        inputText.setText(element!!.list.get(position).title)
+        inputText.setPosition(position)
         inputText.show(supportFragmentManager, "textInput")
 
     }

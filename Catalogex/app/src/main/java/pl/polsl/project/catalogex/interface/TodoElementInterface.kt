@@ -1,5 +1,5 @@
 package pl.polsl.project.catalogex.`interface`
 
 interface TodoElementInterface{
-    fun setListElement(postion:Int)
+    fun setListElement(position:Int)
 }

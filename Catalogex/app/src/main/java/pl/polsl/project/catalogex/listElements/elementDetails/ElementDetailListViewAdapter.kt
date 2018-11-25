@@ -1,7 +1,6 @@
-package pl.polsl.project.catalogex.listElements.ElementDetails
+package pl.polsl.project.catalogex.listElements.elementDetails
 
 import android.app.Activity
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,21 +10,12 @@ import pl.polsl.project.catalogex.`interface`.ElementDetailsInterface
 import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.enums.DetailListMode
 
-class  ElementDetailListViewAdapter : BaseAdapter {
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
+class  ElementDetailListViewAdapter(private var detailList: ArrayList<Feature>, layoutInflater: LayoutInflater, activity: Activity, mode: DetailListMode) : BaseAdapter() {
 
-    private var detailList = ArrayList<Feature>()
-    private var context: Context? = null
-    private var layoutInflater : LayoutInflater? = null
-    private var mode : DetailListMode? = null
-    private var activity :Activity? = null
-
-    constructor(context: Context, detailList: ArrayList<Feature>, layoutInflater: LayoutInflater,activity :Activity, mode: DetailListMode) : super() {
-        this.detailList = detailList
-        this.context = context
-        this.layoutInflater = layoutInflater
-        this.mode = mode
-        this.activity = activity
-    }
+    private var layoutInflater : LayoutInflater? = layoutInflater
+    private var mode : DetailListMode? = mode
+    private var activity :Activity? = activity
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
@@ -70,20 +60,16 @@ class  ElementDetailListViewAdapter : BaseAdapter {
             }
         }
 
-        vh.imEdit.setOnClickListener { view ->
+        vh.imEdit.setOnClickListener { viewL ->
             (activity as ElementDetailsInterface).onEditButton(position)
-            true
         }
 
-        vh.imDelete.setOnClickListener { view ->
+        vh.imDelete.setOnClickListener { viewL ->
             (activity as ElementDetailsInterface).onDeleteButton(position)
-            true
         }
 
-        vh.imAdd.setOnClickListener { view ->
+        vh.imAdd.setOnClickListener { viewL ->
             (activity as ElementDetailsInterface).onAddButton(position)
-
-            true
         }
 
         return view

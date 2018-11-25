@@ -12,11 +12,21 @@ import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.enums.SortMode
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class SortDialog : DialogFragment() {
 
-    var mode: SortMode = SortMode.NAME_ASC
-    var rating : Boolean = false
-    var activity: Activity? = null
+    private var mode: SortMode = SortMode.NAME_ASC
+    private var element : Element? = null
+    private var activity: Activity? = null
+    private var whichFeatureSort: Int = 0
+
+    fun setActivity(activity: Activity){
+        this.activity=activity
+    }
+
+    fun setElement(element : Element?){
+        this.element=element
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -29,8 +39,14 @@ class SortDialog : DialogFragment() {
         val spinnerTemplate = ArrayList<String>()
         spinnerTemplate.add(getString(R.string.name))
 
-        if(rating)
+        if(element != null) {
+
             spinnerTemplate.add(getString(R.string.rating_label))
+
+            for (i in element!!.list)
+                spinnerTemplate.add(i.title)
+
+        }
 
         val dataAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, spinnerTemplate)
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -39,20 +55,30 @@ class SortDialog : DialogFragment() {
         sortBy.setSelection(0)
 
         buttonAccept.setOnClickListener {
-            view ->
+            viewL ->
 
             var elem = 0
+            elem+= sortBy.selectedItemPosition
+
+            whichFeatureSort = sortBy.selectedItemPosition - 2
+
+            if(sortBy.selectedItemPosition >= 2)
+                elem=4
+
             if(sortTypeDesc.isChecked)
                 elem+= 2
 
-            elem+= sortBy.selectedItemPosition
-
-            mode = SortMode.values().get(elem)
+            mode = SortMode.values()[elem]
             (activity as ReturnDialogInterface).doReturn()
+
             dismiss()
 
         }
     }
+
+    fun selectorTitle(p: ListItem): String = p.title
+    fun selectorRating(p: Element): Int = p.indicator
+    fun selectorFeature(p: Element): String = p.list.get(whichFeatureSort).detail
 
     fun sortTable(array : ArrayList<ListItem>){
 
@@ -72,9 +98,15 @@ class SortDialog : DialogFragment() {
             SortMode.RATING_DESC->{
                 array.sortByDescending({selectorRating(it as Element)})
             }
+
+            SortMode.FEATURE_ASC->{
+                array.sortBy({selectorFeature(it as Element)})
+            }
+
+            SortMode.FEATURE_DESC->{
+                array.sortByDescending({selectorFeature(it as Element)})
+            }
+            else -> {}
         }
     }
-
-    fun selectorTitle(p: ListItem): String = p.title
-    fun selectorRating(p: Element): Int = p.indicator
 }

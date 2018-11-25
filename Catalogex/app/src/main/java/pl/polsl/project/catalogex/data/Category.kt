@@ -1,6 +1,8 @@
 package pl.polsl.project.catalogex.data
 
-class Category:ListItem{
+import java.io.Serializable
+
+class Category:ListItem, Serializable{
     var list :ArrayList<ListItem> = arrayListOf()
     var template: Element? = null
 
@@ -22,10 +24,10 @@ class Category:ListItem{
         return categ
     }
 
-    override fun insertValuesFrom(lItem: ListItem){
-        var elem = lItem as Category
-        elem.title = title
-        elem.list = list
-        elem.template = template
+    override fun insertValuesFrom(elem: ListItem){
+        val listElem = elem as Category
+        listElem.title = title
+        listElem.list = list
+        listElem.template = template
     }
 }

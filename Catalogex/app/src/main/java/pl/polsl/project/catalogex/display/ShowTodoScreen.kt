@@ -11,21 +11,38 @@ import android.view.MenuItem
 import android.widget.AbsListView
 import android.widget.PopupMenu
 import android.widget.Toast
+import kotlinx.android.synthetic.main.content_category_element_list_screen.*
+import pl.polsl.project.catalogex.`interface`.ReturnDialogInterface
 import pl.polsl.project.catalogex.`interface`.TodoElementInterface
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.data.ListItem
+import pl.polsl.project.catalogex.dialogs.SortDialog
 import pl.polsl.project.catalogex.edit.EditElementScreen
-import pl.polsl.project.catalogex.listElements.TodoElement.TodoElementListViewAdapter
+import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
+import pl.polsl.project.catalogex.listElements.todoElement.TodoElementListViewAdapter
 import kotlin.collections.ArrayList
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
+class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
-class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener {
+    private var todoList: Category? = null
+    private var displayedList: ArrayList<Element> = ArrayList()
+    private var menuPopupPosition: Int = -1
+    private val sortDialog = SortDialog()
+    private var multichoiceDelete = false
 
-    var todoList: Category? = null
-    var menuPopupPosition: Int = -1
+    @Suppress("UNCHECKED_CAST")
+    private fun updateView(){
 
-    fun updateView(){
-        val adapter = TodoElementListViewAdapter(this, todoList!!.list as ArrayList<Element>, layoutInflater, this)
+        displayedList.clear()
+        for(item in todoList!!.list){
+            displayedList.add(item as Element)
+        }
+
+        sortDialog.sortTable(displayedList as ArrayList<ListItem>)
+
+        val adapter = TodoElementListViewAdapter(this, displayedList, layoutInflater, this)
         listTodo.adapter = adapter
     }
 
@@ -41,13 +58,13 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.element_menu_lists, menu)
+
+        menuInflater.inflate(R.menu.menu_todo, menu)
         return true
     }
 
-    override fun setListElement(postion: Int) {
-        menuPopupPosition = postion
+    override fun setListElement(position: Int) {
+        menuPopupPosition = todoList!!.list.indexOf(displayedList.get(position))
     }
 
     override fun onResume() {
@@ -57,13 +74,25 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
 
             android.R.id.home -> {
                 finish()
             }
 
+            R.id.sort ->{
+                sortDialog.setActivity( this )
+                sortDialog.show(supportFragmentManager, "sort")
+            }
+
             R.id.delete ->{
+                multichoiceDelete = true
+                listTodo.startActionMode(this as AbsListView.MultiChoiceModeListener)
+            }
+
+            R.id.fromToDo ->{
+                multichoiceDelete = false
                 listTodo.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
 
@@ -72,7 +101,9 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
+
         var elem = todoList!!.list.get(menuPopupPosition) as Element
+
         when (item.itemId) {
 
             R.id.edit -> {
@@ -87,57 +118,82 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
                 deleteElement(elem)
             }
 
-            R.id.addToDoList -> {
-                todoList!!.list.remove(elem)
-                elem.category!!.list.add(elem)
-                elem.todo = false
+            R.id.fromToDo -> {
+                moveFromTODO(elem)
+                Toast.makeText(this, getString(R.string.moved) +": " + elem.title, Toast.LENGTH_LONG) .show()
             }
 
         }
         updateView()
         return true
+    }
+
+    fun moveFromTODO(elem:Element){
+        todoList!!.list.remove(elem)
+        elem.category.list.add(elem)
+        elem.todo = false
     }
 
     fun deleteElement(element: Element){
         todoList!!.list.remove(element)
     }
 
-    override fun onItemCheckedStateChanged(p0: ActionMode?, p1: Int, p2: Long, p3: Boolean) {
-
-    }
+    override fun onItemCheckedStateChanged(p0: ActionMode?, p1: Int, p2: Long, p3: Boolean) {}
 
     override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
-        menuInflater.inflate(R.menu.multichoice_menu,p1)
-        ShowCategoryListScreen.isSelectionMode = true
+
+        if(multichoiceDelete) {
+            menuInflater.inflate(R.menu.multichoice_menu_delete, p1)
+
+        }else {
+            menuInflater.inflate(R.menu.multichoice_menu_accept, p1)
+        }
+
+        ShowMainScreen.isSelectionMode = true
         updateView()
         return true
     }
 
-    override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean {
-        return true
-    }
+    override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean { return true }
 
     override fun onDestroyActionMode(p0: ActionMode?) {
-        ShowCategoryListScreen.isSelectionMode = false
+        ShowMainScreen.isSelectionMode = false
         updateView()
-        (listTodo.adapter as TodoElementListViewAdapter).selectedList.clear()
+        (listTodo.adapter as TodoElementListViewAdapter).getSelectedList().clear()
     }
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+
+        var selected = (listTodo.adapter as TodoElementListViewAdapter).getSelectedList()
+
         when(item!!.itemId){
+
             R.id.action_delete ->{
-                var selected = (listTodo.adapter as TodoElementListViewAdapter).selectedList
+
                 Toast.makeText(this, getString(R.string.deleted_element_list) +": " + selected.size.toString(), Toast.LENGTH_LONG) .show()
 
                 for(i in 0 until selected.size){
                     deleteElement(selected.get(i) as Element)
                 }
+            }
 
-                selected.clear()
-                mode!!.finish()
+            R.id.action_accept ->{
+
+                Toast.makeText(this, getString(R.string.moved) +": " + selected.size.toString(), Toast.LENGTH_LONG) .show()
+
+                for(i in 0 until selected.size){
+                    moveFromTODO(selected.get(i) as Element)
+                }
+
             }
         }
+
+        selected.clear()
+        mode!!.finish()
         return true
     }
 
+    override fun doReturn() {
+        updateView()
+    }
 }

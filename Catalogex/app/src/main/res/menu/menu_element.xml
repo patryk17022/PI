@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sort"
+        android:title="@string/sort"/>
+    <item
+        android:id="@+id/filtr"
+        android:title="@string/filtr"/>
+    <item
+        android:id="@+id/delete"
+        android:title="@string/delete"></item>
+    <item
+        android:id="@+id/addToDoList"
+        android:title="@string/add_to_todo_list" />
+
+</menu>

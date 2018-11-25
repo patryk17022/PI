@@ -10,12 +10,24 @@ import kotlinx.android.synthetic.main.dialog_text_input.*
 import android.view.inputmethod.InputMethodManager
 import pl.polsl.project.catalogex.`interface`.TextInputDialogInterface
 
-
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class TextInputDialog : DialogFragment() {
 
-    var labelText: String? = null
-    var position: Int = -1
-    var activity: Activity? = null
+    private var labelText: String? = null
+    private var position: Int = -1
+    private var activity: Activity? = null
+
+    fun setText(text:String?){
+        this.labelText = text
+    }
+
+    fun setPosition(pos:Int){
+        this.position = pos
+    }
+
+    fun setActivity(actv: Activity?){
+        this.activity = actv
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -25,10 +37,9 @@ class TextInputDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         LabelFeature.text = labelText
 
-        featureValueInput.setOnKeyListener { view, i, keyEvent ->
+        featureValueInput.setOnKeyListener { viewL, i, keyEvent ->
             if ( i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                 acceptAction()
             }
@@ -36,13 +47,12 @@ class TextInputDialog : DialogFragment() {
         }
 
         cancleButtonDialog.setOnClickListener{
-            view ->
+            viewL ->
             softKeyboard(featureValueInput,true)
             dismiss()
         }
 
         acceptButtonDialog.setOnClickListener{ acceptAction()}
-
     }
 
     fun acceptAction(){
@@ -63,16 +73,15 @@ class TextInputDialog : DialogFragment() {
     }
 
     fun softKeyboard(view: View, show:Boolean) {
-        if(activity != null) {
-            if (view.requestFocus()) {
-                val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if(activity != null && view.requestFocus()) {
 
-                if(show)
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0)
-                else {
-                    imm.hideSoftInputFromWindow(activity!!.window.decorView.rootView.windowToken, 0)
-                    imm.hideSoftInputFromWindow(view.windowToken, 0)
-                }
+            val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+            if(show)
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0)
+            else {
+                imm.hideSoftInputFromWindow(activity!!.window.decorView.rootView.windowToken, 0)
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
         }
     }

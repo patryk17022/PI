@@ -5,17 +5,19 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.*
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.dialogs.ShowPhotoDialog
 import pl.polsl.project.catalogex.edit.EditElementScreen
 import pl.polsl.project.catalogex.enums.DetailListMode
-import pl.polsl.project.catalogex.listElements.ElementDetails.ElementDetailListViewAdapter
+import pl.polsl.project.catalogex.listElements.elementDetails.ElementDetailListViewAdapter
 
-
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class ShowElementInformationScreen : AppCompatActivity() {
 
-    var element : Element? = null
+    private var element : Element? = null
 
     fun updateView(){
 
@@ -23,9 +25,9 @@ class ShowElementInformationScreen : AppCompatActivity() {
         ratingBarElement.rating = element!!.indicator.toFloat()
 
         if(element!!.todo == true){
-            categoryText.text = "TODO: " + element!!.category!!.title
+            categoryText.text = "TODO: " + element!!.category.title
         }else {
-            categoryText.text = element!!.category!!.title
+            categoryText.text = element!!.category.title
         }
 
         elementText.text = element!!.title
@@ -36,7 +38,7 @@ class ShowElementInformationScreen : AppCompatActivity() {
             elementImage.setImageBitmap(BitmapFactory.decodeResource(resources, R.drawable.image))
         }
 
-        val adapter = ElementDetailListViewAdapter(this, element!!.list, layoutInflater, this, DetailListMode.NONE_BUTTON)
+        val adapter = ElementDetailListViewAdapter(element!!.list, layoutInflater, this, DetailListMode.NONE_BUTTON)
         featureList.adapter = adapter
     }
 
@@ -54,11 +56,19 @@ class ShowElementInformationScreen : AppCompatActivity() {
         cancleButtonTemplate.visibility = View.INVISIBLE
         ratingBarElement.setIsIndicator(true)
 
+        elementImage.setOnClickListener{
+            var dialog = ShowPhotoDialog()
+            dialog.setArguments(windowManager,element!!.image)
+            dialog.show(supportFragmentManager, "photo")
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.element_menu_options, menu)
+
+        if(element!!.todo)
+            menuInflater.inflate(R.menu.menu_todo_popup, menu)
+        else
+            menuInflater.inflate(R.menu.menu_element_popup, menu)
         return true
     }
 
@@ -68,22 +78,39 @@ class ShowElementInformationScreen : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
+
             R.id.edit -> {
                 val intent = Intent(this, EditElementScreen::class.java)
-                ShowMainScreen.actualElement = element!!.category
-                intent.putExtra("ELEMENT_NUMBER", element!!.category!!.list.indexOf(element!!))
+                ShowMainScreen.actualElement = ShowMainScreen.todoList
+                intent.putExtra("ELEMENT_NUMBER", ShowMainScreen.todoList.list.indexOf(element!!))
                 startActivity(intent)
             }
 
             R.id.delete -> {
-
                 if(element!!.todo == true) {
                     ShowMainScreen.todoList.list.remove(element!!)
                 }else {
-                    element!!.category!!.list.remove(element!!)
+                    element!!.category.list.remove(element!!)
                 }
 
+                finish()
+            }
+
+            R.id.fromToDo -> {
+                ShowMainScreen.todoList.list.remove(element!!)
+                element!!.category.list.add(element!!)
+                element!!.todo = false
+                Toast.makeText(this, getString(R.string.moved) +": " + element!!.title, Toast.LENGTH_LONG) .show()
+                finish()
+            }
+
+            R.id.addToDoList ->{
+                element!!.category.list.remove(element!!)
+                ShowMainScreen.todoList.list.add(element!!)
+                element!!.todo = true
+                Toast.makeText(this, getString(R.string.moved) +": " + element!!.title, Toast.LENGTH_LONG) .show()
                 finish()
             }
 
@@ -95,7 +122,6 @@ class ShowElementInformationScreen : AppCompatActivity() {
         updateView()
         return true
     }
-
 }
 
 

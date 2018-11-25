@@ -16,13 +16,18 @@ import pl.polsl.project.catalogex.R
 import android.graphics.BitmapFactory
 import pl.polsl.project.catalogex.`interface`.ImageTakenInterface
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class CameraScreenChooseDialogFragment : DialogFragment() {
 
-    val REQUEST_IMAGE_CAPTURE = 1
-    val RESULT_LOAD_IMG = 2
-    var packageManager: PackageManager? = null
-    var activity: Activity? = null
+    private val REQUEST_IMAGE_CAPTURE = 1
+    private val RESULT_LOAD_IMG = 2
+    private var packageManager: PackageManager? = null
+    private var activity: Activity? = null
 
+    fun setArguments(activity: Activity,packageManager: PackageManager ){
+        this.activity = activity
+        this.packageManager = packageManager
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,17 +38,16 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         exitButtonDialogPhotos.setOnClickListener{
-            view -> dismiss()
+            viewL -> dismiss()
         }
 
         cameraButtonOption.setOnClickListener{
-            view -> dispatchTakePictureIntent()
+            viewL -> dispatchTakePictureIntent()
         }
 
         galleryButtonOption.setOnClickListener{
-            view -> dispatchGetFromGalleryPictureIntent()
+            viewL -> dispatchGetFromGalleryPictureIntent()
         }
-
     }
 
     private fun dispatchTakePictureIntent() {
@@ -64,6 +68,7 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
     }
 
     private fun dispatchGetFromGalleryPictureIntent() {
+
         if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),RESULT_LOAD_IMG)
@@ -82,6 +87,7 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
             val imageBitmap = data!!.extras.get("data") as Bitmap
             (activity!! as ImageTakenInterface).imageHasBeenTaken(imageBitmap)
             dismiss()
