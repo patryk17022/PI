@@ -13,7 +13,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_category_element_list_screen.*
 import kotlinx.android.synthetic.main.content_category_element_list_screen.*
 import pl.polsl.project.catalogex.R
-import pl.polsl.project.catalogex.`interface`.ReturnDialogInterface
+import pl.polsl.project.catalogex.interfaces.ReturnDialogInterface
 import pl.polsl.project.catalogex.create.CreateElementScreen
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
@@ -30,7 +30,9 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
     private var menuPopupPosition: Int = -1
     private var searchWindow : SearchView? = null
     private val sortDialog = SortDialog()
+    private var isSelectionMode = false
     private var multichoiceDelete = false
+
 
     fun updateView(text: String = ""){
 
@@ -45,7 +47,8 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         sortDialog.sortTable(displayedList)
 
         val adapter = CategoryListViewAdapter(layoutInflater, displayedList)
-        listKategoryScreen.adapter = adapter
+        adapter.setIsSelectionMode(isSelectionMode)
+        listCategoryScreen.adapter = adapter
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +61,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
 
         supportActionBar!!.title = listOfElements!!.title
 
-        listKategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
+        listCategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
             val popup = PopupMenu(applicationContext, view)
             popup.menuInflater.inflate(R.menu.menu_element_popup, popup.menu)
             menuPopupPosition = listOfElements!!.list.indexOf(displayedList.get(i))
@@ -67,7 +70,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
             true
         }
 
-        listKategoryScreen.setOnItemClickListener{ adapterView, view, i, l ->
+        listCategoryScreen.setOnItemClickListener{ adapterView, view, i, l ->
             val intent = Intent(this, ShowElementInformationScreen::class.java)
             ShowMainScreen.actualElement = listOfElements!!.list.get(listOfElements!!.list.indexOf(displayedList.get(i)))
             startActivity(intent)
@@ -79,7 +82,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
             startActivity(intent)
         }
 
-        listKategoryScreen.setMultiChoiceModeListener(this)
+        listCategoryScreen.setMultiChoiceModeListener(this)
 
     }
 
@@ -129,12 +132,12 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
 
             R.id.delete ->{
                 multichoiceDelete = true
-                listKategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
+                listCategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
 
             R.id.addToDoList ->{
                 multichoiceDelete = false
-                listKategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
+                listCategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
 
         }
@@ -198,7 +201,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
             menuInflater.inflate(R.menu.multichoice_menu_accept, p1)
         }
 
-        ShowMainScreen.isSelectionMode = true
+        isSelectionMode = true
         updateView()
 
         return true
@@ -207,14 +210,14 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
     override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean { return true }
 
     override fun onDestroyActionMode(p0: ActionMode?) {
-        ShowMainScreen.isSelectionMode = false
+        isSelectionMode = false
         updateView()
-        (listKategoryScreen.adapter as CategoryListViewAdapter).getSelectedList().clear()
+        (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList().clear()
     }
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
 
-        var selected = (listKategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
+        var selected = (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
 
         when(item!!.itemId){
 

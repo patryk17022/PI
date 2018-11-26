@@ -3,6 +3,7 @@ package pl.polsl.project.catalogex.data
 import java.io.Serializable
 
 class Category:ListItem, Serializable{
+
     var list :ArrayList<ListItem> = arrayListOf()
     var template: Element? = null
 

@@ -13,7 +13,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_category_element_list_screen.*
 import kotlinx.android.synthetic.main.content_category_element_list_screen.*
 import pl.polsl.project.catalogex.R
-import pl.polsl.project.catalogex.`interface`.ReturnDialogInterface
+import pl.polsl.project.catalogex.interfaces.ReturnDialogInterface
 import pl.polsl.project.catalogex.create.CreateCategoryScreen
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
@@ -31,6 +31,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     private var menuPopupPosition: Int = -1
     private var searchWindow : SearchView? = null
     private val sortDialog = SortDialog()
+    private var isSelectionMode = false
 
     fun updateView(text: String = ""){
 
@@ -47,7 +48,8 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         sortDialog.sortTable(displayedList)
 
         val adapter = CategoryListViewAdapter(layoutInflater, displayedList)
-        listKategoryScreen.adapter = adapter
+        adapter.setIsSelectionMode(isSelectionMode)
+        listCategoryScreen.adapter = adapter
     }
 
 
@@ -67,7 +69,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             startActivity(intent)
         }
 
-        listKategoryScreen.setOnItemClickListener{ adapterView, view, i, l ->
+        listCategoryScreen.setOnItemClickListener{ adapterView, view, i, l ->
             var intent: Intent?
 
             var lelem = listOfCategory!!.list.get(listOfCategory!!.list.indexOf(displayedList[i]))
@@ -83,7 +85,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             startActivity(intent)
         }
 
-        listKategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
+        listCategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
             val popup = PopupMenu(applicationContext, view)
             popup.menuInflater.inflate(R.menu.menu_options, popup.menu)
             menuPopupPosition = listOfCategory!!.list.indexOf(displayedList[i])
@@ -92,7 +94,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             true
         }
 
-        listKategoryScreen.setMultiChoiceModeListener(this)
+        listCategoryScreen.setMultiChoiceModeListener(this)
 
     }
 
@@ -148,7 +150,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             }
 
             R.id.delete ->{
-                listKategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
+                listCategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
 
         }
@@ -213,7 +215,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
     override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
         menuInflater.inflate(R.menu.multichoice_menu_delete,p1)
-        ShowMainScreen.isSelectionMode = true
+        isSelectionMode = true
         updateView()
         return true
     }
@@ -221,9 +223,9 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean { return true }
 
     override fun onDestroyActionMode(p0: ActionMode?) {
-        ShowMainScreen.isSelectionMode = false
+        isSelectionMode = false
         updateView()
-        (listKategoryScreen.adapter as CategoryListViewAdapter).getSelectedList().clear()
+        (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList().clear()
     }
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
@@ -232,7 +234,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
             R.id.action_delete ->{
 
-                var selected = (listKategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
+                var selected = (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
                 Toast.makeText(this, getString(R.string.deleted_category_list) +": " + selected.size.toString(),Toast.LENGTH_LONG) .show()
 
                 for(i in 0 until selected.size){

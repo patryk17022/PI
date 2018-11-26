@@ -9,9 +9,9 @@ import android.widget.ImageView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
-import pl.polsl.project.catalogex.`interface`.ElementDetailsInterface
-import pl.polsl.project.catalogex.`interface`.ImageTakenInterface
-import pl.polsl.project.catalogex.`interface`.TextInputDialogInterface
+import pl.polsl.project.catalogex.interfaces.ElementDetailsInterface
+import pl.polsl.project.catalogex.interfaces.ImageTakenInterface
+import pl.polsl.project.catalogex.interfaces.TextInputDialogInterface
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.dialogs.CameraScreenChooseDialogFragment

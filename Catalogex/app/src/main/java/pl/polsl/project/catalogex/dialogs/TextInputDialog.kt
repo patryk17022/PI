@@ -8,7 +8,7 @@ import android.view.*
 import pl.polsl.project.catalogex.R
 import kotlinx.android.synthetic.main.dialog_text_input.*
 import android.view.inputmethod.InputMethodManager
-import pl.polsl.project.catalogex.`interface`.TextInputDialogInterface
+import pl.polsl.project.catalogex.interfaces.TextInputDialogInterface
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class TextInputDialog : DialogFragment() {

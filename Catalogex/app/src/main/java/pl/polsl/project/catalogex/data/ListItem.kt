@@ -3,6 +3,9 @@ package pl.polsl.project.catalogex.data
 import java.io.Serializable
 
 open class ListItem: Serializable {
+
+    var id:Int? = null
+
     var title: String
 
     constructor(title: String) {

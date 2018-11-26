@@ -4,15 +4,16 @@ import android.graphics.Bitmap
 import java.io.Serializable
 
 class Element:ListItem, Serializable {
+
     var list :ArrayList<Feature> = arrayListOf()
-    var category : Category = Category()
-    var indicator: Int = 0
+    var category : Category? = null
     var image : Bitmap? = null
+    var indicator: Int = 0
     var todo : Boolean = false
 
     constructor() : super("")
 
-    constructor(title: String, category: Category, indicator:Int) : super(title)
+    constructor(title: String, category: Category?, indicator:Int) : super(title)
     {
         this.title = title
         this.category = category
@@ -31,7 +32,7 @@ class Element:ListItem, Serializable {
         var element = Element(title,category,indicator)
 
         for(i in 0 until list.size){
-            element.list.add(Feature(list.get(i).id, list.get(i).title, list.get(i).detail))
+            element.list.add(Feature(list.get(i).title, list.get(i).detail))
         }
 
         element.image = image

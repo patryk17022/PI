@@ -6,13 +6,17 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.ListItem
-import pl.polsl.project.catalogex.display.ShowMainScreen
 
 class CategoryListViewAdapter : BaseAdapter {
 
     private var categoryList : ArrayList<ListItem>
     private var layoutInflater : LayoutInflater
+    private var isSelectionMode : Boolean = false
     private var selectedList: ArrayList<ListItem> = ArrayList()
+
+    fun setIsSelectionMode(isSelectionMode:Boolean){
+        this.isSelectionMode = isSelectionMode
+    }
 
     fun getSelectedList(): ArrayList<ListItem>{
         return selectedList
@@ -40,7 +44,7 @@ class CategoryListViewAdapter : BaseAdapter {
 
         vh.tvTitle.text = categoryList[position].title
 
-        if(ShowMainScreen.isSelectionMode)
+        if(isSelectionMode)
             vh.checkBox.visibility = View.VISIBLE
         else
             vh.checkBox.visibility = View.GONE

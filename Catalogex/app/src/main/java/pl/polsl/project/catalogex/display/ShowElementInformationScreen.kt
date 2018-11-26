@@ -25,9 +25,9 @@ class ShowElementInformationScreen : AppCompatActivity() {
         ratingBarElement.rating = element!!.indicator.toFloat()
 
         if(element!!.todo == true){
-            categoryText.text = "TODO: " + element!!.category.title
+            categoryText.text = "TODO: " + element!!.category!!.title
         }else {
-            categoryText.text = element!!.category.title
+            categoryText.text = element!!.category!!.title
         }
 
         elementText.text = element!!.title
@@ -92,7 +92,7 @@ class ShowElementInformationScreen : AppCompatActivity() {
                 if(element!!.todo == true) {
                     ShowMainScreen.todoList.list.remove(element!!)
                 }else {
-                    element!!.category.list.remove(element!!)
+                    element!!.category!!.list.remove(element!!)
                 }
 
                 finish()
@@ -100,14 +100,14 @@ class ShowElementInformationScreen : AppCompatActivity() {
 
             R.id.fromToDo -> {
                 ShowMainScreen.todoList.list.remove(element!!)
-                element!!.category.list.add(element!!)
+                element!!.category!!.list.add(element!!)
                 element!!.todo = false
                 Toast.makeText(this, getString(R.string.moved) +": " + element!!.title, Toast.LENGTH_LONG) .show()
                 finish()
             }
 
             R.id.addToDoList ->{
-                element!!.category.list.remove(element!!)
+                element!!.category!!.list.remove(element!!)
                 ShowMainScreen.todoList.list.add(element!!)
                 element!!.todo = true
                 Toast.makeText(this, getString(R.string.moved) +": " + element!!.title, Toast.LENGTH_LONG) .show()

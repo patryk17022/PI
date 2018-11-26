@@ -11,15 +11,13 @@ import android.view.MenuItem
 import android.widget.AbsListView
 import android.widget.PopupMenu
 import android.widget.Toast
-import kotlinx.android.synthetic.main.content_category_element_list_screen.*
-import pl.polsl.project.catalogex.`interface`.ReturnDialogInterface
-import pl.polsl.project.catalogex.`interface`.TodoElementInterface
+import pl.polsl.project.catalogex.interfaces.ReturnDialogInterface
+import pl.polsl.project.catalogex.interfaces.TodoElementInterface
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.dialogs.SortDialog
 import pl.polsl.project.catalogex.edit.EditElementScreen
-import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
 import pl.polsl.project.catalogex.listElements.todoElement.TodoElementListViewAdapter
 import kotlin.collections.ArrayList
 
@@ -30,6 +28,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
     private var displayedList: ArrayList<Element> = ArrayList()
     private var menuPopupPosition: Int = -1
     private val sortDialog = SortDialog()
+    private var isSelectionMode = false
     private var multichoiceDelete = false
 
     @Suppress("UNCHECKED_CAST")
@@ -43,6 +42,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
         sortDialog.sortTable(displayedList as ArrayList<ListItem>)
 
         val adapter = TodoElementListViewAdapter(this, displayedList, layoutInflater, this)
+        adapter.setIsSelectionMode(isSelectionMode)
         listTodo.adapter = adapter
     }
 
@@ -130,7 +130,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
 
     fun moveFromTODO(elem:Element){
         todoList!!.list.remove(elem)
-        elem.category.list.add(elem)
+        elem.category!!.list.add(elem)
         elem.todo = false
     }
 
@@ -149,7 +149,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
             menuInflater.inflate(R.menu.multichoice_menu_accept, p1)
         }
 
-        ShowMainScreen.isSelectionMode = true
+        isSelectionMode = true
         updateView()
         return true
     }
@@ -157,7 +157,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
     override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean { return true }
 
     override fun onDestroyActionMode(p0: ActionMode?) {
-        ShowMainScreen.isSelectionMode = false
+        isSelectionMode = false
         updateView()
         (listTodo.adapter as TodoElementListViewAdapter).getSelectedList().clear()
     }

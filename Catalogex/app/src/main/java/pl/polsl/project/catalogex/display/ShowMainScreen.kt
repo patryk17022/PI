@@ -7,29 +7,29 @@ import android.view.View
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
-import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.data.ListItem
+import pl.polsl.project.catalogex.database.Utility
+
 
 /*TODO:
 filtrowanie
-przechowywanie danych
 Dodac zarzadzanie templatami (edit template nie testowane)
+przechowywanie danych w bd -> work in progres
 
-poprawic diagram
+Poprawic diagram
 */
 
 @Suppress("UNUSED_PARAMETER")
 class ShowMainScreen : AppCompatActivity() {
 
     companion object {
-        var mainCategory = Category()
-        var todoList = Category()
 
         var listOfTemplate : ArrayList<Element> = arrayListOf()
 
-        var actualElement : ListItem? = mainCategory
+        var mainCategory = Category()
+        var todoList = Category()
 
-        var isSelectionMode: Boolean = false
+        var actualElement : ListItem? = mainCategory
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,34 +40,41 @@ class ShowMainScreen : AppCompatActivity() {
         todoList.title = getString(R.string.todo_button_text)
 
 
+        listOfTemplate = Utility.getTemplates()
+   //     mainCategory = Utility.getMainCategory(listOfTemplate)
+    //    todoList = Utility.getToDoCategory(mainCategory)
+
+        Utility.printDB()
+
+//        Utility.insertTemplates(listOfTemplate)
         //TEST--------------------------------------------------------------------------------------
-        for(i in 0 until 10){
-            var test = Category()
-            test.title = "Kategoria: " + i.toString()
-            mainCategory.list.add(test)
-        }
 
-        var cat = mainCategory.list.get(0) as Category
-
-        for(i in 0 until 10){
-            var test = Category()
-            test.title = "POD Kategoira; " + i.toString()
-            cat.list.add(test)
-        }
-
-
-        for(i in 1 until 10){
-            for(k in 0 until 10) {
-                var test = Element()
-                     for(f in 0 until 10) {
-                         test.addFeature(Feature(f,"Informacja:  " + f, f.toString()))
-                     }
-                test.title = "Element:  " + k.toString()
-                test.category = mainCategory.list.get(i) as Category
-                (mainCategory.list.get(i) as Category).list.add(test)
-                (mainCategory.list.get(i) as Category).template = Element()
-            }
-        }
+//        for(i in 0 until 10){
+//            var test = Category()
+//            test.title = "Kategoria: " + i.toString()
+//            mainCategory.list.add(test)
+//        }
+//
+//        var cat = mainCategory.list.get(0) as Category
+//
+//        for(i in 0 until 10){
+//            var test = Category()
+//            test.title = "POD Kategoira; " + i.toString()
+//            cat.list.add(test)
+//        }
+//
+//        for(i in 1 until 10){
+//            for(k in 0 until 10) {
+//                var test = Element()
+//                     for(f in 0 until 10) {
+//                         test.addFeature(Feature("Informacja:  " + f, f.toString()))
+//                     }
+//                test.title = "Element:  " + k.toString()
+//                test.category = mainCategory.list.get(i) as Category
+//                (mainCategory.list.get(i) as Category).list.add(test)
+//                (mainCategory.list.get(i) as Category).template = Element()
+//            }
+//        }
         //TEST--------------------------------------------------------------------------------------
 
     }

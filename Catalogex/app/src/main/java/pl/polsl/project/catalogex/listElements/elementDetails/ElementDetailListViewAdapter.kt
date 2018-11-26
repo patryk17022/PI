@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import pl.polsl.project.catalogex.R
-import pl.polsl.project.catalogex.`interface`.ElementDetailsInterface
+import pl.polsl.project.catalogex.interfaces.ElementDetailsInterface
 import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.enums.DetailListMode
 

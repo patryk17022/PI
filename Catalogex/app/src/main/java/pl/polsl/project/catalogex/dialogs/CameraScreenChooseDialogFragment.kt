@@ -14,7 +14,7 @@ import android.view.*
 import kotlinx.android.synthetic.main.dialog_choose_photo.*
 import pl.polsl.project.catalogex.R
 import android.graphics.BitmapFactory
-import pl.polsl.project.catalogex.`interface`.ImageTakenInterface
+import pl.polsl.project.catalogex.interfaces.ImageTakenInterface
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class CameraScreenChooseDialogFragment : DialogFragment() {

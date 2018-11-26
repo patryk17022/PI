@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
-import pl.polsl.project.catalogex.`interface`.ElementDetailsInterface
-import pl.polsl.project.catalogex.`interface`.TextInputDialogInterface
+import pl.polsl.project.catalogex.interfaces.ElementDetailsInterface
+import pl.polsl.project.catalogex.interfaces.TextInputDialogInterface
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.dialogs.TextInputDialog
@@ -60,15 +60,10 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
         if(!input.isEmpty()) {
             when (tag) {
                 "addFeature" -> {
-                    var id = 0
 
-                    if(template.list.size>0){
-                        id = template.list.get(template.list.size-1).id + 1
-                    }
+                    var feature = Feature(input, getString(R.string.example_Text))
 
-                    var feature = Feature(id, input, getString(R.string.example_Text))
-
-                    template.list.add(feature)
+                    template.addFeature(feature)
                     updateFeatureList()
 
                 }
@@ -91,7 +86,7 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
     }
 
     override fun onDeleteButton(position: Int){
-        template.list.removeAt(position)
+        template.removeFeature(position)
         updateFeatureList()
     }
 

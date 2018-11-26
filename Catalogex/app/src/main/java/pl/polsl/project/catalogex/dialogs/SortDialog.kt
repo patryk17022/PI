@@ -7,7 +7,7 @@ import android.view.*
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.dialog_sort.*
 import pl.polsl.project.catalogex.R
-import pl.polsl.project.catalogex.`interface`.ReturnDialogInterface
+import pl.polsl.project.catalogex.interfaces.ReturnDialogInterface
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.enums.SortMode

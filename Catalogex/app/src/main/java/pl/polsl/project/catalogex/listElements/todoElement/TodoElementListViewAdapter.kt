@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import pl.polsl.project.catalogex.R
-import pl.polsl.project.catalogex.`interface`.TodoElementInterface
+import pl.polsl.project.catalogex.interfaces.TodoElementInterface
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.display.ShowElementInformationScreen
@@ -21,7 +21,12 @@ class  TodoElementListViewAdapter : BaseAdapter {
     private var context: Context? = null
     private var layoutInflater : LayoutInflater? = null
     private var activity : Activity? = null
+    private var isSelectionMode : Boolean = false
     private var selectedList: ArrayList<ListItem> = ArrayList()
+
+    fun setIsSelectionMode(isSelectionMode:Boolean){
+        this.isSelectionMode = isSelectionMode
+    }
 
     fun getSelectedList():ArrayList<ListItem>{
         return selectedList
@@ -65,7 +70,7 @@ class  TodoElementListViewAdapter : BaseAdapter {
             activity!!.startActivity(intent)
         }
 
-        if(ShowMainScreen.isSelectionMode){
+        if(isSelectionMode){
             vh.check.visibility = View.VISIBLE
             vh.imButton.visibility = View.GONE
         }else{

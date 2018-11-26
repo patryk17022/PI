@@ -1,4 +1,4 @@
-package pl.polsl.project.catalogex.`interface`
+package pl.polsl.project.catalogex.interfaces
 
 interface ElementDetailsInterface {
     fun onEditButton(position: Int){}
