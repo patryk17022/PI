@@ -1,5 +1,6 @@
 package pl.polsl.project.catalogex.data
 
+import pl.polsl.project.catalogex.database.entity.FeatureEntity
 import java.io.Serializable
 
 class Feature: Serializable {
@@ -12,5 +13,14 @@ class Feature: Serializable {
     constructor(title: String, detail: String) {
         this.title = title
         this.detail = detail
+    }
+
+    fun ToFeatureEntity(parentId: Int? = null): FeatureEntity {
+        var feat = FeatureEntity()
+        feat.id = this.id
+        feat.elem_id = parentId
+        feat.title = this.title
+        feat.detail = this.detail
+        return feat
     }
 }

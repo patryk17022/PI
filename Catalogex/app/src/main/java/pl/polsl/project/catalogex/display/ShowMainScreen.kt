@@ -14,7 +14,7 @@ import pl.polsl.project.catalogex.database.Utility
 /*TODO:
 filtrowanie
 Dodac zarzadzanie templatami (edit template nie testowane)
-przechowywanie danych w bd -> work in progres
+przechowywanie danych w bd -> work in progres x2 -> isMain skasowac i poprostu wykrywac czy jest null w cat_id, asynchroniczne queerry
 
 Poprawic diagram
 */
@@ -39,14 +39,10 @@ class ShowMainScreen : AppCompatActivity() {
         mainCategory.title = getString(R.string.title_activity_category_list_screen)
         todoList.title = getString(R.string.todo_button_text)
 
-
         listOfTemplate = Utility.getTemplates()
-   //     mainCategory = Utility.getMainCategory(listOfTemplate)
-    //    todoList = Utility.getToDoCategory(mainCategory)
+        mainCategory = Utility.getMainCategory(listOfTemplate)
+        todoList = Utility.getToDoCategory(mainCategory)
 
-        Utility.printDB()
-
-//        Utility.insertTemplates(listOfTemplate)
         //TEST--------------------------------------------------------------------------------------
 
 //        for(i in 0 until 10){
@@ -85,18 +81,25 @@ class ShowMainScreen : AppCompatActivity() {
     }
 
     fun todoScreenShow(view: View) {
+        Utility.printDB()//TODO zmien
         val intent = Intent(this, ShowTodoScreen::class.java)
         startActivity(intent)
     }
 
     fun creditsScreenShow(view: View) {
+        Utility.deleteDatabaseFile()    //TODO usun
         val intent = Intent(this, ShowCreditsScreen::class.java)
         startActivity(intent)
     }
 
     fun exitButton(view: View) {
-        finish()
-        System.exit(0)
+        //TODO zmien
+        Utility.insertElementsList(listOfTemplate)
+        Utility.insertCategories(mainCategory,null,true)
+        Utility.insertElementsList(todoList.list as ArrayList<Element>)
+        //TODO -----
+//        finish()
+//        System.exit(0)
     }
 
     override fun onResume() {

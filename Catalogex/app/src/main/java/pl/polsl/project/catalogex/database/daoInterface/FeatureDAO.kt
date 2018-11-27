@@ -10,7 +10,7 @@ interface FeatureDAO {
     fun getAll(): List<FeatureEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg features: FeatureEntity)
+    fun insert(elements: FeatureEntity) : Long
 
     @Delete
     fun delete(feature: FeatureEntity)

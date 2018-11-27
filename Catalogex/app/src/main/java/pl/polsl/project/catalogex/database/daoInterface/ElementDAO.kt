@@ -20,7 +20,7 @@ interface ElementDAO {
     fun getTemplateAll(): List<ElementEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg elements: ElementEntity)
+    fun insert(elements: ElementEntity) : Long
 
     @Delete
     fun delete(element: ElementEntity)

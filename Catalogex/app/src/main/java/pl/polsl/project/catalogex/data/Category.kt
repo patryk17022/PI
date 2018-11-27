@@ -1,5 +1,6 @@
 package pl.polsl.project.catalogex.data
 
+import pl.polsl.project.catalogex.database.entity.CategoryEntity
 import java.io.Serializable
 
 class Category:ListItem, Serializable{
@@ -30,5 +31,15 @@ class Category:ListItem, Serializable{
         listElem.title = title
         listElem.list = list
         listElem.template = template
+    }
+
+    fun ToCategoryEntity(parentId: Int? = null, templateId: Int? = null, isMain: Boolean = false): CategoryEntity {
+        var elem = CategoryEntity()
+        elem.id = this.id
+        elem.cat_id = parentId
+        elem.temp_id = templateId
+        elem.title = this.title
+        elem.isMain = isMain
+        return elem
     }
 }

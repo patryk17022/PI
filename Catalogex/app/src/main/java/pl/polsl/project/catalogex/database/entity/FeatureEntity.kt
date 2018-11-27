@@ -1,6 +1,9 @@
 package pl.polsl.project.catalogex.database.entity
 
 import android.arch.persistence.room.*
+import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.data.Feature
+import pl.polsl.project.catalogex.database.Utility
 
 @Entity(tableName = "features")
 class FeatureEntity {
@@ -12,9 +15,15 @@ class FeatureEntity {
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("element_id"))
     @ColumnInfo(name = "element_id")
-    var elem_id :Int = -1
+    var elem_id :Int? = null
 
     var title: String = ""
     var detail: String = ""
+
+    fun toFeature() : Feature{
+        var elem = Feature(this.title,this.detail)
+        elem.id = this.id
+        return elem
+    }
 
 }

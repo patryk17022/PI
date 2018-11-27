@@ -1,6 +1,8 @@
 package pl.polsl.project.catalogex.data
 
 import android.graphics.Bitmap
+import pl.polsl.project.catalogex.database.entity.ElementEntity
+import java.io.ByteArrayOutputStream
 import java.io.Serializable
 
 class Element:ListItem, Serializable {
@@ -49,5 +51,24 @@ class Element:ListItem, Serializable {
          listElem.list = list
          listElem.image = image
          listElem.todo = todo
+    }
+
+    fun ToElementEntity(parentId: Int? = null): ElementEntity {
+        var elem = ElementEntity()
+        elem.id = this.id
+
+        if(this.image != null) {
+            val stream = ByteArrayOutputStream()
+            this.image!!.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            elem.image = stream.toByteArray()
+        } else {
+            this.image = null
+        }
+
+        elem.cat_id = parentId
+        elem.title= this.title
+        elem.indicator = this.indicator
+        elem.todo = this.todo
+        return elem
     }
 }

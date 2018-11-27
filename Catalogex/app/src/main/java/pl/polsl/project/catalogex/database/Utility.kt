@@ -2,7 +2,6 @@ package pl.polsl.project.catalogex.database
 
 import android.app.Application
 import android.arch.persistence.room.*
-import android.arch.persistence.room.migration.Migration
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.Feature
@@ -10,54 +9,77 @@ import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.entity.CategoryEntity
 import pl.polsl.project.catalogex.database.entity.ElementEntity
 import pl.polsl.project.catalogex.database.entity.FeatureEntity
+import java.io.File
 
 class Utility : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        db =  Room.databaseBuilder(applicationContext, AppDatabase::class.java, "catalogex_db").allowMainThreadQueries().build()
+        db =  Room.databaseBuilder(applicationContext, AppDatabase::class.java, databaseName).allowMainThreadQueries().build()
+        dbPath = packageManager.getPackageInfo(packageName,0).applicationInfo.dataDir + "/databases"
+        getAllLists()
     }
-
 
     companion object {
 
-        var db: AppDatabase? = null
+        private var databaseName: String = "database_catalogex"
+        private var dbPath : String = ""
+        private var db: AppDatabase? = null
 
+        private var listTemplates : List<ElementEntity>? = null
+        private var listCategories : List<CategoryEntity>? = null
+        private var listTODO : List<ElementEntity>? = null
+        private var listElement : List<ElementEntity>? = null
+        private var listFeature : List<FeatureEntity>? = null
+
+        fun getAllLists(){
+            listTemplates =  db!!.elementDAO().getTemplateAll()
+            listCategories = db!!.categoryDAO().getAll()
+            listTODO = db!!.elementDAO().getToDoAll()
+            listElement =  db!!.elementDAO().getElementsAll()
+            listFeature =  db!!.featureDAO().getAll()
+        }
+
+        fun getTemplates(): ArrayList<Element> {
+
+            var list = ArrayList<Element>()
+
+            for (i in listTemplates!!) {
+
+                var elem = i.toElement()
+                elem.list = getFeatureList(i.id!!)
+                list.add(elem)
+            }
+            return list
+        }
 
         fun getMainCategory(template: ArrayList<Element>): Category {
             var category = Category()
-            var listCategories = db!!.categoryDAO().getAll()
 
-
-            for (i in listCategories) {
+            for (i in listCategories!!) {
 
                 if(i.isMain){
                     category.id = i.id
                     category.template = null
+                    break
                 }
             }
 
-            category.list = getCategoryList(category.id!!, listCategories, template)
-
+            category.list = getCategoryList(category, template)
 
             return category
         }
 
         fun getToDoCategory(mainCategory: Category): Category {
+
             var todoList = Category()
-            var listElement =  db!!.elementDAO().getToDoAll()
-            var listFeature =  db!!.featureDAO().getAll()
 
-            for (i in listElement) {
+            for (i in listTODO!!) {
 
-                var elem = Element()
-                elem.id = i.id
-                elem.title = i.title
-                elem.list = getFeatureList(i.id!!, listFeature)
-                elem.category = findCategory(i.cat_id!!, mainCategory)
-                elem.image = i.image
-                elem.indicator = i.indicator
-                elem.todo = true
+                var elem = i.toElement()
+
+                elem.list = getFeatureList(i.id!!)
+                elem.category = findCategory(i.cat_id!!,mainCategory)
 
                 todoList.list.add(elem)
             }
@@ -65,85 +87,50 @@ class Utility : Application() {
             return todoList
         }
 
-        fun getTemplates(): ArrayList<Element> {
-            var listTemplates =  db!!.elementDAO().getTemplateAll()
-            var listFeature =  db!!.featureDAO().getAll()
-
-            var list = ArrayList<Element>()
-
-            for (i in listTemplates) {
-
-                var elem = Element()
-                elem.id = i.id
-                elem.title = i.title
-                elem.list = getFeatureList(i.id!!, listFeature)
-                elem.category = null
-                elem.image = i.image
-                elem.indicator = i.indicator
-                elem.todo = i.todo
-
-                list.add(elem)
-            }
-
-            return list
-        }
-
-        fun getCategoryList(catId: Int, listCategories: List<CategoryEntity>, template: ArrayList<Element>) : ArrayList<ListItem> {
+        fun getCategoryList(parentCategory: Category, template: ArrayList<Element>) : ArrayList<ListItem> {
 
             var list = ArrayList<ListItem>()
-            var listElement =  db!!.elementDAO().getAll()
-            var category = Category()
 
-            for(cat in listCategories){
+            for(cat in listCategories!!){
 
-                if(cat.cat_id!= null && cat.cat_id == catId){
+                if(cat.cat_id!= null && cat.cat_id == parentCategory.id) {
 
-                    category.title = cat.title
-                    category.template = null
+                    var category = cat.toCategory(null,null)
 
-                    var listofCat = getCategoryList(cat.id!!, listCategories, template)
-                    for(item in listofCat)
-                        category.list.add(item)
+                    if (cat.temp_id == null) {
+                        category.list = getCategoryList(category,template)
+
+                    } else if (cat.temp_id != null) {
+
+                        var templateCategory: Element? = null
+
+                        for (temp in template) {
+                            if (temp.id == cat.temp_id) {
+                                templateCategory = temp
+                                break
+                            }
+                        }
+
+                        category.template = templateCategory
+                        category.list = getElementsList(category) as ArrayList<ListItem>
+
+                    }
 
                     list.add(category)
-                }else if(cat.temp_id != null){
-                    var templateCategory: Element? = null
-                    for (temp in template) {
-                        if (temp.id == cat.temp_id) {
-                            templateCategory = temp
-                            break
-                        }
-                    }
-
-                    if (templateCategory != null) {
-                        category.list = getElementsList(catId, listElement) as ArrayList<ListItem>
-                    } else {
-
-                    }
                 }
             }
             return list
         }
 
-        fun getElementsList(catId: Int, listElement: List<ElementEntity>) : ArrayList<Element>{
+        fun getElementsList(parentCategory: Category) : ArrayList<Element>{
 
             var list = ArrayList<Element>()
 
-            var listFeature =  db!!.featureDAO().getAll()
+            for (el in listElement!!) {
 
-            for (el in listElement) {
+                if(el.cat_id == parentCategory.id) {
 
-                if(el.cat_id == catId) {
-
-                    var elem = Element()
-                    elem.id = el.id
-                    elem.title = el.title
-                    elem.list = getFeatureList(el.id!!, listFeature)
-                    elem.category = null
-                    elem.image = el.image
-                    elem.indicator = el.indicator
-                    elem.todo = el.todo
-
+                    var elem = el.toElement(parentCategory,getFeatureList(el.id!!))
                     list.add(elem)
 
                 }
@@ -152,21 +139,17 @@ class Utility : Application() {
             return list
         }
 
-        fun getFeatureList(elemId: Int, listFeature: List<FeatureEntity>) : ArrayList<Feature>{
+        fun getFeatureList(elemId: Int) : ArrayList<Feature>{
 
             var list = ArrayList<Feature>()
 
-            for (f in listFeature) {
-
+            for (f in listFeature!!) {
                 if(f.elem_id == elemId) {
-
-                    var feature = Feature(f.title, f.detail)
-                    feature.id = f.id
+                    var feature = f.toFeature()
                     list.add(feature)
-
                 }
-
             }
+
             return list
         }
 
@@ -185,7 +168,46 @@ class Utility : Application() {
                 if(find != null) break
 
             }
+
             return find
+        }
+
+        fun insertElement(element: Element){
+            insertElementsList(arrayListOf(element))
+        }
+
+        fun insertElementsList(listOfElements : ArrayList<Element>){
+
+            for(temp in listOfElements){
+
+                var parentId: Int? = null
+                if(temp.category != null)
+                    parentId = temp.category!!.id
+
+                temp.id = db!!.elementDAO().insert(temp.ToElementEntity(parentId)).toInt()
+
+                for(fe in temp.list)
+                    fe.id = db!!.featureDAO().insert(fe.ToFeatureEntity(temp.id)).toInt()
+            }
+        }
+
+        fun insertCategories(category : Category, parentId: Int? = null, isMain: Boolean = false){
+
+            if(category.template == null)
+                category.id = db!!.categoryDAO().insert(category.ToCategoryEntity(parentId,null,isMain)).toInt()
+            else{
+                if(category.template!!.id == null)
+                    insertElement(category.template!!)
+                category.id = db!!.categoryDAO().insert(category.ToCategoryEntity(parentId,category.template!!.id,isMain)).toInt()
+            }
+
+            for(temp in category.list){
+                if(temp is Element)
+                    insertElement(temp)
+                else if(temp is Category){
+                    insertCategories(temp,category.id,false)
+                }
+            }
         }
 
         fun printDB(){
@@ -220,28 +242,15 @@ class Utility : Application() {
 
         }
 
-        fun ToEntity(elemIn: Element): ElementEntity{
-            var elem = ElementEntity()
-            elem.id = elemIn.id
-            elem.image = elemIn.image
+        fun deleteDatabaseFile() {
 
-            if(elemIn.category != null)
-                elem.cat_id = elemIn.category!!.id
+            val databases = File(dbPath)
+            val db = File(databases, databaseName)
+            if (db.delete())
+                println("Database deleted")
             else
-                elem.cat_id = null
+                println("Failed to delete database")
 
-            elem.title= elemIn.title
-            elem.indicator = elemIn.indicator
-            elem.todo = elem.todo
-            return elem
-        }
-
-        fun insertTemplates(listOfTemplate : ArrayList<Element>){
-            for(temp in listOfTemplate){
-                for(fe in temp.list)
-                db!!.elementDAO().insertAll(ToEntity(temp))
-            }
-            printDB()
         }
     }
 }
