@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.display.ShowMainScreen
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
@@ -90,8 +91,10 @@ open class CreateCategoryScreen : AppCompatActivity(), AdapterView.OnItemSelecte
                     cat.template = templateList!![templateSpinner.selectedItemPosition - 1]
                 }
 
+                Utility.insertCategories(cat,parentCategory!!.id)
+
                 parentCategory!!.list.add(cat)
-                Toast.makeText(this, getString(R.string.added_category) +": " + nameCategoryText.text.toString(),Toast.LENGTH_LONG) .show()
+                Toast.makeText(this, getString(R.string.added_category) +": " + nameCategoryText.text.toString(),Toast.LENGTH_SHORT) .show()
                 finish()
             }else{
                 Toast.makeText(this,getString(R.string.noCategoryName),Toast.LENGTH_SHORT).show()

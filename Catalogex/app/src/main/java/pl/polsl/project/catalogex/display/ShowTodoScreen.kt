@@ -114,13 +114,13 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
             }
 
             R.id.delete -> {
-                Toast.makeText(this, getString(R.string.deleted_element) +": " + elem.title,Toast.LENGTH_LONG) .show()
+                Toast.makeText(this, getString(R.string.deleted_element) +": " + elem.title,Toast.LENGTH_SHORT) .show()
                 deleteElement(elem)
             }
 
             R.id.fromToDo -> {
                 moveFromTODO(elem)
-                Toast.makeText(this, getString(R.string.moved) +": " + elem.title, Toast.LENGTH_LONG) .show()
+                Toast.makeText(this, getString(R.string.moved) +": " + elem.title, Toast.LENGTH_SHORT) .show()
             }
 
         }
@@ -170,7 +170,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
 
             R.id.action_delete ->{
 
-                Toast.makeText(this, getString(R.string.deleted_element_list) +": " + selected.size.toString(), Toast.LENGTH_LONG) .show()
+                Toast.makeText(this, getString(R.string.deleted_element_list) +": " + selected.size.toString(), Toast.LENGTH_SHORT) .show()
 
                 for(i in 0 until selected.size){
                     deleteElement(selected.get(i) as Element)
@@ -179,7 +179,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
 
             R.id.action_accept ->{
 
-                Toast.makeText(this, getString(R.string.moved) +": " + selected.size.toString(), Toast.LENGTH_LONG) .show()
+                Toast.makeText(this, getString(R.string.moved) +": " + selected.size.toString(), Toast.LENGTH_SHORT) .show()
 
                 for(i in 0 until selected.size){
                     moveFromTODO(selected.get(i) as Element)

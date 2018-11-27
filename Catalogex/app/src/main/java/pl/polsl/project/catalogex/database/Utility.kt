@@ -22,7 +22,7 @@ class Utility : Application() {
 
     companion object {
 
-        private var databaseName: String = "database_catalogex"
+        private var databaseName: String = "database_catalogex_1.0"
         private var dbPath : String = ""
         private var db: AppDatabase? = null
 
@@ -54,11 +54,12 @@ class Utility : Application() {
         }
 
         fun getMainCategory(template: ArrayList<Element>): Category {
+
             var category = Category()
 
             for (i in listCategories!!) {
 
-                if(i.isMain){
+                if(i.cat_id == null){
                     category.id = i.id
                     category.template = null
                     break
@@ -66,6 +67,11 @@ class Utility : Application() {
             }
 
             category.list = getCategoryList(category, template)
+
+            //If the database was cleared
+            if(category.id == null){
+                Utility.insertCategories(category,null,true)
+            }
 
             return category
         }
@@ -210,6 +216,14 @@ class Utility : Application() {
             }
         }
 
+        fun makeSomeSpace(str:String,long:Int = 25):String{
+            var out = str
+            for(i in str.length-1 until long){
+                out+= ' '
+            }
+            return out
+        }
+
         fun printDB(){
 
             var listCategories = db!!.categoryDAO().getAll()
@@ -218,25 +232,25 @@ class Utility : Application() {
 
             println("---------------------------------------------- CATEGORY TABLE ----------------------------------------------")
             println("Elements: " + listCategories.size)
-            println("id\t\t\t\tcat_id\t\t\t\ttemp_id\t\t\t\ttitle\t\t\t\tisMain")
+            println(makeSomeSpace("id") + makeSomeSpace("cat_id") + makeSomeSpace("temp_id") + makeSomeSpace("title"))
             for(i in listCategories){
-                println(i.id.toString()+"\t\t\t\t"+i.cat_id.toString()+"\t\t\t\t" + i.temp_id+"\t\t\t\t"+i.title+"\t\t\t\t"+i.isMain.toString())
+                println(makeSomeSpace(i.id.toString())+makeSomeSpace(i.cat_id.toString())+makeSomeSpace(i.temp_id.toString())+makeSomeSpace(i.title))
             }
             println("------------------------------------------------------------------------------------------------------------")
 
             println("---------------------------------------------- ELEMENT TABLE -----------------------------------------------")
             println("Elements: " + listElement.size)
-            println("id\t\t\t\tcat_id\t\t\t\ttitle\t\t\t\tindicator\t\t\t\ttodo")
+            println(makeSomeSpace("id") + makeSomeSpace("cat_id") + makeSomeSpace("title") + makeSomeSpace("indicator")+ makeSomeSpace("todo"))
             for(i in listElement){
-                println(i.id.toString()+"\t\t\t\t"+i.cat_id.toString()+"\t\t\t\t" + i.title+"\t\t\t\t"+i.indicator+"\t\t\t\t"+i.todo.toString())
+                println(makeSomeSpace(i.id.toString())+makeSomeSpace(i.cat_id.toString())+makeSomeSpace(i.title)+makeSomeSpace(i.indicator.toString())+makeSomeSpace(i.todo.toString()))
             }
             println("------------------------------------------------------------------------------------------------------------")
 
             println("---------------------------------------------- FEATURE TABLE -----------------------------------------------")
             println("Elements: " + listFeature.size)
-            println("id\t\t\t\telem_id\t\t\t\ttitle\t\t\t\tdetail")
+            println(makeSomeSpace("id") + makeSomeSpace("elem_id") + makeSomeSpace("detail") )
             for(i in listFeature){
-                println(i.id.toString()+"\t\t\t\t"+i.elem_id.toString()+"\t\t\t\t" + i.title+"\t\t\t\t"+i.detail)
+                println(makeSomeSpace(i.id.toString())+makeSomeSpace(i.elem_id.toString())+makeSomeSpace(i.title)+makeSomeSpace(i.detail))
             }
             println("------------------------------------------------------------------------------------------------------------")
 

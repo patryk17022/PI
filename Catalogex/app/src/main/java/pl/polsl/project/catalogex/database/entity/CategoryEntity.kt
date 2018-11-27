@@ -26,8 +26,6 @@ class CategoryEntity{
 
     var title: String = ""
 
-    var isMain:Boolean = false
-
     fun toCategory(childList:ArrayList<ListItem>? = null, template:Element? = null): Category{
         var elem = Category()
         elem.id = this.id

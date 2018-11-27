@@ -10,6 +10,7 @@ import pl.polsl.project.catalogex.interfaces.ElementDetailsInterface
 import pl.polsl.project.catalogex.interfaces.TextInputDialogInterface
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.Feature
+import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.dialogs.TextInputDialog
 import pl.polsl.project.catalogex.display.ShowMainScreen
 import pl.polsl.project.catalogex.enums.DetailListMode
@@ -74,9 +75,12 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
 
                 "addTemplate" -> {
                     template.title = input
+
+                    Utility.insertElement(template)
+
                     ShowMainScreen.listOfTemplate.add(template)
                     setResult(RESULT_OK,null)
-                    Toast.makeText(this, getString(R.string.added_template) + ": " + template.title, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.added_template) + ": " + template.title, Toast.LENGTH_SHORT).show()
                     finish()
                 }
             }

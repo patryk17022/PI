@@ -43,7 +43,7 @@ class Element:ListItem, Serializable {
         return element
     }
 
-     override fun insertValuesFrom(elem: ListItem){
+     override fun insertValuesInto(elem: ListItem){
          var listElem = elem as Element
          listElem.title = title
          listElem.category = category

@@ -1,10 +1,12 @@
 package pl.polsl.project.catalogex.edit
 
 import android.os.Bundle
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.create.CreateTemplateScreen
 import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.display.ShowMainScreen
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
@@ -18,6 +20,7 @@ class  EditTemplateScreen : CreateTemplateScreen() {
         if(oldElement == null) {
             oldElement = ShowMainScreen.actualElement as Element
             template = oldElement!!.copy() as Element
+            template.id = oldElement!!.id
         }
 
         ratingBarElement.setIsIndicator(true)
@@ -32,8 +35,10 @@ class  EditTemplateScreen : CreateTemplateScreen() {
         cancleButtonTemplate.setOnClickListener{ view -> finish()}
 
         acceptButtonTemplate.setOnClickListener{ view ->
-            ShowMainScreen.listOfTemplate.remove(oldElement!!)
-            ShowMainScreen.listOfTemplate.add(template)
+            template!!.insertValuesInto(oldElement!!)
+            Utility.insertElement(template)
+
+            Toast.makeText(this,getString(R.string.edited)+": " + template.title, Toast.LENGTH_SHORT).show()
             setResult(RESULT_OK,null)
             finish()
         }

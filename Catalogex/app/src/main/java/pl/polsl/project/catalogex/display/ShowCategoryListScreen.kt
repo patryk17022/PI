@@ -173,7 +173,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             }
 
             R.id.delete -> {
-                Toast.makeText(this, getString(R.string.deleted_category) +": " + categ.title,Toast.LENGTH_LONG) .show()
+                Toast.makeText(this, getString(R.string.deleted_category) +": " + categ.title,Toast.LENGTH_SHORT) .show()
                 deleteCategory(categ as Category)
             }
 
@@ -235,7 +235,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             R.id.action_delete ->{
 
                 var selected = (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
-                Toast.makeText(this, getString(R.string.deleted_category_list) +": " + selected.size.toString(),Toast.LENGTH_LONG) .show()
+                Toast.makeText(this, getString(R.string.deleted_category_list) +": " + selected.size.toString(),Toast.LENGTH_SHORT) .show()
 
                 for(i in 0 until selected.size){
                     deleteCategory(selected.get(i) as Category)

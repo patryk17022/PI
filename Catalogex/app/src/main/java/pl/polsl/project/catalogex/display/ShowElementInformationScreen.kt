@@ -84,12 +84,17 @@ class ShowElementInformationScreen : AppCompatActivity() {
             R.id.edit -> {
                 val intent = Intent(this, EditElementScreen::class.java)
                 ShowMainScreen.actualElement = ShowMainScreen.todoList
-                intent.putExtra("ELEMENT_NUMBER", ShowMainScreen.todoList.list.indexOf(element!!))
+
+                if(element!!.todo)
+                    intent.putExtra("ELEMENT_NUMBER", ShowMainScreen.todoList.list.indexOf(element!!))
+                else
+                    intent.putExtra("ELEMENT_NUMBER", element!!.category!!.list.indexOf(element!!))
+
                 startActivity(intent)
             }
 
             R.id.delete -> {
-                if(element!!.todo == true) {
+                if(element!!.todo) {
                     ShowMainScreen.todoList.list.remove(element!!)
                 }else {
                     element!!.category!!.list.remove(element!!)
@@ -102,7 +107,7 @@ class ShowElementInformationScreen : AppCompatActivity() {
                 ShowMainScreen.todoList.list.remove(element!!)
                 element!!.category!!.list.add(element!!)
                 element!!.todo = false
-                Toast.makeText(this, getString(R.string.moved) +": " + element!!.title, Toast.LENGTH_LONG) .show()
+                Toast.makeText(this, getString(R.string.moved) +": " + element!!.title, Toast.LENGTH_SHORT) .show()
                 finish()
             }
 
@@ -110,7 +115,7 @@ class ShowElementInformationScreen : AppCompatActivity() {
                 element!!.category!!.list.remove(element!!)
                 ShowMainScreen.todoList.list.add(element!!)
                 element!!.todo = true
-                Toast.makeText(this, getString(R.string.moved) +": " + element!!.title, Toast.LENGTH_LONG) .show()
+                Toast.makeText(this, getString(R.string.moved) +": " + element!!.title, Toast.LENGTH_SHORT) .show()
                 finish()
             }
 

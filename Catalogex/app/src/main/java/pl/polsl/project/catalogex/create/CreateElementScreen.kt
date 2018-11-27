@@ -14,6 +14,7 @@ import pl.polsl.project.catalogex.interfaces.ImageTakenInterface
 import pl.polsl.project.catalogex.interfaces.TextInputDialogInterface
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.dialogs.CameraScreenChooseDialogFragment
 import pl.polsl.project.catalogex.dialogs.TextInputDialog
 import pl.polsl.project.catalogex.display.ShowMainScreen
@@ -63,8 +64,11 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
         acceptButtonTemplate.setOnClickListener { view ->
             if(!elementText.text.toString().isEmpty()) {
                 element!!.indicator = ratingBarElement.rating.toInt()
+
+                Utility.insertElement(element!!)
+
                 category!!.list.add(element!!)
-                Toast.makeText(this, getString(R.string.added_element) + ": " + element!!.title, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.added_element) + ": " + element!!.title, Toast.LENGTH_SHORT).show()
                 finish()
             }else{
                 Toast.makeText(this,getString(R.string.noElementName),Toast.LENGTH_SHORT).show()

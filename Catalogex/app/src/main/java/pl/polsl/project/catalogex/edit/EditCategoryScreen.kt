@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.activity_create_category_screen.*
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.create.CreateCategoryScreen
 import pl.polsl.project.catalogex.data.Category
+import pl.polsl.project.catalogex.database.Utility
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class EditCategoryScreen : CreateCategoryScreen() {
@@ -43,6 +44,10 @@ class EditCategoryScreen : CreateCategoryScreen() {
 
             if(!nameCategoryText.text.toString().isEmpty()) {
                 category!!.title = nameCategoryText.text.toString()
+
+                Utility.insertCategories(category!!,parentCategory!!.id)
+
+                Toast.makeText(this,getString(R.string.edited)+": " + category!!.title, Toast.LENGTH_SHORT).show()
                 finish()
             }else{
                 Toast.makeText(this,getString(R.string.noCategoryName), Toast.LENGTH_SHORT).show()

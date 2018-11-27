@@ -12,7 +12,7 @@
     <string name="title_activity_element_information_screen">Informacje o elemencie</string>
     <string name="credits_title">Informacje</string>
 
-    <string name="catalog_button_text">Katalogi</string>
+    <string name="catalog_button_text">Kategorie</string>
     <string name="todo_button_text">Lista - To Do</string>
     <string name="credits_button_text">O Aplikacji</string>
     <string name="exit_button_text">Wyjście</string>
@@ -71,6 +71,7 @@
     <string name="descending">Malejące</string>
     <string name="sorting_type">Typ sortowania:</string>
     <string name="sort_by">Sortuj po:</string>
-    <string name="moved">Przenesiono</string>
+    <string name="moved">Przeniesiono</string>
+    <string name="edited">Edytowano</string>
 
 </resources>

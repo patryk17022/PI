@@ -26,7 +26,7 @@ class Category:ListItem, Serializable{
         return categ
     }
 
-    override fun insertValuesFrom(elem: ListItem){
+    override fun insertValuesInto(elem: ListItem){
         val listElem = elem as Category
         listElem.title = title
         listElem.list = list
@@ -39,7 +39,10 @@ class Category:ListItem, Serializable{
         elem.cat_id = parentId
         elem.temp_id = templateId
         elem.title = this.title
-        elem.isMain = isMain
+
+        if(isMain)
+            elem.cat_id = null
+
         return elem
     }
 }

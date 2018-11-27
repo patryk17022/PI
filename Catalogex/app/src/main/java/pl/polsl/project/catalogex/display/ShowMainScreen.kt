@@ -14,7 +14,7 @@ import pl.polsl.project.catalogex.database.Utility
 /*TODO:
 filtrowanie
 Dodac zarzadzanie templatami (edit template nie testowane)
-przechowywanie danych w bd -> work in progres x2 -> isMain skasowac i poprostu wykrywac czy jest null w cat_id, asynchroniczne queerry
+ asynchroniczne queerry + usuwanie
 
 Poprawic diagram
 */
@@ -36,42 +36,12 @@ class ShowMainScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
 
-        mainCategory.title = getString(R.string.title_activity_category_list_screen)
-        todoList.title = getString(R.string.todo_button_text)
-
         listOfTemplate = Utility.getTemplates()
         mainCategory = Utility.getMainCategory(listOfTemplate)
         todoList = Utility.getToDoCategory(mainCategory)
 
-        //TEST--------------------------------------------------------------------------------------
-
-//        for(i in 0 until 10){
-//            var test = Category()
-//            test.title = "Kategoria: " + i.toString()
-//            mainCategory.list.add(test)
-//        }
-//
-//        var cat = mainCategory.list.get(0) as Category
-//
-//        for(i in 0 until 10){
-//            var test = Category()
-//            test.title = "POD Kategoira; " + i.toString()
-//            cat.list.add(test)
-//        }
-//
-//        for(i in 1 until 10){
-//            for(k in 0 until 10) {
-//                var test = Element()
-//                     for(f in 0 until 10) {
-//                         test.addFeature(Feature("Informacja:  " + f, f.toString()))
-//                     }
-//                test.title = "Element:  " + k.toString()
-//                test.category = mainCategory.list.get(i) as Category
-//                (mainCategory.list.get(i) as Category).list.add(test)
-//                (mainCategory.list.get(i) as Category).template = Element()
-//            }
-//        }
-        //TEST--------------------------------------------------------------------------------------
+        mainCategory.title = getString(R.string.title_activity_category_list_screen)
+        todoList.title = getString(R.string.todo_button_text)
 
     }
 
@@ -93,13 +63,8 @@ class ShowMainScreen : AppCompatActivity() {
     }
 
     fun exitButton(view: View) {
-        //TODO zmien
-        Utility.insertElementsList(listOfTemplate)
-        Utility.insertCategories(mainCategory,null,true)
-        Utility.insertElementsList(todoList.list as ArrayList<Element>)
-        //TODO -----
-//        finish()
-//        System.exit(0)
+        finish()
+        System.exit(0)
     }
 
     override fun onResume() {

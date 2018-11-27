@@ -17,7 +17,7 @@ open class ListItem: Serializable {
         return listItem
     }
 
-    open fun insertValuesFrom(elem: ListItem) {
+    open fun insertValuesInto(elem: ListItem) {
         elem.title = title
     }
 }
