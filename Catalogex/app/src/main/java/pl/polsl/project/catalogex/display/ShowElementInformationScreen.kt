@@ -9,6 +9,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.dialogs.ShowPhotoDialog
 import pl.polsl.project.catalogex.edit.EditElementScreen
 import pl.polsl.project.catalogex.enums.DetailListMode
@@ -19,15 +20,15 @@ class ShowElementInformationScreen : AppCompatActivity() {
 
     private var element : Element? = null
 
-    fun updateView(){
+    private fun updateView(){
 
         supportActionBar!!.title = element!!.title
         ratingBarElement.rating = element!!.indicator.toFloat()
 
-        if(element!!.todo == true){
-            categoryText.text = "TODO: " + element!!.category!!.title
-        }else {
-            categoryText.text = element!!.category!!.title
+        when {
+            element!!.todo -> categoryText.text = "TODO: " + element!!.category!!.title
+            element!!.category == null -> categoryText.text = getString(R.string.template_button_text)
+            else -> categoryText.text = element!!.category!!.title
         }
 
         elementText.text = element!!.title
@@ -65,10 +66,11 @@ class ShowElementInformationScreen : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
-        if(element!!.todo)
-            menuInflater.inflate(R.menu.menu_todo_popup, menu)
-        else
-            menuInflater.inflate(R.menu.menu_element_popup, menu)
+        when {
+            element!!.todo -> menuInflater.inflate(R.menu.menu_todo_popup, menu)
+            element!!.category == null -> menuInflater.inflate(R.menu.menu_template, menu)
+            else -> menuInflater.inflate(R.menu.menu_element_popup, menu)
+        }
         return true
     }
 
@@ -82,39 +84,53 @@ class ShowElementInformationScreen : AppCompatActivity() {
         when (item.itemId) {
 
             R.id.edit -> {
+
                 val intent = Intent(this, EditElementScreen::class.java)
                 ShowMainScreen.actualElement = ShowMainScreen.todoList
 
-                if(element!!.todo)
+                if (element!!.todo)
                     intent.putExtra("ELEMENT_NUMBER", ShowMainScreen.todoList.list.indexOf(element!!))
                 else
                     intent.putExtra("ELEMENT_NUMBER", element!!.category!!.list.indexOf(element!!))
 
                 startActivity(intent)
+
             }
 
             R.id.delete -> {
-                if(element!!.todo) {
-                    ShowMainScreen.todoList.list.remove(element!!)
-                }else {
-                    element!!.category!!.list.remove(element!!)
+
+                if(element!!.category != null)
+                {
+                    if (element!!.todo) {
+                        ShowMainScreen.todoList.list.remove(element!!)
+                    } else {
+                        element!!.category!!.list.remove(element!!)
+                    }
+                    Utility.deleteElement(element!!)
+
+                }else{
+                    ShowTemplateListScreen.deleteTemplate(element!!)
                 }
 
                 finish()
             }
 
             R.id.fromToDo -> {
+                Utility.deleteElement(element!!)
                 ShowMainScreen.todoList.list.remove(element!!)
-                element!!.category!!.list.add(element!!)
                 element!!.todo = false
+                Utility.insertElement(element!!)
+                element!!.category!!.list.add(element!!)
                 Toast.makeText(this, getString(R.string.moved) +": " + element!!.title, Toast.LENGTH_SHORT) .show()
                 finish()
             }
 
             R.id.addToDoList ->{
+                Utility.deleteElement(element!!)
                 element!!.category!!.list.remove(element!!)
-                ShowMainScreen.todoList.list.add(element!!)
                 element!!.todo = true
+                Utility.insertElement(element!!)
+                ShowMainScreen.todoList.list.add(element!!)
                 Toast.makeText(this, getString(R.string.moved) +": " + element!!.title, Toast.LENGTH_SHORT) .show()
                 finish()
             }

@@ -16,6 +16,7 @@ import pl.polsl.project.catalogex.interfaces.TodoElementInterface
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
+import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.dialogs.SortDialog
 import pl.polsl.project.catalogex.edit.EditElementScreen
 import pl.polsl.project.catalogex.listElements.todoElement.TodoElementListViewAdapter
@@ -114,8 +115,8 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
             }
 
             R.id.delete -> {
-                Toast.makeText(this, getString(R.string.deleted_element) +": " + elem.title,Toast.LENGTH_SHORT) .show()
                 deleteElement(elem)
+                Toast.makeText(this, getString(R.string.deleted_element) +": " + elem.title,Toast.LENGTH_SHORT) .show()
             }
 
             R.id.fromToDo -> {
@@ -129,9 +130,11 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
     }
 
     fun moveFromTODO(elem:Element){
+        Utility.deleteElement(elem)
         todoList!!.list.remove(elem)
-        elem.category!!.list.add(elem)
         elem.todo = false
+        Utility.insertElement(elem)
+        elem.category!!.list.add(elem)
     }
 
     fun deleteElement(element: Element){

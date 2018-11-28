@@ -14,30 +14,26 @@ import kotlinx.android.synthetic.main.activity_category_element_list_screen.*
 import kotlinx.android.synthetic.main.content_category_element_list_screen.*
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.interfaces.ReturnDialogInterface
-import pl.polsl.project.catalogex.create.CreateCategoryScreen
+import pl.polsl.project.catalogex.create.CreateTemplateScreen
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.Utility
-import pl.polsl.project.catalogex.dialogs.SortDialog
-import pl.polsl.project.catalogex.edit.EditCategoryScreen
 import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
 
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
+class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
-    private var listOfCategory : Category? = null
     private var displayedList: ArrayList<ListItem> = ArrayList()
     private var menuPopupPosition: Int = -1
     private var searchWindow : SearchView? = null
-    private val sortDialog = SortDialog()
     private var isSelectionMode = false
 
     fun updateView(text: String = ""){
 
         displayedList.clear()
-        for(item in listOfCategory!!.list){
+        for(item in ShowMainScreen.listOfTemplate){
 
             if(text.isEmpty())
                 displayedList.add(item)
@@ -45,8 +41,6 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
                 if(item.title.toUpperCase().contains(text.toUpperCase()))
                     displayedList.add(item)
         }
-
-        sortDialog.sortTable(displayedList)
 
         val adapter = CategoryListViewAdapter(layoutInflater, displayedList)
         adapter.setIsSelectionMode(isSelectionMode)
@@ -60,27 +54,17 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         setContentView(R.layout.activity_category_element_list_screen)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        if(listOfCategory == null) listOfCategory = (ShowMainScreen.actualElement as Category)
-
-        supportActionBar!!.title = listOfCategory!!.title
-
         buttonAddList.setOnClickListener { view ->
-            val intent = Intent(this, CreateCategoryScreen::class.java)
-            ShowMainScreen.actualElement = listOfCategory
+            val intent = Intent(this, CreateTemplateScreen::class.java)
             startActivity(intent)
         }
 
         listCategoryScreen.setOnItemClickListener{ adapterView, view, i, l ->
             var intent: Intent?
 
-            var lelem = listOfCategory!!.list.get(listOfCategory!!.list.indexOf(displayedList[i]))
+            var lelem = ShowMainScreen.listOfTemplate.get(ShowMainScreen.listOfTemplate.indexOf(displayedList[i]))
 
-            if((lelem as Category).template == null)
-            {
-                intent = Intent(this, ShowCategoryListScreen::class.java)
-            } else {
-                intent = Intent(this, ShowElementListScreen::class.java)
-            }
+            intent = Intent(this, ShowElementInformationScreen::class.java)
 
             ShowMainScreen.actualElement = lelem
             startActivity(intent)
@@ -88,8 +72,8 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
         listCategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
             val popup = PopupMenu(applicationContext, view)
-            popup.menuInflater.inflate(R.menu.menu_options, popup.menu)
-            menuPopupPosition = listOfCategory!!.list.indexOf(displayedList[i])
+            popup.menuInflater.inflate(R.menu.menu_template, popup.menu)
+            menuPopupPosition = ShowMainScreen.listOfTemplate.indexOf(displayedList[i])
             popup.setOnMenuItemClickListener(this)
             popup.show()
             true
@@ -101,7 +85,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
-        menuInflater.inflate(R.menu.menu_category, menu)
+        menuInflater.inflate(R.menu.menu_template, menu)
         menuInflater.inflate(R.menu.menu_search, menu)
 
         searchWindow = menu.findItem(R.id.action_search).actionView as SearchView
@@ -145,11 +129,6 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
                 }
             }
 
-            R.id.sort ->{
-                sortDialog.setActivity(this)
-                sortDialog.show(supportFragmentManager, "sort")
-            }
-
             R.id.delete ->{
                 listCategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
@@ -163,19 +142,12 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
 
-        var categ = listOfCategory!!.list.get(menuPopupPosition)
+        var temp = ShowMainScreen.listOfTemplate.get(menuPopupPosition)
         when (item.itemId) {
 
-            R.id.edit -> {
-                val intent = Intent(this, EditCategoryScreen::class.java)
-                ShowMainScreen.actualElement = listOfCategory
-                intent.putExtra("CATEGORY_NUMBER", listOfCategory!!.list.indexOf(categ))
-                startActivity(intent)
-            }
-
             R.id.delete -> {
-                Toast.makeText(this, getString(R.string.deleted_category) +": " + categ.title,Toast.LENGTH_SHORT) .show()
-                deleteCategory(categ as Category)
+                Toast.makeText(this, getString(R.string.deleted_template) +": " + temp.title,Toast.LENGTH_SHORT) .show()
+                deleteTemplate(temp)
             }
 
         }
@@ -183,38 +155,41 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         return true
     }
 
+    companion object {
+        fun deleteTemplate(template: Element) {
 
-    fun deleteCategory(category: Category){
-        deleteFromTodo(category)
-        Utility.deleteCategories(category)
+            deleteOtherConnectedElement(template,ShowMainScreen.mainCategory)
 
-        listOfCategory!!.list.remove(category)
-    }
-
-    private fun deleteFromTodo(category:Category){
-
-        if(category.template == null)
-        {
-            for(i in 0 until category.list.size)
-            {
-                deleteCategory(category.list.get(i) as Category)
-            }
+            Utility.deleteTemplate(template)
+            ShowMainScreen.listOfTemplate.remove(template)
         }
-        else
-        {
-            var array = ShowMainScreen.todoList.list
-            var todel = ArrayList<Element>()
 
-            for (elem in array) {
-                if ((elem as Element).category == category) {
-                    todel.add(elem)
+        private fun deleteOtherConnectedElement(template: Element, category: Category) {
+
+            for(cat in category.list)
+            {
+                if(cat is Element){
+                    return
+                }else{
+                    if((cat as Category).template != null && cat.template!!.id == template.id){
+
+                        var array = ShowMainScreen.todoList.list
+                        var todel = ArrayList<Element>()
+
+                        for (elem in array) {
+                            if ((elem as Element).category == cat) {
+                                todel.add(elem)
+                            }
+                        }
+
+                        array.removeAll(todel)
+
+                        category.list.remove(cat)
+                    }else
+                        deleteOtherConnectedElement(template,cat)
                 }
             }
-
-            Utility.deleteElementList(todel)
-            array.removeAll(todel)
         }
-
     }
 
     override fun onItemCheckedStateChanged(p0: ActionMode?, p1: Int, p2: Long, p3: Boolean) {}
@@ -241,10 +216,10 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             R.id.action_delete ->{
 
                 var selected = (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
-                Toast.makeText(this, getString(R.string.deleted_category_list) +": " + selected.size.toString(),Toast.LENGTH_SHORT) .show()
+                Toast.makeText(this, getString(R.string.deleted_template_list) +": " + selected.size.toString(),Toast.LENGTH_SHORT) .show()
 
                 for(i in 0 until selected.size){
-                    deleteCategory(selected.get(i) as Category)
+                    deleteTemplate(selected.get(i) as Element)
                 }
 
                 selected.clear()

@@ -33,7 +33,7 @@ class Category:ListItem, Serializable{
         listElem.template = template
     }
 
-    fun ToCategoryEntity(parentId: Int? = null, templateId: Int? = null, isMain: Boolean = false): CategoryEntity {
+    fun toCategoryEntity(parentId: Int? = null, templateId: Int? = null, isMain: Boolean = false): CategoryEntity {
         var elem = CategoryEntity()
         elem.id = this.id
         elem.cat_id = parentId

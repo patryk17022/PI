@@ -7,16 +7,16 @@ import android.view.View
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
+import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.Utility
 
 
 /*TODO:
-filtrowanie
-Dodac zarzadzanie templatami (edit template nie testowane)
- asynchroniczne queerry + usuwanie
+filtrowanie elementów
+wywoływanie DB nie w głównym wątku
 
-Poprawic diagram
+Poprawic diagram i dopisac wymagania
 */
 
 @Suppress("UNUSED_PARAMETER")
@@ -43,6 +43,53 @@ class ShowMainScreen : AppCompatActivity() {
         mainCategory.title = getString(R.string.title_activity_category_list_screen)
         todoList.title = getString(R.string.todo_button_text)
 
+       /* if(mainCategory.list.size == 0) {
+            var f1 = Feature("1", "Przykładowy Tekst")
+            var f2 = Feature("2", "Przykładowy Tekst")
+
+            var temp = Element("Temp", null, 0)
+            temp.addFeature(f1)
+            temp.addFeature(f2)
+
+            listOfTemplate.add(temp)
+
+            var cat1 = Category()
+            cat1.title = "cat1"
+
+            var cat2 = Category()
+            cat2.title = "cat1->cat2"
+            cat2.template = temp
+
+            cat1.list.add(cat2)
+
+            mainCategory.list.add(cat1)
+
+            var elem1 = Element("elem1", cat2, 4)
+            cat2.list.add(elem1)
+
+            var elem2 = Element("elem2", cat2, 4)
+            todoList.list.add(elem2)
+
+            f1 = Feature("1", "elem1")
+            f2 = Feature("2", "elem1")
+
+            elem1.addFeature(f1)
+            elem1.addFeature(f2)
+
+            f1 = Feature("1", "elem2")
+            f2 = Feature("2", "elem2")
+
+            elem2.addFeature(f1)
+            elem2.addFeature(f2)
+
+            Utility.insertElementsList(listOfTemplate)
+            Utility.insertCategories(mainCategory,null,true)
+
+            @Suppress("UNCHECKED_CAST")
+            Utility.insertElementsList(todoList.list as ArrayList<Element>)
+
+        }*/
+
     }
 
     fun categoryScreenShow(view: View) {
@@ -51,8 +98,13 @@ class ShowMainScreen : AppCompatActivity() {
     }
 
     fun todoScreenShow(view: View) {
-        Utility.printDB()//TODO zmien
+        println(Utility.printDB())//TODO zmien
         val intent = Intent(this, ShowTodoScreen::class.java)
+        startActivity(intent)
+    }
+
+    fun templateScreenShow(view: View) {
+        val intent = Intent(this, ShowTemplateListScreen::class.java)
         startActivity(intent)
     }
 

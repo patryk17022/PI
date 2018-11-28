@@ -53,7 +53,7 @@ class Element:ListItem, Serializable {
          listElem.todo = todo
     }
 
-    fun ToElementEntity(parentId: Int? = null): ElementEntity {
+    fun toElementEntity(parentId: Int? = null): ElementEntity {
         var elem = ElementEntity()
         elem.id = this.id
 

@@ -32,9 +32,7 @@
         <activity
             android:name=".create.CreateTemplateScreen"
             android:label="@string/title_activity_create_template_screen"
-            android:theme="@style/AppTheme" >
-
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".create.CreateCategoryScreen"
@@ -59,9 +57,7 @@
         <activity
             android:name=".create.CreateElementScreen"
             android:label="@string/title_activity_create_element_screen"
-            android:theme="@style/AppTheme" >
-
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".edit.EditElementScreen"
@@ -81,6 +77,12 @@
         <activity
             android:name=".display.ShowTodoScreen"
             android:label="@string/todo_button_text"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".display.ShowMainScreen"/>
+
+        <activity
+            android:name=".display.ShowTemplateListScreen"
+            android:label="@string/title_activity_template_list_screen"
             android:theme="@style/AppTheme"
             android:parentActivityName=".display.ShowMainScreen"/>
 

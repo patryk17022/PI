@@ -10,10 +10,12 @@
     <string name="title_activity_edit_category_screen">Edytuj kategorię</string>
     <string name="title_activity_edit_template_screen">Edytuj wzór elementu</string>
     <string name="title_activity_element_information_screen">Informacje o elemencie</string>
+    <string name="title_activity_template_list_screen">Lista wzorów</string>
     <string name="credits_title">Informacje</string>
 
     <string name="catalog_button_text">Kategorie</string>
     <string name="todo_button_text">Lista - To Do</string>
+    <string name="template_button_text">Wzory</string>
     <string name="credits_button_text">O Aplikacji</string>
     <string name="exit_button_text">Wyjście</string>
 
@@ -61,8 +63,10 @@
     <string name="options">Opcje</string>
 
     <string name="deleted_category_list">Usunięta liczba kategorii</string>
+    <string name="deleted_template_list">Usunięta liczba wzorów</string>
     <string name="deleted_element_list">Usunięta liczba elementów</string>
     <string name="deleted_category">Usunięta kategorię</string>
+    <string name="deleted_template">Usunięta wzór</string>
     <string name="deleted_element">Usunięto element</string>
     <string name="added_element">Dodano element</string>
     <string name="added_category">Dodano kategorię</string>

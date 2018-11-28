@@ -15,7 +15,7 @@ class Feature: Serializable {
         this.detail = detail
     }
 
-    fun ToFeatureEntity(parentId: Int? = null): FeatureEntity {
+    fun toFeatureEntity(parentId: Int? = null): FeatureEntity {
         var feat = FeatureEntity()
         feat.id = this.id
         feat.elem_id = parentId

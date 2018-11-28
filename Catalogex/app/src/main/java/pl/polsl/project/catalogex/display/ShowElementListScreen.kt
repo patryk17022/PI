@@ -18,6 +18,7 @@ import pl.polsl.project.catalogex.create.CreateElementScreen
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
+import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.dialogs.SortDialog
 import pl.polsl.project.catalogex.edit.EditElementScreen
 import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
@@ -182,12 +183,15 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
     }
 
     fun moveToTODO(elem:Element){
+        Utility.deleteElement(elem)
         listOfElements!!.list.remove(elem)
-        ShowMainScreen.todoList.list.add(elem)
         elem.todo = true
+        Utility.insertElement(elem)
+        ShowMainScreen.todoList.list.add(elem)
     }
 
     fun deleteElement(element: Element){
+        Utility.deleteElement(element)
         listOfElements!!.list.remove(element)
     }
 
