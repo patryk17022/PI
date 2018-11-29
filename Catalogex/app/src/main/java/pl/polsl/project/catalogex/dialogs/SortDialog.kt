@@ -81,32 +81,36 @@ class SortDialog : DialogFragment() {
     fun selectorFeature(p: Element): String = p.list.get(whichFeatureSort).detail
 
     fun sortTable(array : ArrayList<ListItem>){
+        if(array.size > 1)
+            when(mode){
+                SortMode.NAME_ASC->{
+                    array.sortBy({selectorTitle(it)})
+                }
 
-        when(mode){
-            SortMode.NAME_ASC->{
-                array.sortBy({selectorTitle(it)})
-            }
+                SortMode.NAME_DESC->{
+                    array.sortByDescending({selectorTitle(it)})
+                }
 
-            SortMode.NAME_DESC->{
-                array.sortByDescending({selectorTitle(it)})
-            }
+                SortMode.RATING_ASC->{
+                    if(array[0] is Element)
+                        array.sortBy({selectorRating(it as Element)})
+                }
 
-            SortMode.RATING_ASC->{
-                array.sortBy({selectorRating(it as Element)})
-            }
+                SortMode.RATING_DESC->{
+                    if(array[0] is Element)
+                        array.sortByDescending({selectorRating(it as Element)})
+                }
 
-            SortMode.RATING_DESC->{
-                array.sortByDescending({selectorRating(it as Element)})
-            }
+                SortMode.FEATURE_ASC->{
+                    if(array[0] is Element)
+                        array.sortBy({selectorFeature(it as Element)})
+                }
 
-            SortMode.FEATURE_ASC->{
-                array.sortBy({selectorFeature(it as Element)})
+                SortMode.FEATURE_DESC->{
+                    if(array[0] is Element)
+                        array.sortByDescending({selectorFeature(it as Element)})
+                }
+                else -> {}
             }
-
-            SortMode.FEATURE_DESC->{
-                array.sortByDescending({selectorFeature(it as Element)})
-            }
-            else -> {}
-        }
     }
 }

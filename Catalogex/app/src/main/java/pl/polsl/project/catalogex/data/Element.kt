@@ -59,7 +59,7 @@ class Element:ListItem, Serializable {
 
         if(this.image != null) {
             val stream = ByteArrayOutputStream()
-            this.image!!.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            this.image!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
             elem.image = stream.toByteArray()
         } else {
             this.image = null

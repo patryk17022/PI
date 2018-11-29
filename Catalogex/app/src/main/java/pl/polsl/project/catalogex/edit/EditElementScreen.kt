@@ -1,6 +1,9 @@
 package pl.polsl.project.catalogex.edit
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
@@ -11,6 +14,18 @@ import pl.polsl.project.catalogex.database.Utility
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class EditElementScreen : CreateElementScreen() {
+
+    override fun updateView() {
+        super.updateView()
+        if(element!!.image != null){
+            elementImage.setImageBitmap(element!!.image)
+            elementImage.scaleType = ImageView.ScaleType.FIT_CENTER
+            deletePhotoButton.visibility = View.VISIBLE
+        } else {
+            elementImage.setImageBitmap(BitmapFactory.decodeResource(resources, R.drawable.image))
+            elementImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

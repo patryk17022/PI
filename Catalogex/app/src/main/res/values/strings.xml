@@ -77,5 +77,8 @@
     <string name="sort_by">Sortuj po:</string>
     <string name="moved">Przeniesiono</string>
     <string name="edited">Edytowano</string>
+    <string name="filter">Filtruj:</string>
+    <string name="value">Wartość</string>
+    <string name="none">Brak</string>
 
 </resources>

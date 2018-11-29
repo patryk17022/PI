@@ -19,6 +19,7 @@ import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.Utility
+import pl.polsl.project.catalogex.dialogs.FilterDialog
 import pl.polsl.project.catalogex.dialogs.SortDialog
 import pl.polsl.project.catalogex.edit.EditCategoryScreen
 import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
@@ -31,7 +32,6 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     private var displayedList: ArrayList<ListItem> = ArrayList()
     private var menuPopupPosition: Int = -1
     private var searchWindow : SearchView? = null
-    private val sortDialog = SortDialog()
     private var isSelectionMode = false
 
     fun updateView(text: String = ""){
@@ -46,7 +46,8 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
                     displayedList.add(item)
         }
 
-        sortDialog.sortTable(displayedList)
+        ShowMainScreen.sortDialog.sortTable(displayedList)
+        ShowMainScreen.filterDialog.filter(displayedList)
 
         val adapter = CategoryListViewAdapter(layoutInflater, displayedList)
         adapter.setIsSelectionMode(isSelectionMode)
@@ -96,7 +97,6 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         }
 
         listCategoryScreen.setMultiChoiceModeListener(this)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -146,8 +146,15 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             }
 
             R.id.sort ->{
-                sortDialog.setActivity(this)
-                sortDialog.show(supportFragmentManager, "sort")
+                ShowMainScreen.sortDialog.setActivity(this)
+                ShowMainScreen.sortDialog.setElement(null)
+                ShowMainScreen.sortDialog.show(supportFragmentManager, "sort")
+            }
+
+            R.id.filtr ->{
+                ShowMainScreen.filterDialog.setActivity(this)
+                ShowMainScreen.filterDialog.setCategory(listOfCategory!!)
+                ShowMainScreen.filterDialog.show(supportFragmentManager, "filter")
             }
 
             R.id.delete ->{

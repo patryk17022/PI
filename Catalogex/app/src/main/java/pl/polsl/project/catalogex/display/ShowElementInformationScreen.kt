@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.*
+import android.widget.ImageView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_create_template_screen.*
 import pl.polsl.project.catalogex.R
@@ -35,8 +36,10 @@ class ShowElementInformationScreen : AppCompatActivity() {
 
         if(element!!.image != null){
             elementImage.setImageBitmap(element!!.image)
+            elementImage.scaleType = ImageView.ScaleType.FIT_CENTER
         } else {
             elementImage.setImageBitmap(BitmapFactory.decodeResource(resources, R.drawable.image))
+            elementImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
         }
 
         val adapter = ElementDetailListViewAdapter(element!!.list, layoutInflater, this, DetailListMode.NONE_BUTTON)
@@ -86,12 +89,16 @@ class ShowElementInformationScreen : AppCompatActivity() {
             R.id.edit -> {
 
                 val intent = Intent(this, EditElementScreen::class.java)
-                ShowMainScreen.actualElement = ShowMainScreen.todoList
 
-                if (element!!.todo)
+
+                if (element!!.todo) {
+                    ShowMainScreen.actualElement = ShowMainScreen.todoList
                     intent.putExtra("ELEMENT_NUMBER", ShowMainScreen.todoList.list.indexOf(element!!))
-                else
+                }
+                else {
+                    ShowMainScreen.actualElement = element!!.category
                     intent.putExtra("ELEMENT_NUMBER", element!!.category!!.list.indexOf(element!!))
+                }
 
                 startActivity(intent)
 

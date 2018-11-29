@@ -10,12 +10,15 @@ import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.Utility
+import pl.polsl.project.catalogex.dialogs.FilterDialog
+import pl.polsl.project.catalogex.dialogs.SortDialog
 
 
 /*TODO:
-filtrowanie elementów
 wywoływanie DB nie w głównym wątku
-
+Testowanie
+To co jest implementowane zmienic na wywolania (tak jak spinner w filterdialog)
+Przeczyscic kod i jesli cos sie powtarza to zrobic dziedziczenia jedne funkcje i wgl
 Poprawic diagram i dopisac wymagania
 */
 
@@ -30,6 +33,9 @@ class ShowMainScreen : AppCompatActivity() {
         var todoList = Category()
 
         var actualElement : ListItem? = mainCategory
+
+        val sortDialog = SortDialog()
+        val filterDialog = FilterDialog()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +49,7 @@ class ShowMainScreen : AppCompatActivity() {
         mainCategory.title = getString(R.string.title_activity_category_list_screen)
         todoList.title = getString(R.string.todo_button_text)
 
-       /* if(mainCategory.list.size == 0) {
+        if(mainCategory.list.size == 0) {
             var f1 = Feature("1", "Przykładowy Tekst")
             var f2 = Feature("2", "Przykładowy Tekst")
 
@@ -88,7 +94,7 @@ class ShowMainScreen : AppCompatActivity() {
             @Suppress("UNCHECKED_CAST")
             Utility.insertElementsList(todoList.list as ArrayList<Element>)
 
-        }*/
+        }
 
     }
 
