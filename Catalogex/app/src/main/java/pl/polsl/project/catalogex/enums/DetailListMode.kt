@@ -1,5 +1,6 @@
 package pl.polsl.project.catalogex.enums
 
+@Suppress("unused")
 enum class DetailListMode(val mode: Int){
     NONE_BUTTON(0),
     EDIT_BUTTON(1),

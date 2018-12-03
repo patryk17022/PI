@@ -19,8 +19,6 @@ import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.Utility
-import pl.polsl.project.catalogex.dialogs.FilterDialog
-import pl.polsl.project.catalogex.dialogs.SortDialog
 import pl.polsl.project.catalogex.edit.EditElementScreen
 import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
 
@@ -51,6 +49,8 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         val adapter = CategoryListViewAdapter(layoutInflater, displayedList)
         adapter.setIsSelectionMode(isSelectionMode)
         listCategoryScreen.adapter = adapter
+
+        supportActionBar!!.title = listOfElements!!.title
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,8 +60,6 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         if(listOfElements == null) listOfElements = ShowMainScreen.actualElement as Category
-
-        supportActionBar!!.title = listOfElements!!.title
 
         listCategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
             val popup = PopupMenu(applicationContext, view)

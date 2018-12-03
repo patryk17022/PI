@@ -1,9 +1,7 @@
 package pl.polsl.project.catalogex.database.entity
 
 import android.arch.persistence.room.*
-import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.Feature
-import pl.polsl.project.catalogex.database.Utility
 
 @Entity(tableName = "features")
 class FeatureEntity {

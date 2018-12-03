@@ -7,7 +7,6 @@ import android.view.View
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
-import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.dialogs.FilterDialog
@@ -15,11 +14,13 @@ import pl.polsl.project.catalogex.dialogs.SortDialog
 
 
 /*TODO:
-wywoływanie DB nie w głównym wątku
-Testowanie
-To co jest implementowane zmienic na wywolania (tak jak spinner w filterdialog)
-Przeczyscic kod i jesli cos sie powtarza to zrobic dziedziczenia jedne funkcje i wgl
-Poprawic diagram i dopisac wymagania
+dla display + Utility
+   To co jest implementowane zmienic na wywolania (tak jak spinner w filterdialog)  ??
+   Przeczyscic kod i jesli cos sie powtarza to zrobic dziedziczenia jedne funkcje i wgl
+daigram klas
+wymagania funkcjonalne
+diagram przypadkow uzycia i wymagania
+komentarze i pisanie pracy
 */
 
 @Suppress("UNUSED_PARAMETER")
@@ -49,53 +50,6 @@ class ShowMainScreen : AppCompatActivity() {
         mainCategory.title = getString(R.string.title_activity_category_list_screen)
         todoList.title = getString(R.string.todo_button_text)
 
-        if(mainCategory.list.size == 0) {
-            var f1 = Feature("1", "Przykładowy Tekst")
-            var f2 = Feature("2", "Przykładowy Tekst")
-
-            var temp = Element("Temp", null, 0)
-            temp.addFeature(f1)
-            temp.addFeature(f2)
-
-            listOfTemplate.add(temp)
-
-            var cat1 = Category()
-            cat1.title = "cat1"
-
-            var cat2 = Category()
-            cat2.title = "cat1->cat2"
-            cat2.template = temp
-
-            cat1.list.add(cat2)
-
-            mainCategory.list.add(cat1)
-
-            var elem1 = Element("elem1", cat2, 4)
-            cat2.list.add(elem1)
-
-            var elem2 = Element("elem2", cat2, 4)
-            todoList.list.add(elem2)
-
-            f1 = Feature("1", "elem1")
-            f2 = Feature("2", "elem1")
-
-            elem1.addFeature(f1)
-            elem1.addFeature(f2)
-
-            f1 = Feature("1", "elem2")
-            f2 = Feature("2", "elem2")
-
-            elem2.addFeature(f1)
-            elem2.addFeature(f2)
-
-            Utility.insertElementsList(listOfTemplate)
-            Utility.insertCategories(mainCategory,null,true)
-
-            @Suppress("UNCHECKED_CAST")
-            Utility.insertElementsList(todoList.list as ArrayList<Element>)
-
-        }
-
     }
 
     fun categoryScreenShow(view: View) {
@@ -104,7 +58,7 @@ class ShowMainScreen : AppCompatActivity() {
     }
 
     fun todoScreenShow(view: View) {
-        println(Utility.printDB())//TODO zmien
+        println(Utility.printDB())//TODO usun
         val intent = Intent(this, ShowTodoScreen::class.java)
         startActivity(intent)
     }

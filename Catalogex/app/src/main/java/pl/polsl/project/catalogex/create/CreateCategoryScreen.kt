@@ -16,44 +16,11 @@ import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.display.ShowMainScreen
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-open class CreateCategoryScreen : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+open class CreateCategoryScreen : AppCompatActivity() {
 
     protected var parentCategory: Category? = null
     protected var templateList: ArrayList<Element>? = null
     protected val ADD_NEW_TEMPLATE = 1
-
-    override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-
-        if(pos == templateSpinner.adapter.count-1) {
-            val intent = Intent(this, CreateTemplateScreen::class.java)
-            startActivityForResult(intent, ADD_NEW_TEMPLATE)
-        }
-
-        acceptButton.isEnabled = (pos != 0 && pos != templateSpinner.adapter.count-1) || categoryOptionRadio.isChecked
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>) {}
-
-    private fun initializeSpinner(){
-
-        val spinnerTemplate = ArrayList<String>()
-
-        spinnerTemplate.add(getString(R.string.addNewTemplate))
-
-        for(i in 0 until templateList!!.size)
-            spinnerTemplate.add(templateList!![i].title)
-
-        spinnerTemplate.add(getString(R.string.noTemplate))
-
-        val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, spinnerTemplate)
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        templateSpinner.adapter = dataAdapter
-
-        templateSpinner.setSelection(0)
-        templateSpinner.onItemSelectedListener = this
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,7 +70,42 @@ open class CreateCategoryScreen : AppCompatActivity(), AdapterView.OnItemSelecte
 
         cancleButton.setOnClickListener{ view -> finish()}
 
+        templateSpinner.onItemSelectedListener =
+                object:  AdapterView.OnItemSelectedListener{
+                    override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+
+                        if(pos == templateSpinner.adapter.count-1) {
+                            val intent = Intent(applicationContext, CreateTemplateScreen::class.java)
+                            startActivityForResult(intent, ADD_NEW_TEMPLATE)
+                        }
+
+                        acceptButton.isEnabled = (pos != 0 && pos != templateSpinner.adapter.count-1) || categoryOptionRadio.isChecked
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {}
+                }
+
         initializeSpinner()
+    }
+
+    private fun initializeSpinner(){
+
+        val spinnerTemplate = ArrayList<String>()
+
+        spinnerTemplate.add(getString(R.string.addNewTemplate))
+
+        for(i in 0 until templateList!!.size)
+            spinnerTemplate.add(templateList!![i].title)
+
+        spinnerTemplate.add(getString(R.string.noTemplate))
+
+        val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, spinnerTemplate)
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        templateSpinner.adapter = dataAdapter
+
+        templateSpinner.setSelection(0)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

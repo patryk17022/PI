@@ -29,7 +29,7 @@ class ShowPhotoDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val display = windowManager!!.getDefaultDisplay()
+        val display = windowManager!!.defaultDisplay
         val size = Point()
         display.getSize(size)
 

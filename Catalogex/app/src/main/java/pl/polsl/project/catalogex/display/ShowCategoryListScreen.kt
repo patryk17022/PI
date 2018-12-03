@@ -19,8 +19,6 @@ import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.Utility
-import pl.polsl.project.catalogex.dialogs.FilterDialog
-import pl.polsl.project.catalogex.dialogs.SortDialog
 import pl.polsl.project.catalogex.edit.EditCategoryScreen
 import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
 
@@ -52,6 +50,8 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         val adapter = CategoryListViewAdapter(layoutInflater, displayedList)
         adapter.setIsSelectionMode(isSelectionMode)
         listCategoryScreen.adapter = adapter
+
+        supportActionBar!!.title = listOfCategory!!.title
     }
 
 
@@ -62,8 +62,6 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         if(listOfCategory == null) listOfCategory = (ShowMainScreen.actualElement as Category)
-
-        supportActionBar!!.title = listOfCategory!!.title
 
         buttonAddList.setOnClickListener { view ->
             val intent = Intent(this, CreateCategoryScreen::class.java)

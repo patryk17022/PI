@@ -55,7 +55,7 @@ class TextInputDialog : DialogFragment() {
         acceptButtonDialog.setOnClickListener{ acceptAction()}
     }
 
-    fun acceptAction(){
+    private fun acceptAction(){
         ( activity as TextInputDialogInterface).doPositiveClick(tag!!,featureValueInput.text.toString(),position)
         softKeyboard(featureValueInput,false)
         dismiss()
@@ -72,7 +72,7 @@ class TextInputDialog : DialogFragment() {
         super.onPause()
     }
 
-    fun softKeyboard(view: View, show:Boolean) {
+    private fun softKeyboard(view: View, show:Boolean) {
         if(activity != null && view.requestFocus()) {
 
             val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

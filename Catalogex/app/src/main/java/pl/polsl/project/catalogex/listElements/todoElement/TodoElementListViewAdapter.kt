@@ -1,7 +1,6 @@
 package pl.polsl.project.catalogex.listElements.todoElement
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import pl.polsl.project.catalogex.display.ShowMainScreen
 class  TodoElementListViewAdapter : BaseAdapter {
 
     private var categoryList = ArrayList<Element>()
-    private var context: Context? = null
     private var layoutInflater : LayoutInflater? = null
     private var activity : Activity? = null
     private var isSelectionMode : Boolean = false
@@ -32,9 +30,8 @@ class  TodoElementListViewAdapter : BaseAdapter {
         return selectedList
     }
 
-    constructor(context: Context, categoryList: ArrayList<Element>, layoutInflater: LayoutInflater, activity: Activity) : super() {
+    constructor(categoryList: ArrayList<Element>, layoutInflater: LayoutInflater, activity: Activity) : super() {
         this.categoryList = categoryList
-        this.context = context
         this.layoutInflater = layoutInflater
         this.activity = activity
     }
@@ -57,7 +54,7 @@ class  TodoElementListViewAdapter : BaseAdapter {
         vh.tvTitle.text = categoryList[position].title
 
         vh.imButton.setOnClickListener { viewL ->
-            val popup = PopupMenu(context, viewL)
+            val popup = PopupMenu(activity, viewL)
             popup.menuInflater.inflate(R.menu.menu_todo_popup, popup.menu)
             (activity as TodoElementInterface).setListElement(position)
             popup.setOnMenuItemClickListener(activity as PopupMenu.OnMenuItemClickListener)
@@ -65,7 +62,7 @@ class  TodoElementListViewAdapter : BaseAdapter {
         }
 
         vh.button.setOnClickListener{ viewL ->
-            val intent = Intent(context, ShowElementInformationScreen::class.java)
+            val intent = Intent(activity, ShowElementInformationScreen::class.java)
             ShowMainScreen.actualElement = categoryList[position]
             activity!!.startActivity(intent)
         }

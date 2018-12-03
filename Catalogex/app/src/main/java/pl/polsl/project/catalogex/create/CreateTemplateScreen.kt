@@ -20,17 +20,7 @@ import pl.polsl.project.catalogex.listElements.elementDetails.ElementDetailListV
 open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, TextInputDialogInterface {
 
     protected var template = Element()
-    protected val inputText = TextInputDialog()
-
-    fun updateFeatureList(){
-        val adapter = ElementDetailListViewAdapter(template.list, layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
-        featureList.adapter = adapter
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
+    private val inputText = TextInputDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +43,18 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
         }
     }
 
-    fun addFeatureToElement(){
+    private fun updateFeatureList(){
+        val adapter = ElementDetailListViewAdapter(template.list, layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
+        featureList.adapter = adapter
+    }
+
+    private fun addFeatureToElement(){
         inputText.show(supportFragmentManager, "addFeature")
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     override fun doPositiveClick(tag: String, input: String, position: Int) {

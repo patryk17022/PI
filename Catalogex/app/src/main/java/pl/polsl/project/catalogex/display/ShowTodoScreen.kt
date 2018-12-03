@@ -17,8 +17,6 @@ import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.Utility
-import pl.polsl.project.catalogex.dialogs.FilterDialog
-import pl.polsl.project.catalogex.dialogs.SortDialog
 import pl.polsl.project.catalogex.edit.EditElementScreen
 import pl.polsl.project.catalogex.listElements.todoElement.TodoElementListViewAdapter
 import kotlin.collections.ArrayList
@@ -43,7 +41,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
         ShowMainScreen.sortDialog.sortTable(displayedList as ArrayList<ListItem>)
         ShowMainScreen.filterDialog.filter(displayedList as ArrayList<ListItem>)
 
-        val adapter = TodoElementListViewAdapter(this, displayedList, layoutInflater, this)
+        val adapter = TodoElementListViewAdapter( displayedList, layoutInflater, this)
         adapter.setIsSelectionMode(isSelectionMode)
         listTodo.adapter = adapter
     }

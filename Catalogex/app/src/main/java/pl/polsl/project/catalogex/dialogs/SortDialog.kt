@@ -76,9 +76,9 @@ class SortDialog : DialogFragment() {
         }
     }
 
-    fun selectorTitle(p: ListItem): String = p.title
-    fun selectorRating(p: Element): Int = p.indicator
-    fun selectorFeature(p: Element): String = p.list.get(whichFeatureSort).detail
+    private fun selectorTitle(p: ListItem): String = p.title
+    private fun selectorRating(p: Element): Int = p.indicator
+    private fun selectorFeature(p: Element): String = p.list.get(whichFeatureSort).detail
 
     fun sortTable(array : ArrayList<ListItem>){
         if(array.size > 1)

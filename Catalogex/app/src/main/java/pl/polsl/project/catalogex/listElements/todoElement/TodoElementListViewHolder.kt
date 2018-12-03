@@ -12,5 +12,4 @@ class TodoElementListViewHolder(view: View?) {
     val imButton: ImageButton = view?.findViewById(R.id.dropDownListCategory) as ImageButton
     val button: Button = view?.findViewById(R.id.elementInfoButton) as Button
     val check: CheckBox = view?.findViewById(R.id.checkBox) as CheckBox
-
 }

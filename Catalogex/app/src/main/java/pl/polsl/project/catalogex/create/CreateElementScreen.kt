@@ -28,19 +28,6 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
     protected var element: Element? = null
     protected val inputText = TextInputDialog()
 
-    open fun updateView(){
-        val adapter = ElementDetailListViewAdapter(element!!.list, layoutInflater, this, DetailListMode.ADD_BUTTON)
-        featureList.adapter = adapter
-        elementText.text = element!!.title
-        categoryText.text = category!!.title
-        ratingBarElement.rating = element!!.indicator.toFloat()
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_template_screen)
@@ -82,9 +69,22 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
             deletePhotoButton.visibility = View.INVISIBLE
         }
 
-        elementImage.setOnClickListener{onImageScelect()}
+        elementImage.setOnClickListener{onImageSelect()}
         editNameElement.setOnClickListener{editNameButton()}
         cancleButtonTemplate.setOnClickListener{view -> finish()}
+    }
+
+    open fun updateView(){
+        val adapter = ElementDetailListViewAdapter(element!!.list, layoutInflater, this, DetailListMode.ADD_BUTTON)
+        featureList.adapter = adapter
+        elementText.text = element!!.title
+        categoryText.text = category!!.title
+        ratingBarElement.rating = element!!.indicator.toFloat()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     override fun imageHasBeenTaken(bitmap: Bitmap) {
@@ -94,13 +94,13 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
         deletePhotoButton.visibility = View.VISIBLE
     }
 
-    fun onImageScelect(){
+    private fun onImageSelect(){
         val choosePhoto = CameraScreenChooseDialogFragment()
         choosePhoto.setArguments(this,packageManager)
         choosePhoto.show(supportFragmentManager, "photoGallery")
     }
 
-    fun editNameButton(){
+    private fun editNameButton(){
         inputText.setText(getString(R.string.name_label))
         inputText.show(supportFragmentManager, "textNameInput")
     }

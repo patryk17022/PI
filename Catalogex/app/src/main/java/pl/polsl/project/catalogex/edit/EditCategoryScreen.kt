@@ -14,25 +14,6 @@ class EditCategoryScreen : CreateCategoryScreen() {
 
     private var category: Category? = null
 
-    fun updateView(){
-
-        nameCategoryText.setText(category!!.title)
-
-        categoryOptionRadio.isEnabled = false
-        elementOptionRadio.isEnabled = false
-        templateSpinner.isEnabled = false
-
-        if(category!!.template != null){
-            elementOptionRadio.isChecked = true
-            templateSpinner.visibility = View.VISIBLE
-            templateLabelCategory.visibility = View.VISIBLE
-
-            var index = templateList!!.indexOf(category!!.template)+1
-            templateSpinner.setSelection(index)
-
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,5 +36,24 @@ class EditCategoryScreen : CreateCategoryScreen() {
 
         }
         updateView()
+    }
+
+    private fun updateView(){
+
+        nameCategoryText.setText(category!!.title)
+
+        categoryOptionRadio.isEnabled = false
+        elementOptionRadio.isEnabled = false
+        templateSpinner.isEnabled = false
+
+        if(category!!.template != null){
+            elementOptionRadio.isChecked = true
+            templateSpinner.visibility = View.VISIBLE
+            templateLabelCategory.visibility = View.VISIBLE
+
+            var index = templateList!!.indexOf(category!!.template)+1
+            templateSpinner.setSelection(index)
+
+        }
     }
 }

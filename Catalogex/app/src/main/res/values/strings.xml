@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Catalogex</string>
+    <string name="app_name">Cataloger</string>
     <string name="app_motto">Simple, Fast &amp; Flexible</string>
     <string name="title_activity_category_list_screen">Lista kategorii</string>
     <string name="title_activity_element_list_screen">Lista elementów</string>

@@ -71,6 +71,9 @@ class Utility : Application() {
             //If the database was cleared
             if(category.id == null){
                 Utility.insertCategories(category,null,true)
+
+                //TODO adding default templates
+
             }
 
             return category

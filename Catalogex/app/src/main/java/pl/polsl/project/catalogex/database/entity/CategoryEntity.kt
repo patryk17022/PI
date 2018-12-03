@@ -4,7 +4,6 @@ import android.arch.persistence.room.*
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
-import javax.xml.transform.Templates
 
 @Entity(tableName = "categories")
 class CategoryEntity{
