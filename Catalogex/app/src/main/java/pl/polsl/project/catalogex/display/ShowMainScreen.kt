@@ -12,15 +12,11 @@ import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.dialogs.FilterDialog
 import pl.polsl.project.catalogex.dialogs.SortDialog
 
-
 /*TODO:
-dla display + Utility
-   To co jest implementowane zmienic na wywolania (tak jak spinner w filterdialog)  ??
-   Przeczyscic kod i jesli cos sie powtarza to zrobic dziedziczenia jedne funkcje i wgl
 daigram klas
-wymagania funkcjonalne
-diagram przypadkow uzycia i wymagania
-komentarze i pisanie pracy
+wymagania funkcjonalne poprawic
+diagram przypadkow uzycia poprawic
+komentarze i praca
 */
 
 @Suppress("UNUSED_PARAMETER")
@@ -58,7 +54,7 @@ class ShowMainScreen : AppCompatActivity() {
     }
 
     fun todoScreenShow(view: View) {
-        println(Utility.printDB())//TODO usun
+//        println(Utility.printDB())//TODO usun
         val intent = Intent(this, ShowTodoScreen::class.java)
         startActivity(intent)
     }
@@ -69,7 +65,7 @@ class ShowMainScreen : AppCompatActivity() {
     }
 
     fun creditsScreenShow(view: View) {
-        Utility.deleteDatabaseFile()    //TODO usun
+//        Utility.deleteDatabaseFile()    //TODO usun
         val intent = Intent(this, ShowCreditsScreen::class.java)
         startActivity(intent)
     }

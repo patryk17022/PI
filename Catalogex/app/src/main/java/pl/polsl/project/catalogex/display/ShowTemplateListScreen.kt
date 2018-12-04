@@ -115,7 +115,7 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
     fun closeSearchWindow(){
         if(searchWindow != null) {
-            searchWindow!!.setIconified(true)
+            searchWindow!!.isIconified = true
             searchWindow!!.onActionViewCollapsed()
         }
     }

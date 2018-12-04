@@ -54,7 +54,6 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         supportActionBar!!.title = listOfCategory!!.title
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -127,7 +126,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         closeSearchWindow()
     }
 
-    fun closeSearchWindow(){
+    private fun closeSearchWindow(){
         if(searchWindow != null) {
             searchWindow!!.setIconified(true)
             searchWindow!!.onActionViewCollapsed()
@@ -188,8 +187,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         return true
     }
 
-
-    fun deleteCategory(category: Category){
+    private fun deleteCategory(category: Category){
         deleteFromTodo(category)
         Utility.deleteCategories(category)
 

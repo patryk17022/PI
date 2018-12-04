@@ -30,8 +30,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
     private var menuPopupPosition: Int = -1
     private var searchWindow : SearchView? = null
     private var isSelectionMode = false
-    private var multichoiceDelete = false
-
+    private var multiChoiceDelete = false
 
     fun updateView(text: String = ""){
 
@@ -137,12 +136,12 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
             }
 
             R.id.delete ->{
-                multichoiceDelete = true
+                multiChoiceDelete = true
                 listCategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
 
             R.id.addToDoList ->{
-                multichoiceDelete = false
+                multiChoiceDelete = false
                 listCategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
 
@@ -153,7 +152,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         return super.onOptionsItemSelected(item)
     }
 
-    fun closeSearchWindow(){
+    private fun closeSearchWindow(){
         if(searchWindow != null) {
             searchWindow!!.setIconified(true)
             searchWindow!!.onActionViewCollapsed()
@@ -187,8 +186,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         return true
     }
 
-    fun moveToTODO(elem:Element){
-        Utility.deleteElement(elem)
+    private fun moveToTODO(elem:Element){
         listOfElements!!.list.remove(elem)
         elem.todo = true
         Utility.insertElement(elem)
@@ -204,7 +202,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
 
     override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
 
-        if(multichoiceDelete) {
+        if(multiChoiceDelete) {
             menuInflater.inflate(R.menu.multichoice_menu_delete, p1)
         }else {
             menuInflater.inflate(R.menu.multichoice_menu_accept, p1)

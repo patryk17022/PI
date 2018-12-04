@@ -123,7 +123,6 @@ class ShowElementInformationScreen : AppCompatActivity() {
             }
 
             R.id.fromToDo -> {
-                Utility.deleteElement(element!!)
                 ShowMainScreen.todoList.list.remove(element!!)
                 element!!.todo = false
                 Utility.insertElement(element!!)
@@ -133,7 +132,6 @@ class ShowElementInformationScreen : AppCompatActivity() {
             }
 
             R.id.addToDoList ->{
-                Utility.deleteElement(element!!)
                 element!!.category!!.list.remove(element!!)
                 element!!.todo = true
                 Utility.insertElement(element!!)

@@ -2,6 +2,7 @@ package pl.polsl.project.catalogex.database
 
 import android.app.Application
 import android.arch.persistence.room.*
+import android.content.Context
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.Feature
@@ -9,12 +10,15 @@ import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.entity.CategoryEntity
 import pl.polsl.project.catalogex.database.entity.ElementEntity
 import pl.polsl.project.catalogex.database.entity.FeatureEntity
+import pl.polsl.project.catalogex.R
+import pl.polsl.project.catalogex.display.ShowMainScreen
 import java.io.File
 
 class Utility : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        appContext = this
         db =  Room.databaseBuilder(applicationContext, AppDatabase::class.java, databaseName).allowMainThreadQueries().build()
         dbPath = packageManager.getPackageInfo(packageName,0).applicationInfo.dataDir + "/databases"
         updateAllLists()
@@ -25,6 +29,7 @@ class Utility : Application() {
         private var databaseName: String = "database_catalogex_1.0"
         private var dbPath : String = ""
         private var db: AppDatabase? = null
+        private var appContext: Context? = null
 
         private var listTemplates : List<ElementEntity>? = null
         private var listCategories : List<CategoryEntity>? = null
@@ -72,7 +77,37 @@ class Utility : Application() {
             if(category.id == null){
                 Utility.insertCategories(category,null,true)
 
-                //TODO adding default templates
+                //Inicjalizing starting templates
+
+                var templateBook = Element()
+                templateBook.title = appContext!!.getString(R.string.template_book)
+                templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_author),appContext!!.getString(R.string.example_Text)))
+                templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_publisher),appContext!!.getString(R.string.example_Text)))
+                templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_year),appContext!!.getString(R.string.example_Text)))
+                templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_binding),appContext!!.getString(R.string.example_Text)))
+                templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_pages),appContext!!.getString(R.string.example_Text)))
+                Utility.insertElement(templateBook)
+                ShowMainScreen.listOfTemplate.add(templateBook)
+
+                var templateMovie = Element()
+                templateMovie.title = appContext!!.getString(R.string.template_movie)
+                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_genre),appContext!!.getString(R.string.example_Text)))
+                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_time),appContext!!.getString(R.string.example_Text)))
+                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_director),appContext!!.getString(R.string.example_Text)))
+                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_scenario),appContext!!.getString(R.string.example_Text)))
+                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_country),appContext!!.getString(R.string.example_Text)))
+                Utility.insertElement(templateMovie)
+                ShowMainScreen.listOfTemplate.add(templateMovie)
+
+                var templateMusic = Element()
+                templateMusic.title = appContext!!.getString(R.string.template_music)
+                templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_artist),appContext!!.getString(R.string.example_Text)))
+                templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_genre),appContext!!.getString(R.string.example_Text)))
+                templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_time),appContext!!.getString(R.string.example_Text)))
+                templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_year),appContext!!.getString(R.string.example_Text)))
+                templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_carrier),appContext!!.getString(R.string.example_Text)))
+                Utility.insertElement(templateMusic)
+                ShowMainScreen.listOfTemplate.add(templateMusic)
 
             }
 
@@ -96,7 +131,7 @@ class Utility : Application() {
             return todoList
         }
 
-        fun getCategoryList(parentCategory: Category, template: ArrayList<Element>) : ArrayList<ListItem> {
+        private fun getCategoryList(parentCategory: Category, template: ArrayList<Element>) : ArrayList<ListItem> {
 
             var list = ArrayList<ListItem>()
 
@@ -133,7 +168,7 @@ class Utility : Application() {
             return list
         }
 
-        fun getElementsList(parentCategory: Category) : ArrayList<Element>{
+        private fun getElementsList(parentCategory: Category) : ArrayList<Element>{
 
             var list = ArrayList<Element>()
 
@@ -150,7 +185,7 @@ class Utility : Application() {
             return list
         }
 
-        fun getFeatureList(elemId: Int) : ArrayList<Feature>{
+        private fun getFeatureList(elemId: Int) : ArrayList<Feature>{
 
             var list = ArrayList<Feature>()
 
@@ -164,7 +199,7 @@ class Utility : Application() {
             return list
         }
 
-        fun findCategory(index: Int, mainCategory: ListItem): Category? {
+        private fun findCategory(index: Int, mainCategory: ListItem): Category? {
 
             if(mainCategory is Element)
                 return null
@@ -187,7 +222,7 @@ class Utility : Application() {
             insertElementsList(arrayListOf(element))
         }
 
-        fun insertElementsList(listOfElements : ArrayList<Element>){
+        private fun insertElementsList(listOfElements : ArrayList<Element>){
 
             for(temp in listOfElements){
 
@@ -300,7 +335,7 @@ class Utility : Application() {
             temp.id = null
         }
 
-        fun formatString(str:String, long:Int = 25):String{
+        private fun formatString(str:String, long:Int = 25):String{
             var out = str
             for(i in str.length-1 until long){
                 out+= ' '

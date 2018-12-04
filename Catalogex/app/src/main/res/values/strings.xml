@@ -81,4 +81,25 @@
     <string name="value">Wartość</string>
     <string name="none">Brak</string>
 
+    <string name="template_book">Książka</string>
+    <string name="template_book_author">Autor</string>
+    <string name="template_book_publisher">Wydawnictwo</string>
+    <string name="template_book_year">Rok wydania</string>
+    <string name="template_book_binding">Rodzaj oprawy</string>
+    <string name="template_book_pages">Ilośc stron</string>
+
+    <string name="template_movie">Film</string>
+    <string name="template_movie_genre">Gatunek</string>
+    <string name="template_movie_time">Czas trwania (min)</string>
+    <string name="template_movie_director">Reżyseria</string>
+    <string name="template_movie_scenario">Scenariusz</string>
+    <string name="template_movie_country">Kraj produkcji</string>
+
+    <string name="template_music">Muzyka</string>
+    <string name="template_music_artist">Wykonawca</string>
+    <string name="template_music_genre">Gatunek</string>
+    <string name="template_music_time">Czas trwania (min)</string>
+    <string name="template_music_year">Rok nagrania</string>
+    <string name="template_music_carrier">Nośnik</string>
+
 </resources>

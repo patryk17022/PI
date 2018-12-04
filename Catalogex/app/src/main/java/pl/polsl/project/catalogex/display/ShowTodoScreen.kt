@@ -28,7 +28,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
     private var displayedList: ArrayList<Element> = ArrayList()
     private var menuPopupPosition: Int = -1
     private var isSelectionMode = false
-    private var multichoiceDelete = false
+    private var multiChoiceDelete = false
 
     @Suppress("UNCHECKED_CAST")
     private fun updateView(){
@@ -72,7 +72,6 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
         updateView()
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -94,12 +93,12 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
             }
 
             R.id.delete ->{
-                multichoiceDelete = true
+                multiChoiceDelete = true
                 listTodo.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
 
             R.id.fromToDo ->{
-                multichoiceDelete = false
+                multiChoiceDelete = false
                 listTodo.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
 
@@ -135,8 +134,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
         return true
     }
 
-    fun moveFromTODO(elem:Element){
-        Utility.deleteElement(elem)
+    private fun moveFromTODO(elem:Element){
         todoList!!.list.remove(elem)
         elem.todo = false
         Utility.insertElement(elem)
@@ -144,6 +142,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
     }
 
     fun deleteElement(element: Element){
+        Utility.deleteElement(element)
         todoList!!.list.remove(element)
     }
 
@@ -151,7 +150,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
 
     override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
 
-        if(multichoiceDelete) {
+        if(multiChoiceDelete) {
             menuInflater.inflate(R.menu.multichoice_menu_delete, p1)
 
         }else {
