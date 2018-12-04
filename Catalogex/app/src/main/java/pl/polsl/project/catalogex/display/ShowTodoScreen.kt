@@ -12,7 +12,6 @@ import android.widget.AbsListView
 import android.widget.PopupMenu
 import android.widget.Toast
 import pl.polsl.project.catalogex.interfaces.ReturnDialogInterface
-import pl.polsl.project.catalogex.interfaces.TodoElementInterface
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
@@ -22,7 +21,7 @@ import pl.polsl.project.catalogex.listElements.todoElement.TodoElementListViewAd
 import kotlin.collections.ArrayList
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
+class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
     private var todoList: Category? = null
     private var displayedList: ArrayList<Element> = ArrayList()
@@ -63,7 +62,7 @@ class ShowTodoScreen : AppCompatActivity(), TodoElementInterface, PopupMenu.OnMe
         return true
     }
 
-    override fun setListElement(position: Int) {
+    fun setListElement(position: Int) {
         menuPopupPosition = todoList!!.list.indexOf(displayedList.get(position))
     }
 

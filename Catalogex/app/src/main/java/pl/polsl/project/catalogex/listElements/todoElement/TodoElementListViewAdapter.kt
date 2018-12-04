@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import pl.polsl.project.catalogex.R
-import pl.polsl.project.catalogex.interfaces.TodoElementInterface
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.display.ShowElementInformationScreen
 import pl.polsl.project.catalogex.display.ShowMainScreen
+import pl.polsl.project.catalogex.display.ShowTodoScreen
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class  TodoElementListViewAdapter : BaseAdapter {
@@ -56,7 +56,7 @@ class  TodoElementListViewAdapter : BaseAdapter {
         vh.imButton.setOnClickListener { viewL ->
             val popup = PopupMenu(activity, viewL)
             popup.menuInflater.inflate(R.menu.menu_todo_popup, popup.menu)
-            (activity as TodoElementInterface).setListElement(position)
+            (activity as ShowTodoScreen).setListElement(position)
             popup.setOnMenuItemClickListener(activity as PopupMenu.OnMenuItemClickListener)
             popup.show()
         }

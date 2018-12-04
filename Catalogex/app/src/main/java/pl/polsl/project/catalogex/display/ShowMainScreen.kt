@@ -12,13 +12,6 @@ import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.dialogs.FilterDialog
 import pl.polsl.project.catalogex.dialogs.SortDialog
 
-/*TODO:
-daigram klas
-wymagania funkcjonalne poprawic
-diagram przypadkow uzycia poprawic
-komentarze i praca
-*/
-
 @Suppress("UNUSED_PARAMETER")
 class ShowMainScreen : AppCompatActivity() {
 
@@ -54,7 +47,6 @@ class ShowMainScreen : AppCompatActivity() {
     }
 
     fun todoScreenShow(view: View) {
-//        println(Utility.printDB())//TODO usun
         val intent = Intent(this, ShowTodoScreen::class.java)
         startActivity(intent)
     }
@@ -65,7 +57,6 @@ class ShowMainScreen : AppCompatActivity() {
     }
 
     fun creditsScreenShow(view: View) {
-//        Utility.deleteDatabaseFile()    //TODO usun
         val intent = Intent(this, ShowCreditsScreen::class.java)
         startActivity(intent)
     }
