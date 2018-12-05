@@ -43,6 +43,11 @@ class TextInputDialog : DialogFragment() {
             if ( i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                 acceptAction()
             }
+            if( i == KeyEvent.KEYCODE_DEL && keyEvent.getAction() == KeyEvent.ACTION_DOWN && !featureValueInput.text.isEmpty())
+            {
+                featureValueInput.setText(featureValueInput.text.toString().substring(0,featureValueInput.text.length-1))
+                featureValueInput.setSelection(featureValueInput.text.length)
+            }
             true
         }
 
