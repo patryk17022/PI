@@ -56,8 +56,8 @@ class ShowElementInformationScreen : AppCompatActivity() {
 
         editNameElement.visibility = View.INVISIBLE
         addFeatureButton.visibility = View.INVISIBLE
-        acceptButtonTemplate.visibility = View.INVISIBLE
-        cancleButtonTemplate.visibility = View.INVISIBLE
+        acceptButtonTemplate.visibility = View.GONE
+        cancleButtonTemplate.visibility = View.GONE
         ratingBarElement.setIsIndicator(true)
 
         elementImage.setOnClickListener{

@@ -96,6 +96,7 @@ class Utility : Application() {
                 templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_director),appContext!!.getString(R.string.example_Text)))
                 templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_scenario),appContext!!.getString(R.string.example_Text)))
                 templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_country),appContext!!.getString(R.string.example_Text)))
+                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_year),appContext!!.getString(R.string.example_Text)))
                 Utility.insertElement(templateMovie)
                 ShowMainScreen.listOfTemplate.add(templateMovie)
 

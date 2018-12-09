@@ -1,7 +1,12 @@
 package pl.polsl.project.catalogex.display
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Environment
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.ActionMode
@@ -21,6 +26,9 @@ import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.edit.EditElementScreen
 import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
@@ -31,6 +39,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
     private var searchWindow : SearchView? = null
     private var isSelectionMode = false
     private var multiChoiceDelete = false
+    private val REQUEST_EXPORT_PAERMISSION = 1
 
     fun updateView(text: String = ""){
 
@@ -145,11 +154,55 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
                 listCategoryScreen.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
 
+            R.id.exportCategory ->{
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this,
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),REQUEST_EXPORT_PAERMISSION)
+                }else {
+                    exportCategory()
+                }
+            }
+
         }
 
         closeSearchWindow()
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+
+        if (requestCode == REQUEST_EXPORT_PAERMISSION && !grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            exportCategory()
+    }
+
+    private fun exportCategory(){
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd_HHmmss")
+        val filename = listOfElements!!.title + "_" + sdf.format(Date()) + ".csv"
+
+        try {
+
+            val file = File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS), filename)
+
+            if (displayedList.size > 0) {
+                file.writeText("Id;" + (displayedList[0] as Element).exportToString(this, true))
+
+                var index = 0;
+                for (elem in displayedList) {
+                    file.appendText(index.toString() + ";" + (elem as Element).exportToString(this))
+                    index += 1
+                }
+            }
+        }
+        catch (ex: Exception){
+            Toast.makeText(this, getString(R.string.saved_error_file), Toast.LENGTH_SHORT) .show()
+        }
+
+        Toast.makeText(this, getString(R.string.saved_file) +": \n" + filename + "\n" + getString(R.string.in_download) , Toast.LENGTH_LONG) .show()
+
     }
 
     private fun closeSearchWindow(){

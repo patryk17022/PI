@@ -39,18 +39,18 @@
     <string name="sort">Sortuj</string>
     <string name="filtr">Filtruj</string>
 
-    <string name="name_label">Nazwa:</string>
+    <string name="name_label">Nazwa</string>
     <string name="element_photo">Zdjęcie przedmiotu</string>
     <string name="cancle_button">Anuluj</string>
     <string name="accept_button">Zatwierdź</string>
-    <string name="category_title">Kategoria:</string>
+    <string name="category_title">Kategoria</string>
     <string name="rating_label">Ocena</string>
-    <string name="additional_information">Informacje dodatkowe:</string>
+    <string name="additional_information">Informacje dodatkowe</string>
     <string name="delete_element">Usuń element</string>
     <string name="adding_information">Dodawanie informacji</string>
-    <string name="category_type">Zawartość kategorii:</string>
+    <string name="category_type">Zawartość kategorii</string>
     <string name="categor_name">Nazwa kategorii</string>
-    <string name="choose_template_element">Wybierz wzór dla elementów:</string>
+    <string name="choose_template_element">Wybierz wzór dla kategorii</string>
     <string name="add_to_todo_list">Dodaj do listy TODO</string>
     <string name="back_to_category">Przenieś do kategori</string>
 
@@ -73,13 +73,17 @@
     <string name="added_template">Dodano wzór</string>
     <string name="ascending">Rosnące</string>
     <string name="descending">Malejące</string>
-    <string name="sorting_type">Typ sortowania:</string>
-    <string name="sort_by">Sortuj po:</string>
+    <string name="sorting_type">Typ sortowania</string>
+    <string name="sort_by">Sortuj po</string>
     <string name="moved">Przeniesiono</string>
     <string name="edited">Edytowano</string>
-    <string name="filter">Filtruj:</string>
+    <string name="filter">Filtruj po</string>
     <string name="value">Wartość</string>
     <string name="none">Brak</string>
+    <string name="export_category">Eksportuj kategorię</string>
+    <string name="saved_file">Zapisano plik</string>
+    <string name="saved_error_file">Nie udało się zapisać pliku</string>
+    <string name="in_download">w folderze Downloads</string>
 
     <string name="template_book">Książka</string>
     <string name="template_book_author">Autor</string>
@@ -94,6 +98,7 @@
     <string name="template_movie_director">Reżyseria</string>
     <string name="template_movie_scenario">Scenariusz</string>
     <string name="template_movie_country">Kraj produkcji</string>
+    <string name="template_movie_year">Rok produkcji</string>
 
     <string name="template_music">Muzyka</string>
     <string name="template_music_artist">Wykonawca</string>

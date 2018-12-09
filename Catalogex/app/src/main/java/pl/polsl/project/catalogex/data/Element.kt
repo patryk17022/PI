@@ -1,6 +1,8 @@
 package pl.polsl.project.catalogex.data
 
+import android.content.Context
 import android.graphics.Bitmap
+import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.database.entity.ElementEntity
 import java.io.ByteArrayOutputStream
 import java.io.Serializable
@@ -70,5 +72,32 @@ class Element:ListItem, Serializable {
         elem.indicator = this.indicator
         elem.todo = this.todo
         return elem
+    }
+
+    fun exportToString(context: Context, asTemplate:Boolean=false) : String{
+
+        var line = ""
+
+        if(asTemplate){
+            line+= context.getString(R.string.name_label) + ";"
+            line+= context.getString(R.string.category_title) + ";"
+            line+= context.getString(R.string.rating_label)
+
+            for(elem in list){
+                line+= ";" + elem.title
+            }
+
+        }else{
+            line+= title + ";"
+            line+= category!!.title + ";"
+            line+= indicator.toString()
+
+            for(elem in list){
+                line+= ";" + elem.detail
+            }
+
+        }
+
+        return line +"\n"
     }
 }
