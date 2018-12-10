@@ -88,9 +88,18 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
     }
 
     override fun imageHasBeenTaken(bitmap: Bitmap) {
-        val bm = Bitmap.createScaledBitmap(bitmap,1024,1024,false)
+
+        val newSize = 1024
+        var bm = bitmap
+        val scale = Math.abs(bitmap.height.toDouble()/bitmap.width.toDouble())
+
+        if(bitmap.height > newSize || bitmap.width > newSize) {
+            bm = Bitmap.createScaledBitmap(bitmap, newSize, (newSize * scale).toInt(), false)
+        }
+
         element!!.image = bm
         elementImage.setImageBitmap(bm)
+
         elementImage.scaleType = ImageView.ScaleType.FIT_CENTER
         deletePhotoButton.visibility = View.VISIBLE
     }
