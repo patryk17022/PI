@@ -1,8 +1,13 @@
 package pl.polsl.project.catalogex.display
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.ActionMode
 import android.view.Menu
 import kotlinx.android.synthetic.main.activity_todo_screen.*
@@ -18,6 +23,9 @@ import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.edit.EditElementScreen
 import pl.polsl.project.catalogex.listElements.todoElement.TodoElementListViewAdapter
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.collections.ArrayList
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
@@ -28,6 +36,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
     private var menuPopupPosition: Int = -1
     private var isSelectionMode = false
     private var multiChoiceDelete = false
+    private val REQUEST_EXPORT_PAERMISSION = 1
 
     @Suppress("UNCHECKED_CAST")
     private fun updateView(){
@@ -101,8 +110,59 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
                 listTodo.startActionMode(this as AbsListView.MultiChoiceModeListener)
             }
 
+            R.id.exportTodo ->{
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this,
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),REQUEST_EXPORT_PAERMISSION)
+                }else {
+                    exportTODO()
+                }
+            }
+
         }
         return true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+
+        if (requestCode == REQUEST_EXPORT_PAERMISSION && !grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            exportTODO()
+    }
+
+    private fun exportTODO(){
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd_HHmmss")
+        val filename = "TODO_list_" + sdf.format(Date()) + ".csv"
+
+        try {
+
+            val file = File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS), filename)
+
+            if (displayedList.size > 0) {
+                for(temp in ShowMainScreen.listOfTemplate) {
+                    file.appendText("Id;" + getString(R.string.category) + ";" + temp.exportToString(this, true))
+
+                    var index = 0
+                    for (elem in displayedList) {
+                        if(elem.category!!.template == temp) {
+                            file.appendText(index.toString() + ";" + elem.category!!.title + ";" + elem.exportToString(this))
+                        }
+                        index += 1
+                    }
+
+                    file.appendText("\n")
+
+                }
+            }
+        }
+        catch (ex: Exception){
+            Toast.makeText(this, getString(R.string.saved_error_file), Toast.LENGTH_SHORT) .show()
+        }
+
+        Toast.makeText(this, getString(R.string.saved_file) +": \n" + filename + "\n" + getString(R.string.in_download) , Toast.LENGTH_LONG) .show()
+
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {

@@ -47,7 +47,7 @@
 
         <Button
             android:id="@+id/acceptButtonDialog"
-            android:layout_width="wrap_content"
+            android:layout_width="111dp"
             android:layout_height="wrap_content"
             android:text="@string/accept_button"
             tools:layout_editor_absoluteX="85dp"

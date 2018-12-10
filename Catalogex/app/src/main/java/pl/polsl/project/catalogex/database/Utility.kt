@@ -18,6 +18,10 @@ class Utility : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        initialize()
+    }
+
+    fun initialize(){
         appContext = this
         db =  Room.databaseBuilder(applicationContext, AppDatabase::class.java, databaseName).allowMainThreadQueries().build()
         dbPath = packageManager.getPackageInfo(packageName,0).applicationInfo.dataDir + "/databases"
@@ -382,10 +386,9 @@ class Utility : Application() {
 
             val databases = File(dbPath)
             val db = File(databases, databaseName)
-            if (db.delete())
-                println("Database deleted")
-            else
-                println("Failed to delete database")
+            if (db.delete()) {
+                println("DB deleted")
+            }
 
         }
     }

@@ -81,6 +81,7 @@
     <string name="value">Wartość</string>
     <string name="none">Brak</string>
     <string name="export_category">Eksportuj kategorię</string>
+    <string name="export_todo">Eksportuj listę TODO</string>
     <string name="saved_file">Zapisano plik</string>
     <string name="saved_error_file">Nie udało się zapisać pliku</string>
     <string name="in_download">w folderze Downloads</string>

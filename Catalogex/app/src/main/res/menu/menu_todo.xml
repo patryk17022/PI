@@ -9,7 +9,10 @@
         android:title="@string/filtr"/>
     <item
         android:id="@+id/delete"
-        android:title="@string/delete"></item>
+        android:title="@string/delete"/>
+    <item
+        android:id="@+id/exportTodo"
+        android:title="@string/export_todo" />
     <item
         android:id="@+id/fromToDo"
         android:title="@string/back_to_category" />

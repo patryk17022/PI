@@ -32,13 +32,16 @@ class ShowMainScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
 
+        inicialize()
+    }
+
+    fun inicialize(){
         listOfTemplate = Utility.getTemplates()
         mainCategory = Utility.getMainCategory(listOfTemplate)
         todoList = Utility.getToDoCategory(mainCategory)
 
         mainCategory.title = getString(R.string.title_activity_category_list_screen)
         todoList.title = getString(R.string.todo_button_text)
-
     }
 
     fun categoryScreenShow(view: View) {
