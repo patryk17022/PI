@@ -8,7 +8,7 @@ import pl.polsl.project.catalogex.database.entity.CategoryEntity
 import pl.polsl.project.catalogex.database.entity.ElementEntity
 import pl.polsl.project.catalogex.database.entity.FeatureEntity
 
-@Database(entities = arrayOf(CategoryEntity::class,ElementEntity::class,FeatureEntity::class), version = 1)
+@Database(entities = [CategoryEntity::class, ElementEntity::class, FeatureEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun categoryDAO(): CategoryDAO
     abstract fun elementDAO(): ElementDAO

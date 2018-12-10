@@ -14,6 +14,7 @@ import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.display.ShowMainScreen
 import java.io.File
 
+@Suppress("unused")
 class Utility : Application() {
 
     override fun onCreate() {
@@ -21,7 +22,7 @@ class Utility : Application() {
         initialize()
     }
 
-    fun initialize(){
+    private fun initialize(){
         appContext = this
         db =  Room.databaseBuilder(applicationContext, AppDatabase::class.java, databaseName).allowMainThreadQueries().build()
         dbPath = packageManager.getPackageInfo(packageName,0).applicationInfo.dataDir + "/databases"
@@ -30,7 +31,7 @@ class Utility : Application() {
 
     companion object {
 
-        private var databaseName: String = "database_catalogex_1.0"
+        private var databaseName: String = "database_cataloger_1.0"
         private var dbPath : String = ""
         private var db: AppDatabase? = null
         private var appContext: Context? = null
@@ -51,11 +52,11 @@ class Utility : Application() {
 
         fun getTemplates(): ArrayList<Element> {
 
-            var list = ArrayList<Element>()
+            val list = ArrayList<Element>()
 
             for (i in listTemplates!!) {
 
-                var elem = i.toElement()
+                val elem = i.toElement()
                 elem.list = getFeatureList(i.id!!)
                 list.add(elem)
             }
@@ -64,7 +65,7 @@ class Utility : Application() {
 
         fun getMainCategory(template: ArrayList<Element>): Category {
 
-            var category = Category()
+            val category = Category()
 
             for (i in listCategories!!) {
 
@@ -81,9 +82,9 @@ class Utility : Application() {
             if(category.id == null){
                 Utility.insertCategories(category,null,true)
 
-                //Inicjalizing starting templates
+                //Initializing starting templates
 
-                var templateBook = Element()
+                val templateBook = Element()
                 templateBook.title = appContext!!.getString(R.string.template_book)
                 templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_author),appContext!!.getString(R.string.example_Text)))
                 templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_publisher),appContext!!.getString(R.string.example_Text)))
@@ -93,7 +94,7 @@ class Utility : Application() {
                 Utility.insertElement(templateBook)
                 ShowMainScreen.listOfTemplate.add(templateBook)
 
-                var templateMovie = Element()
+                val templateMovie = Element()
                 templateMovie.title = appContext!!.getString(R.string.template_movie)
                 templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_genre),appContext!!.getString(R.string.example_Text)))
                 templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_time),appContext!!.getString(R.string.example_Text)))
@@ -104,7 +105,7 @@ class Utility : Application() {
                 Utility.insertElement(templateMovie)
                 ShowMainScreen.listOfTemplate.add(templateMovie)
 
-                var templateMusic = Element()
+                val templateMusic = Element()
                 templateMusic.title = appContext!!.getString(R.string.template_music)
                 templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_artist),appContext!!.getString(R.string.example_Text)))
                 templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_genre),appContext!!.getString(R.string.example_Text)))
@@ -121,11 +122,11 @@ class Utility : Application() {
 
         fun getToDoCategory(mainCategory: Category): Category {
 
-            var todoList = Category()
+            val todoList = Category()
 
             for (i in listTODO!!) {
 
-                var elem = i.toElement()
+                val elem = i.toElement()
 
                 elem.list = getFeatureList(i.id!!)
                 elem.category = findCategory(i.cat_id!!,mainCategory)
@@ -138,13 +139,13 @@ class Utility : Application() {
 
         private fun getCategoryList(parentCategory: Category, template: ArrayList<Element>) : ArrayList<ListItem> {
 
-            var list = ArrayList<ListItem>()
+            val list = ArrayList<ListItem>()
 
             for(cat in listCategories!!){
 
                 if(cat.cat_id!= null && cat.cat_id == parentCategory.id) {
 
-                    var category = cat.toCategory(null,null)
+                    val category = cat.toCategory(null,null)
 
                     if (cat.temp_id == null) {
                         category.list = getCategoryList(category,template)
@@ -175,13 +176,13 @@ class Utility : Application() {
 
         private fun getElementsList(parentCategory: Category) : ArrayList<Element>{
 
-            var list = ArrayList<Element>()
+            val list = ArrayList<Element>()
 
             for (el in listElement!!) {
 
                 if(el.cat_id == parentCategory.id) {
 
-                    var elem = el.toElement(parentCategory,getFeatureList(el.id!!))
+                    val elem = el.toElement(parentCategory,getFeatureList(el.id!!))
                     list.add(elem)
 
                 }
@@ -192,11 +193,11 @@ class Utility : Application() {
 
         private fun getFeatureList(elemId: Int) : ArrayList<Feature>{
 
-            var list = ArrayList<Feature>()
+            val list = ArrayList<Feature>()
 
             for (f in listFeature!!) {
                 if(f.elem_id == elemId) {
-                    var feature = f.toFeature()
+                    val feature = f.toFeature()
                     list.add(feature)
                 }
             }
@@ -300,37 +301,37 @@ class Utility : Application() {
 
             updateAllLists()
 
-            var catInexes = ArrayList<Int>()
-            var elemInexes = ArrayList<Int>()
-            var featInexes = ArrayList<Int>()
+            val catIndexes = ArrayList<Int>()
+            val elemIndexes = ArrayList<Int>()
+            val featIndexes = ArrayList<Int>()
 
             for(cat in listCategories!!){
                 if(cat.temp_id == temp.id){
-                    catInexes.add(cat.id!!)
+                    catIndexes.add(cat.id!!)
                     db!!.categoryDAO().delete(cat)
                     cat.id = null
                 }
             }
 
             for(elem in listElement!!){
-                if(catInexes.contains(elem.cat_id)){
-                    elemInexes.add(elem.id!!)
+                if(catIndexes.contains(elem.cat_id)){
+                    elemIndexes.add(elem.id!!)
                     db!!.elementDAO().delete(elem)
                     elem.id = null
                 }
             }
 
             for(elem in listTODO!!){
-                if(catInexes.contains(elem.cat_id)){
-                    elemInexes.add(elem.id!!)
+                if(catIndexes.contains(elem.cat_id)){
+                    elemIndexes.add(elem.id!!)
                     db!!.elementDAO().delete(elem)
                     elem.id = null
                 }
             }
 
             for(feat in listFeature!!){
-                if(elemInexes.contains(feat.elem_id) || temp.id == feat.elem_id){
-                    featInexes.add(feat.id!!)
+                if(elemIndexes.contains(feat.elem_id) || temp.id == feat.elem_id){
+                    featIndexes.add(feat.id!!)
                     db!!.featureDAO().delete(feat)
                     feat.id = null
                 }
@@ -352,9 +353,9 @@ class Utility : Application() {
 
             var str = ""
 
-            var listCategories = db!!.categoryDAO().getAll()
-            var listElement =  db!!.elementDAO().getAll()
-            var listFeature =  db!!.featureDAO().getAll()
+            val listCategories = db!!.categoryDAO().getAll()
+            val listElement =  db!!.elementDAO().getAll()
+            val listFeature =  db!!.featureDAO().getAll()
 
             str+= ("---------------------------------------------- CATEGORY TABLE ----------------------------------------------\n")
             str+= ("Elements: " + listCategories.size+"\n")

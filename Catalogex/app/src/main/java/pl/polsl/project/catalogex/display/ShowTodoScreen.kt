@@ -1,6 +1,7 @@
 package pl.polsl.project.catalogex.display
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
@@ -28,7 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-@Suppress("UNUSED_ANONYMOUS_PARAMETER")
+@Suppress("UNUSED_ANONYMOUS_PARAMETER", "PrivatePropertyName")
 class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
     private var todoList: Category? = null
@@ -36,7 +37,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
     private var menuPopupPosition: Int = -1
     private var isSelectionMode = false
     private var multiChoiceDelete = false
-    private val REQUEST_EXPORT_PAERMISSION = 1
+    private val REQUEST_EXPORT_PERMISSION = 1
 
     @Suppress("UNCHECKED_CAST")
     private fun updateView(){
@@ -72,7 +73,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
     }
 
     fun setListElement(position: Int) {
-        menuPopupPosition = todoList!!.list.indexOf(displayedList.get(position))
+        menuPopupPosition = todoList!!.list.indexOf(displayedList[position])
     }
 
     override fun onResume() {
@@ -94,7 +95,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
                 ShowMainScreen.sortDialog.show(supportFragmentManager, "sort")
             }
 
-            R.id.filtr ->{
+            R.id.filter ->{
                 ShowMainScreen.filterDialog.setActivity(this)
                 ShowMainScreen.filterDialog.setCategory(ShowMainScreen.todoList)
                 ShowMainScreen.filterDialog.show(supportFragmentManager, "filter")
@@ -114,7 +115,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this,
-                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),REQUEST_EXPORT_PAERMISSION)
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),REQUEST_EXPORT_PERMISSION)
                 }else {
                     exportTODO()
                 }
@@ -126,10 +127,12 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
 
-        if (requestCode == REQUEST_EXPORT_PAERMISSION && !grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        if (requestCode == REQUEST_EXPORT_PERMISSION && !grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             exportTODO()
     }
 
+    @Suppress("SpellCheckingInspection")
+    @SuppressLint("SimpleDateFormat")
     private fun exportTODO(){
 
         val sdf = SimpleDateFormat("yyyy-MM-dd_HHmmss")
@@ -167,7 +170,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
 
-        var elem = todoList!!.list.get(menuPopupPosition) as Element
+        val elem = todoList!!.list[menuPopupPosition] as Element
 
         when (item.itemId) {
 
@@ -231,7 +234,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
 
-        var selected = (listTodo.adapter as TodoElementListViewAdapter).getSelectedList()
+        val selected = (listTodo.adapter as TodoElementListViewAdapter).getSelectedList()
 
         when(item!!.itemId){
 
@@ -240,7 +243,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
                 Toast.makeText(this, getString(R.string.deleted_element_list) +": " + selected.size.toString(), Toast.LENGTH_SHORT) .show()
 
                 for(i in 0 until selected.size){
-                    deleteElement(selected.get(i) as Element)
+                    deleteElement(selected[i] as Element)
                 }
             }
 
@@ -249,7 +252,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
                 Toast.makeText(this, getString(R.string.moved) +": " + selected.size.toString(), Toast.LENGTH_SHORT) .show()
 
                 for(i in 0 until selected.size){
-                    moveFromTODO(selected.get(i) as Element)
+                    moveFromTODO(selected[i] as Element)
                 }
 
             }

@@ -8,6 +8,7 @@ import android.arch.persistence.room.ColumnInfo
 import android.graphics.BitmapFactory
 
 
+@Suppress("PropertyName")
 @Entity(tableName = "elements")
 class ElementEntity{
 
@@ -18,8 +19,8 @@ class ElementEntity{
     var image: ByteArray? = null
 
     @ForeignKey(entity = CategoryEntity::class,
-            parentColumns = arrayOf("id"),
-            childColumns = arrayOf("category_id"))
+            parentColumns = ["id"],
+            childColumns = ["category_id"])
     @ColumnInfo(name = "category_id")
     var cat_id : Int? = null
 
@@ -28,7 +29,7 @@ class ElementEntity{
     var todo : Boolean = false
 
     fun toElement(parentCategory: Category? = null ,childFeatureList: ArrayList<Feature>? = null) : Element{
-        var elem = Element()
+        val elem = Element()
         elem.id = this.id
         elem.title = this.title
         elem.category = parentCategory

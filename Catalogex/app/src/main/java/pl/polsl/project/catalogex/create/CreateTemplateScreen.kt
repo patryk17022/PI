@@ -36,7 +36,7 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
 
         addFeatureButton.setOnClickListener{ view -> addFeatureToElement()}
 
-        cancleButtonTemplate.setOnClickListener{ view -> finish()}
+        cancelButtonTemplate.setOnClickListener{ view -> finish()}
 
         acceptButtonTemplate.setOnClickListener{ view ->
             inputText.show(supportFragmentManager, "addTemplate")
@@ -62,7 +62,7 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
             when (tag) {
                 "addFeature" -> {
 
-                    var feature = Feature(input, getString(R.string.example_Text))
+                    val feature = Feature(input, getString(R.string.example_Text))
 
                     template.addFeature(feature)
                     updateFeatureList()
@@ -70,7 +70,7 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
                 }
 
                 "editFeature" -> {
-                    template.list.get(position).title = input
+                    template.list[position].title = input
                 }
 
                 "addTemplate" -> {

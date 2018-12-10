@@ -54,10 +54,10 @@
             tools:layout_editor_absoluteY="77dp" />
 
         <Button
-            android:id="@+id/cancleButtonDialog"
+            android:id="@+id/cancelButtonDialog"
             android:layout_width="111dp"
             android:layout_height="wrap_content"
-            android:text="@string/cancle_button"
+            android:text="@string/cancel_button"
             tools:layout_editor_absoluteX="189dp"
             tools:layout_editor_absoluteY="77dp" />
     </LinearLayout>

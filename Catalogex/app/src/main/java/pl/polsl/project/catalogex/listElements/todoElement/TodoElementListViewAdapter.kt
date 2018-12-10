@@ -14,11 +14,10 @@ import pl.polsl.project.catalogex.display.ShowMainScreen
 import pl.polsl.project.catalogex.display.ShowTodoScreen
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-class  TodoElementListViewAdapter : BaseAdapter {
+class  TodoElementListViewAdapter(private var categoryList: ArrayList<Element>, layoutInflater: LayoutInflater, activity: Activity) : BaseAdapter() {
 
-    private var categoryList = ArrayList<Element>()
-    private var layoutInflater : LayoutInflater? = null
-    private var activity : Activity? = null
+    private var layoutInflater : LayoutInflater? = layoutInflater
+    private var activity : Activity? = activity
     private var isSelectionMode : Boolean = false
     private var selectedList: ArrayList<ListItem> = ArrayList()
 
@@ -28,12 +27,6 @@ class  TodoElementListViewAdapter : BaseAdapter {
 
     fun getSelectedList():ArrayList<ListItem>{
         return selectedList
-    }
-
-    constructor(categoryList: ArrayList<Element>, layoutInflater: LayoutInflater, activity: Activity) : super() {
-        this.categoryList = categoryList
-        this.layoutInflater = layoutInflater
-        this.activity = activity
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {

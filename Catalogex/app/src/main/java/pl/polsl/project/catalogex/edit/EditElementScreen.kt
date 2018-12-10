@@ -18,8 +18,8 @@ class EditElementScreen : CreateElementScreen() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var index = intent.getIntExtra("ELEMENT_NUMBER",-1)
-        var elementOld = category!!.list.get(index) as Element
+        val index = intent.getIntExtra("ELEMENT_NUMBER",-1)
+        val elementOld = category!!.list[index] as Element
         element = elementOld.copy() as Element
         element!!.id = elementOld.id
 

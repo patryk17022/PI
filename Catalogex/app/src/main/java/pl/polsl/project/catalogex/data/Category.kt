@@ -17,13 +17,13 @@ class Category:ListItem, Serializable{
     }
 
     override fun copy():ListItem{
-        var categ = Category(title,template)
+        val category = Category(title,template)
 
         for(i in 0 until list.size){
-            categ.list.add(list.get(i).copy())
+            category.list.add(list[i].copy())
         }
 
-        return categ
+        return category
     }
 
     override fun insertValuesInto(elem: ListItem){
@@ -34,7 +34,7 @@ class Category:ListItem, Serializable{
     }
 
     fun toCategoryEntity(parentId: Int? = null, templateId: Int? = null, isMain: Boolean = false): CategoryEntity {
-        var elem = CategoryEntity()
+        val elem = CategoryEntity()
         elem.id = this.id
         elem.cat_id = parentId
         elem.temp_id = templateId

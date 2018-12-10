@@ -60,13 +60,13 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         }
 
         listCategoryScreen.setOnItemClickListener{ adapterView, view, i, l ->
-            var intent: Intent?
+            val intent: Intent?
 
-            var lelem = ShowMainScreen.listOfTemplate.get(ShowMainScreen.listOfTemplate.indexOf(displayedList[i]))
+            val elem = ShowMainScreen.listOfTemplate[ShowMainScreen.listOfTemplate.indexOf(displayedList[i])]
 
             intent = Intent(this, ShowElementInformationScreen::class.java)
 
-            ShowMainScreen.actualElement = lelem
+            ShowMainScreen.actualElement = elem
             startActivity(intent)
         }
 
@@ -113,7 +113,7 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         closeSearchWindow()
     }
 
-    fun closeSearchWindow(){
+    private fun closeSearchWindow(){
         if(searchWindow != null) {
             searchWindow!!.isIconified = true
             searchWindow!!.onActionViewCollapsed()
@@ -124,7 +124,7 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         when (item.itemId) {
 
             android.R.id.home -> {
-                if (searchWindow!!.isIconified()) {
+                if (searchWindow!!.isIconified) {
                     finish()
                 }
             }
@@ -142,7 +142,7 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
 
-        var temp = ShowMainScreen.listOfTemplate.get(menuPopupPosition)
+        val temp = ShowMainScreen.listOfTemplate[menuPopupPosition]
         when (item.itemId) {
 
             R.id.delete -> {
@@ -173,16 +173,16 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
                 }else{
                     if((cat as Category).template != null && cat.template!!.id == template.id){
 
-                        var array = ShowMainScreen.todoList.list
-                        var todel = ArrayList<Element>()
+                        val array = ShowMainScreen.todoList.list
+                        val toDel = ArrayList<Element>()
 
                         for (elem in array) {
                             if ((elem as Element).category == cat) {
-                                todel.add(elem)
+                                toDel.add(elem)
                             }
                         }
 
-                        array.removeAll(todel)
+                        array.removeAll(toDel)
 
                         category.list.remove(cat)
                     }else
@@ -215,11 +215,11 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
 
             R.id.action_delete ->{
 
-                var selected = (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
+                val selected = (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
                 Toast.makeText(this, getString(R.string.deleted_template_list) +": " + selected.size.toString(),Toast.LENGTH_SHORT) .show()
 
                 for(i in 0 until selected.size){
-                    deleteTemplate(selected.get(i) as Element)
+                    deleteTemplate(selected[i] as Element)
                 }
 
                 selected.clear()

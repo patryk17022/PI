@@ -1,6 +1,7 @@
 package pl.polsl.project.catalogex.display
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -30,7 +31,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-@Suppress("UNUSED_ANONYMOUS_PARAMETER")
+@Suppress("UNUSED_ANONYMOUS_PARAMETER", "PrivatePropertyName")
 class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
     private var listOfElements : Category? = null
@@ -39,7 +40,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
     private var searchWindow : SearchView? = null
     private var isSelectionMode = false
     private var multiChoiceDelete = false
-    private val REQUEST_EXPORT_PAERMISSION = 1
+    private val REQUEST_EXPORT_PERMISSION = 1
 
     fun updateView(text: String = ""){
 
@@ -72,7 +73,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         listCategoryScreen.setOnItemLongClickListener { adapterView, view, i, l ->
             val popup = PopupMenu(applicationContext, view)
             popup.menuInflater.inflate(R.menu.menu_element_popup, popup.menu)
-            menuPopupPosition = listOfElements!!.list.indexOf(displayedList.get(i))
+            menuPopupPosition = listOfElements!!.list.indexOf(displayedList[i])
             popup.setOnMenuItemClickListener(this)
             popup.show()
             true
@@ -80,7 +81,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
 
         listCategoryScreen.setOnItemClickListener{ adapterView, view, i, l ->
             val intent = Intent(this, ShowElementInformationScreen::class.java)
-            ShowMainScreen.actualElement = listOfElements!!.list.get(listOfElements!!.list.indexOf(displayedList.get(i)))
+            ShowMainScreen.actualElement = listOfElements!!.list[listOfElements!!.list.indexOf(displayedList[i])]
             startActivity(intent)
         }
 
@@ -127,7 +128,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         when (item.itemId) {
 
             android.R.id.home -> {
-                if (searchWindow!!.isIconified()) {
+                if (searchWindow!!.isIconified) {
                     finish()
                 }
             }
@@ -138,7 +139,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
                 ShowMainScreen.sortDialog.show(supportFragmentManager, "sort")
             }
 
-            R.id.filtr ->{
+            R.id.filter ->{
                 ShowMainScreen.filterDialog.setActivity(this)
                 ShowMainScreen.filterDialog.setCategory(listOfElements!!)
                 ShowMainScreen.filterDialog.show(supportFragmentManager, "filter")
@@ -158,7 +159,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this,
-                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),REQUEST_EXPORT_PAERMISSION)
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),REQUEST_EXPORT_PERMISSION)
                 }else {
                     exportCategory()
                 }
@@ -173,10 +174,12 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
 
-        if (requestCode == REQUEST_EXPORT_PAERMISSION && !grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        if (requestCode == REQUEST_EXPORT_PERMISSION && !grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             exportCategory()
     }
 
+    @Suppress("SpellCheckingInspection")
+    @SuppressLint("SimpleDateFormat")
     private fun exportCategory(){
 
         val sdf = SimpleDateFormat("yyyy-MM-dd_HHmmss")
@@ -190,7 +193,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
             if (displayedList.size > 0) {
                 file.writeText("Id;" + (displayedList[0] as Element).exportToString(this, true))
 
-                var index = 0;
+                var index = 0
                 for (elem in displayedList) {
                     file.appendText(index.toString() + ";" + (elem as Element).exportToString(this))
                     index += 1
@@ -207,14 +210,14 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
 
     private fun closeSearchWindow(){
         if(searchWindow != null) {
-            searchWindow!!.setIconified(true)
+            searchWindow!!.isIconified = true
             searchWindow!!.onActionViewCollapsed()
         }
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
 
-        var elem = listOfElements!!.list.get(menuPopupPosition) as Element
+        val elem = listOfElements!!.list[menuPopupPosition] as Element
         when (item.itemId) {
 
             R.id.edit -> {
@@ -277,7 +280,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
 
-        var selected = (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
+        val selected = (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()
 
         when(item!!.itemId){
 
@@ -285,7 +288,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
                 Toast.makeText(this, getString(R.string.deleted_element_list) +": " + selected.size.toString(), Toast.LENGTH_SHORT) .show()
 
                 for(i in 0 until selected.size){
-                    deleteElement(selected.get(i) as Element)
+                    deleteElement(selected[i] as Element)
                 }
             }
 
@@ -293,7 +296,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
                 Toast.makeText(this, getString(R.string.moved) +": " + selected.size.toString(), Toast.LENGTH_SHORT) .show()
 
                 for(i in 0 until selected.size){
-                    moveToTODO(selected.get(i) as Element)
+                    moveToTODO(selected[i] as Element)
                 }
             }
         }

@@ -19,7 +19,7 @@
     <string name="credits_button_text">O Aplikacji</string>
     <string name="exit_button_text">Wyjście</string>
 
-    <string name="autor_text_view">Autor:</string>
+    <string name="author_text_view">Autor:</string>
     <string name="app_version_text_view">Wersja aplikacji:</string>
     <string name="author_PG">Patryk Gałąska</string>
     <string name="version">v 1.1</string>
@@ -27,7 +27,7 @@
     <string name="email_address_title">Adres e-mail:</string>
     <string name="email_Address">patrgal311@student.polsl.pl</string>
 
-    <string name="choose_from_galery">Wybierz z galeri</string>
+    <string name="choose_from_gallery">Wybierz z galeri</string>
     <string name="make_photo">Zrób zdjęcie</string>
     <string name="edit">Edytuj</string>
     <string name="add">Dodaj</string>
@@ -37,11 +37,11 @@
     <string name="elements">Elementy</string>
     <string name="searchOption">Szukaj</string>
     <string name="sort">Sortuj</string>
-    <string name="filtr">Filtruj</string>
+    <string name="filter">Filtruj</string>
 
     <string name="name_label">Nazwa</string>
     <string name="element_photo">Zdjęcie przedmiotu</string>
-    <string name="cancle_button">Anuluj</string>
+    <string name="cancel_button">Anuluj</string>
     <string name="accept_button">Zatwierdź</string>
     <string name="category_title">Kategoria</string>
     <string name="rating_label">Ocena</string>
@@ -49,7 +49,7 @@
     <string name="delete_element">Usuń element</string>
     <string name="adding_information">Dodawanie informacji</string>
     <string name="category_type">Zawartość kategorii</string>
-    <string name="categor_name">Nazwa kategorii</string>
+    <string name="category_name">Nazwa kategorii</string>
     <string name="choose_template_element">Wybierz wzór dla kategorii</string>
     <string name="add_to_todo_list">Dodaj do listy TODO</string>
     <string name="back_to_category">Przenieś do kategori</string>
@@ -77,7 +77,7 @@
     <string name="sort_by">Sortuj po</string>
     <string name="moved">Przeniesiono</string>
     <string name="edited">Edytowano</string>
-    <string name="filter">Filtruj po</string>
+    <string name="filter_by">Filtruj po</string>
     <string name="value">Wartość</string>
     <string name="none">Brak</string>
     <string name="export_category">Eksportuj kategorię</string>

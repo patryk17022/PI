@@ -16,7 +16,7 @@ import pl.polsl.project.catalogex.R
 import android.graphics.BitmapFactory
 import pl.polsl.project.catalogex.interfaces.ImageTakenInterface
 
-@Suppress("UNUSED_ANONYMOUS_PARAMETER")
+@Suppress("UNUSED_ANONYMOUS_PARAMETER", "PrivatePropertyName")
 class CameraScreenChooseDialogFragment : DialogFragment() {
 
     private val REQUEST_IMAGE_CAPTURE = 1

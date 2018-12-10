@@ -7,6 +7,7 @@ import pl.polsl.project.catalogex.database.entity.ElementEntity
 import java.io.ByteArrayOutputStream
 import java.io.Serializable
 
+@Suppress("ConvertToStringTemplate")
 class Element:ListItem, Serializable {
 
     var list :ArrayList<Feature> = arrayListOf()
@@ -33,10 +34,10 @@ class Element:ListItem, Serializable {
     }
 
     override fun copy():ListItem{
-        var element = Element(title,category,indicator)
+        val element = Element(title,category,indicator)
 
         for(i in 0 until list.size){
-            element.list.add(Feature(list.get(i).title, list.get(i).detail))
+            element.list.add(Feature(list[i].title, list[i].detail))
         }
 
         element.image = image
@@ -46,7 +47,7 @@ class Element:ListItem, Serializable {
     }
 
      override fun insertValuesInto(elem: ListItem){
-         var listElem = elem as Element
+         val listElem = elem as Element
          listElem.title = title
          listElem.category = category
          listElem.indicator = indicator
@@ -56,7 +57,7 @@ class Element:ListItem, Serializable {
     }
 
     fun toElementEntity(parentId: Int? = null): ElementEntity {
-        var elem = ElementEntity()
+        val elem = ElementEntity()
         elem.id = this.id
 
         if(this.image != null) {
@@ -88,7 +89,7 @@ class Element:ListItem, Serializable {
             }
 
         }else{
-            line+= title + ";"
+            line+= title+ ";"
             line+= category!!.title + ";"
             line+= indicator.toString()
 

@@ -2,19 +2,12 @@ package pl.polsl.project.catalogex.data
 
 import java.io.Serializable
 
-open class ListItem: Serializable {
+open class ListItem(var title: String) : Serializable {
 
     var id:Int? = null
 
-    var title: String
-
-    constructor(title: String) {
-        this.title = title
-    }
-
     open fun copy(): ListItem {
-        var listItem = ListItem(title)
-        return listItem
+        return ListItem(title)
     }
 
     open fun insertValuesInto(elem: ListItem) {

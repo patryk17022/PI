@@ -17,8 +17,8 @@ class EditCategoryScreen : CreateCategoryScreen() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var index = intent.getIntExtra("CATEGORY_NUMBER",-1)
-        category = parentCategory!!.list.get(index) as Category
+        val index = intent.getIntExtra("CATEGORY_NUMBER",-1)
+        category = parentCategory!!.list[index] as Category
 
         acceptButton.setOnClickListener{
             viewL ->
@@ -51,7 +51,7 @@ class EditCategoryScreen : CreateCategoryScreen() {
             templateSpinner.visibility = View.VISIBLE
             templateLabelCategory.visibility = View.VISIBLE
 
-            var index = templateList!!.indexOf(category!!.template)+1
+            val index = templateList!!.indexOf(category!!.template)+1
             templateSpinner.setSelection(index)
 
         }

@@ -7,10 +7,8 @@ import android.widget.BaseAdapter
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.ListItem
 
-class CategoryListViewAdapter : BaseAdapter {
+class CategoryListViewAdapter(private var layoutInflater: LayoutInflater, private var categoryList: ArrayList<ListItem>) : BaseAdapter() {
 
-    private var categoryList : ArrayList<ListItem>
-    private var layoutInflater : LayoutInflater
     private var isSelectionMode : Boolean = false
     private var selectedList: ArrayList<ListItem> = ArrayList()
 
@@ -20,11 +18,6 @@ class CategoryListViewAdapter : BaseAdapter {
 
     fun getSelectedList(): ArrayList<ListItem>{
         return selectedList
-    }
-
-    constructor(layoutInflater : LayoutInflater, categoryList: ArrayList<ListItem>) : super() {
-        this.categoryList = categoryList
-        this.layoutInflater = layoutInflater
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {

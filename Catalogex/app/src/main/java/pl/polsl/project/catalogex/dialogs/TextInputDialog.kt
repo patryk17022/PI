@@ -25,8 +25,8 @@ class TextInputDialog : DialogFragment() {
         this.position = pos
     }
 
-    fun setActivity(actv: Activity?){
-        this.activity = actv
+    fun setActivity(activity: Activity?){
+        this.activity = activity
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -40,10 +40,10 @@ class TextInputDialog : DialogFragment() {
         LabelFeature.text = labelText
 
         featureValueInput.setOnKeyListener { viewL, i, keyEvent ->
-            if ( i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+            if ( i == KeyEvent.KEYCODE_ENTER && keyEvent.action == KeyEvent.ACTION_DOWN) {
                 acceptAction()
             }
-            if( i == KeyEvent.KEYCODE_DEL && keyEvent.getAction() == KeyEvent.ACTION_DOWN && !featureValueInput.text.isEmpty())
+            if( i == KeyEvent.KEYCODE_DEL && keyEvent.action == KeyEvent.ACTION_DOWN && !featureValueInput.text.isEmpty())
             {
                 featureValueInput.setText(featureValueInput.text.toString().substring(0,featureValueInput.text.length-1))
                 featureValueInput.setSelection(featureValueInput.text.length)
@@ -51,7 +51,7 @@ class TextInputDialog : DialogFragment() {
             true
         }
 
-        cancleButtonDialog.setOnClickListener{
+        cancelButtonDialog.setOnClickListener{
             viewL ->
             softKeyboard(featureValueInput,true)
             dismiss()

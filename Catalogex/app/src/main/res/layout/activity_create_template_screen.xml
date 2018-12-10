@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -58,12 +57,12 @@
         app:srcCompat="@drawable/delete" />
 
     <Button
-        android:id="@+id/cancleButtonTemplate"
+        android:id="@+id/cancelButtonTemplate"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="10dp"
-        android:text="@string/cancle_button"
+        android:text="@string/cancel_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -127,7 +126,7 @@
         app:layout_constraintTop_toBottomOf="@+id/categoryText" />
 
     <TextView
-        android:id="@+id/addtionalInformationText"
+        android:id="@+id/additionalInformationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -144,10 +143,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/cancleButtonTemplate"
+        app:layout_constraintBottom_toTopOf="@+id/cancelButtonTemplate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addtionalInformationText" />
+        app:layout_constraintTop_toBottomOf="@+id/additionalInformationText" />
 
     <ImageButton
         android:id="@+id/addFeatureButton"

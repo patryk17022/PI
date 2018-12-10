@@ -71,7 +71,7 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
 
         elementImage.setOnClickListener{onImageSelect()}
         editNameElement.setOnClickListener{editNameButton()}
-        cancleButtonTemplate.setOnClickListener{view -> finish()}
+        cancelButtonTemplate.setOnClickListener{view -> finish()}
     }
 
     open fun updateView(){
@@ -88,7 +88,7 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
     }
 
     override fun imageHasBeenTaken(bitmap: Bitmap) {
-        var bm = Bitmap.createScaledBitmap(bitmap,1024,1024,false)
+        val bm = Bitmap.createScaledBitmap(bitmap,1024,1024,false)
         element!!.image = bm
         elementImage.setImageBitmap(bm)
         elementImage.scaleType = ImageView.ScaleType.FIT_CENTER
@@ -107,7 +107,7 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
     }
 
     override fun onAddButton(position: Int){
-        inputText.setText(element!!.list.get(position).title)
+        inputText.setText(element!!.list[position].title)
         inputText.setPosition(position)
         inputText.show(supportFragmentManager, "textInput")
 
@@ -115,7 +115,7 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
 
     override fun doPositiveClick(tag:String, input:String, position: Int){
         if(tag== "textInput") {
-            element!!.list.get(position).detail = input
+            element!!.list[position].detail = input
         }
         else {
             element!!.title = input

@@ -32,10 +32,10 @@ class ShowMainScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
 
-        inicialize()
+        initialize()
     }
 
-    fun inicialize(){
+    private fun initialize(){
         listOfTemplate = Utility.getTemplates()
         mainCategory = Utility.getMainCategory(listOfTemplate)
         todoList = Utility.getToDoCategory(mainCategory)

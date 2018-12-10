@@ -15,7 +15,7 @@ import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.display.ShowMainScreen
 
-@Suppress("UNUSED_ANONYMOUS_PARAMETER")
+@Suppress("UNUSED_ANONYMOUS_PARAMETER", "PropertyName")
 open class CreateCategoryScreen : AppCompatActivity() {
 
     protected var parentCategory: Category? = null
@@ -49,7 +49,7 @@ open class CreateCategoryScreen : AppCompatActivity() {
 
         acceptButton.setOnClickListener{ view ->
             if(!nameCategoryText.text.toString().isEmpty()) {
-                var cat = Category()
+                val cat = Category()
                 cat.title = nameCategoryText.text.toString()
 
                 if(categoryOptionRadio.isChecked){
@@ -68,7 +68,7 @@ open class CreateCategoryScreen : AppCompatActivity() {
             }
         }
 
-        cancleButton.setOnClickListener{ view -> finish()}
+        cancelButton.setOnClickListener{ view -> finish()}
 
         templateSpinner.onItemSelectedListener =
                 object:  AdapterView.OnItemSelectedListener{

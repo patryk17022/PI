@@ -12,7 +12,7 @@ import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.enums.SortMode
 
-@Suppress("UNUSED_ANONYMOUS_PARAMETER")
+@Suppress("UNUSED_ANONYMOUS_PARAMETER", "MoveLambdaOutsideParentheses")
 class SortDialog : DialogFragment() {
 
     private var mode: SortMode = SortMode.NAME_ASC
@@ -78,7 +78,7 @@ class SortDialog : DialogFragment() {
 
     private fun selectorTitle(p: ListItem): String = p.title
     private fun selectorRating(p: Element): Int = p.indicator
-    private fun selectorFeature(p: Element): String = p.list.get(whichFeatureSort).detail
+    private fun selectorFeature(p: Element): String = p.list[whichFeatureSort].detail
 
     fun sortTable(array : ArrayList<ListItem>){
         if(array.size > 1)

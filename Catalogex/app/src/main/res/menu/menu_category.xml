@@ -5,10 +5,10 @@
         android:id="@+id/sort"
         android:title="@string/sort"/>
     <item
-        android:id="@+id/filtr"
-        android:title="@string/filtr"/>
+        android:id="@+id/filter"
+        android:title="@string/filter"/>
     <item
         android:id="@+id/delete"
-        android:title="@string/delete"></item>
+        android:title="@string/delete" />
 
 </menu>

@@ -40,9 +40,9 @@ class FilterDialog : DialogFragment() {
         return inflater.inflate(R.layout.dialog_filter, container)
     }
 
-    fun prepareList(categ: Category) {
+    private fun prepareList(category: Category) {
 
-        for (cat in categ.list) {
+        for (cat in category.list) {
             if (cat is Category) {
                 prepareList(cat)
             } else {
@@ -61,20 +61,19 @@ class FilterDialog : DialogFragment() {
                         }
                     }
 
-                    if (isInList == false) {
-                        var felem = FilterElement()
-                        felem.title = feat.title
-                        felem.values.add(feat.detail)
-                        filterList.add(felem)
+                    if (!isInList) {
+                        val featureElem = FilterElement()
+                        featureElem.title = feat.title
+                        featureElem.values.add(feat.detail)
+                        filterList.add(featureElem)
                     }
-
 
                 }
             }
         }
     }
 
-    fun initializeSpinnerTitle() {
+    private fun initializeSpinnerTitle() {
 
         var index = 0
 
@@ -99,10 +98,10 @@ class FilterDialog : DialogFragment() {
         var index = 0
 
         val spinnerTemplateValue = ArrayList<String>()
-        for (value in filterList.get(filterBy.selectedItemPosition).values) {
+        for (value in filterList[filterBy.selectedItemPosition].values) {
             spinnerTemplateValue.add(value)
             if(valueActual != null && value == valueActual){
-                index = filterList.get(filterBy.selectedItemPosition).values.indexOf(value)
+                index = filterList[filterBy.selectedItemPosition].values.indexOf(value)
             }
         }
 
@@ -118,17 +117,17 @@ class FilterDialog : DialogFragment() {
 
         filterList.clear()
 
-        var filtr = FilterElement()
-        filtr.title = getString(R.string.none)
-        filtr.values.add(getString(R.string.none))
-        filterList.add(filtr)
+        var filter = FilterElement()
+        filter.title = getString(R.string.none)
+        filter.values.add(getString(R.string.none))
+        filterList.add(filter)
 
-        filtr = FilterElement()
-        filtr.title = getString(R.string.rating_label)
+        filter = FilterElement()
+        filter.title = getString(R.string.rating_label)
         for (i in 0 until 11) {
-            filtr.values.add(i.toString())
+            filter.values.add(i.toString())
         }
-        filterList.add(filtr)
+        filterList.add(filter)
 
         prepareList(category!!)
 
@@ -147,9 +146,9 @@ class FilterDialog : DialogFragment() {
 
         buttonAccept.setOnClickListener { viewL ->
 
-            var elem = filterList.get(filterBy.selectedItemPosition)
+            val elem = filterList[filterBy.selectedItemPosition]
             titleActual = elem.title
-            valueActual = elem.values.get(valueBy.selectedItemPosition)
+            valueActual = elem.values[valueBy.selectedItemPosition]
 
             (activity as ReturnDialogInterface).doReturn()
 
@@ -157,7 +156,7 @@ class FilterDialog : DialogFragment() {
 
         }
 
-        buttonCancle.setOnClickListener {
+        buttonCancel.setOnClickListener {
             titleActual = null
             valueActual = null
             dismiss()
@@ -167,23 +166,23 @@ class FilterDialog : DialogFragment() {
     fun filter(array: ArrayList<ListItem>) {
 
         if(titleActual!= null) {
-            var todel = ArrayList<ListItem>()
+            val toDel = ArrayList<ListItem>()
 
             when (titleActual) {
                 filterList[0].title-> return
 
                 filterList[1].title -> for (elem in array) {
                     if (!filterCategories(arrayListOf(elem), valueActual!!.toInt()))
-                        todel.add(elem)
+                        toDel.add(elem)
                 }
 
                 else -> for (elem in array) {
                     if (!filterCategories(arrayListOf(elem), null))
-                        todel.add(elem)
+                        toDel.add(elem)
                 }
             }
 
-            array.removeAll(todel)
+            array.removeAll(toDel)
         }
     }
 
