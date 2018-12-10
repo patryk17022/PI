@@ -1,5 +1,6 @@
 package pl.polsl.project.catalogex.listElements.todoElement
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import pl.polsl.project.catalogex.display.ShowElementInformationScreen
 import pl.polsl.project.catalogex.display.ShowMainScreen
 import pl.polsl.project.catalogex.display.ShowTodoScreen
 
+@SuppressLint("SetTextI18n")
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class  TodoElementListViewAdapter(private var categoryList: ArrayList<Element>, layoutInflater: LayoutInflater, activity: Activity) : BaseAdapter() {
 
@@ -28,6 +30,7 @@ class  TodoElementListViewAdapter(private var categoryList: ArrayList<Element>, 
     fun getSelectedList():ArrayList<ListItem>{
         return selectedList
     }
+
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
@@ -45,6 +48,7 @@ class  TodoElementListViewAdapter(private var categoryList: ArrayList<Element>, 
         }
 
         vh.tvTitle.text = categoryList[position].title
+        vh.info.text = activity!!.getString(R.string.from) + " " + categoryList[position].category!!.title
 
         vh.imButton.setOnClickListener { viewL ->
             val popup = PopupMenu(activity, viewL)

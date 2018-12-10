@@ -84,7 +84,8 @@
     <string name="export_todo">Eksportuj listę TODO</string>
     <string name="saved_file">Zapisano plik</string>
     <string name="saved_error_file">Nie udało się zapisać pliku</string>
-    <string name="in_download">w folderze Downloads</string>
+    <string name="in_download">w folderze "Downloads"</string>
+    <string name="from">z</string>
 
     <string name="template_book">Książka</string>
     <string name="template_book_author">Autor</string>
