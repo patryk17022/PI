@@ -36,6 +36,7 @@ class ShowMainScreen : AppCompatActivity() {
     }
 
     private fun initialize(){
+        Utility.updateAllLists()
         listOfTemplate = Utility.getTemplates()
         mainCategory = Utility.getMainCategory(listOfTemplate)
         todoList = Utility.getToDoCategory(mainCategory)
