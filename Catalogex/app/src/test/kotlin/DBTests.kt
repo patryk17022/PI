@@ -245,7 +245,6 @@ class DBTests{
         Utility.insertElement(template)
 
         Utility.insertCategories(category2,ShowMainScreen.mainCategory.id)
-        println(Utility.printDB())
 
         Utility.deleteTemplate(template)
         assertEquals("Delete template: " + Utility.db!!.elementDAO().getTemplateAll().size,3 == Utility.db!!.elementDAO().getTemplateAll().size && 16 == Utility.db!!.featureDAO().getAll().size
