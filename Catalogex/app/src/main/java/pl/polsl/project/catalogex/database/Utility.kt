@@ -31,10 +31,10 @@ class Utility : Application() {
 
     companion object {
 
-        private var databaseName: String = "database_cataloger_1.0"
-        private var dbPath : String = ""
-        private var db: AppDatabase? = null
-        private var appContext: Context? = null
+        var databaseName: String = "database_cataloger_1.0"
+        var dbPath : String = ""
+        var appContext: Context? = null
+        var db: AppDatabase? = null
 
         private var listTemplates : List<ElementEntity>? = null
         private var listCategories : List<CategoryEntity>? = null
@@ -84,36 +84,38 @@ class Utility : Application() {
 
                 //Initializing starting templates
 
-                val templateBook = Element()
-                templateBook.title = appContext!!.getString(R.string.template_book)
-                templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_author),appContext!!.getString(R.string.example_Text)))
-                templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_publisher),appContext!!.getString(R.string.example_Text)))
-                templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_year),appContext!!.getString(R.string.example_Text)))
-                templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_binding),appContext!!.getString(R.string.example_Text)))
-                templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_pages),appContext!!.getString(R.string.example_Text)))
-                Utility.insertElement(templateBook)
-                ShowMainScreen.listOfTemplate.add(templateBook)
+                if(appContext != null) {
+                    val templateBook = Element()
+                    templateBook.title = appContext!!.getString(R.string.template_book)
+                    templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_author), appContext!!.getString(R.string.example_Text)))
+                    templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_publisher), appContext!!.getString(R.string.example_Text)))
+                    templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_year), appContext!!.getString(R.string.example_Text)))
+                    templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_binding), appContext!!.getString(R.string.example_Text)))
+                    templateBook.addFeature(Feature(appContext!!.getString(R.string.template_book_pages), appContext!!.getString(R.string.example_Text)))
+                    Utility.insertElement(templateBook)
+                    ShowMainScreen.listOfTemplate.add(templateBook)
 
-                val templateMovie = Element()
-                templateMovie.title = appContext!!.getString(R.string.template_movie)
-                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_genre),appContext!!.getString(R.string.example_Text)))
-                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_time),appContext!!.getString(R.string.example_Text)))
-                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_director),appContext!!.getString(R.string.example_Text)))
-                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_scenario),appContext!!.getString(R.string.example_Text)))
-                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_country),appContext!!.getString(R.string.example_Text)))
-                templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_year),appContext!!.getString(R.string.example_Text)))
-                Utility.insertElement(templateMovie)
-                ShowMainScreen.listOfTemplate.add(templateMovie)
+                    val templateMovie = Element()
+                    templateMovie.title = appContext!!.getString(R.string.template_movie)
+                    templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_genre), appContext!!.getString(R.string.example_Text)))
+                    templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_time), appContext!!.getString(R.string.example_Text)))
+                    templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_director), appContext!!.getString(R.string.example_Text)))
+                    templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_scenario), appContext!!.getString(R.string.example_Text)))
+                    templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_country), appContext!!.getString(R.string.example_Text)))
+                    templateMovie.addFeature(Feature(appContext!!.getString(R.string.template_movie_year), appContext!!.getString(R.string.example_Text)))
+                    Utility.insertElement(templateMovie)
+                    ShowMainScreen.listOfTemplate.add(templateMovie)
 
-                val templateMusic = Element()
-                templateMusic.title = appContext!!.getString(R.string.template_music)
-                templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_artist),appContext!!.getString(R.string.example_Text)))
-                templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_genre),appContext!!.getString(R.string.example_Text)))
-                templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_time),appContext!!.getString(R.string.example_Text)))
-                templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_year),appContext!!.getString(R.string.example_Text)))
-                templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_carrier),appContext!!.getString(R.string.example_Text)))
-                Utility.insertElement(templateMusic)
-                ShowMainScreen.listOfTemplate.add(templateMusic)
+                    val templateMusic = Element()
+                    templateMusic.title = appContext!!.getString(R.string.template_music)
+                    templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_artist), appContext!!.getString(R.string.example_Text)))
+                    templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_genre), appContext!!.getString(R.string.example_Text)))
+                    templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_time), appContext!!.getString(R.string.example_Text)))
+                    templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_year), appContext!!.getString(R.string.example_Text)))
+                    templateMusic.addFeature(Feature(appContext!!.getString(R.string.template_music_carrier), appContext!!.getString(R.string.example_Text)))
+                    Utility.insertElement(templateMusic)
+                    ShowMainScreen.listOfTemplate.add(templateMusic)
+                }
 
             }
 
