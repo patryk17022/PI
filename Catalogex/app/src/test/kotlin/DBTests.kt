@@ -30,7 +30,7 @@ class DBTests{
         private val category1 = Category()
         private val category2 = Category()
         private val listOfElements : ArrayList<Element> = arrayListOf()
-        private const val howMany = 10
+        private const val howMany = 1000
 
         @BeforeClass
         fun createDbConnectioon() {
