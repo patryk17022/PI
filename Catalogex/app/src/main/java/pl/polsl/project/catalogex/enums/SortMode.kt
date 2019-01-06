@@ -1,5 +1,6 @@
 package pl.polsl.project.catalogex.enums
 
+//Enumerator określający typ sortowania list
 @Suppress("UNUSED_PARAMETER")
 enum class SortMode(mode: Int){
     NAME_ASC(0),

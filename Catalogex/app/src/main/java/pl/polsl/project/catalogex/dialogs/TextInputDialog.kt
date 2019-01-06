@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.dialog_text_input.*
 import android.view.inputmethod.InputMethodManager
 import pl.polsl.project.catalogex.interfaces.TextInputDialogInterface
 
+//Klasa odpowiedzialna za obsługę okna dialogowego, wykorzystywanego do pobierania tekstu wprowadzanego przez użytkownika
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class TextInputDialog : DialogFragment() {
 
@@ -29,11 +30,13 @@ class TextInputDialog : DialogFragment() {
         this.activity = activity
     }
 
+    //Metoda jest wywoływana podczas tworzenia widoku
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_text_input, container)
     }
 
+    //Metoda jest wywoływana po tworzeniu widoku
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -77,6 +80,7 @@ class TextInputDialog : DialogFragment() {
         super.onPause()
     }
 
+    //Metoda służy do wyświetlania oraz ukrywania klawiatury
     private fun softKeyboard(view: View, show:Boolean) {
         if(activity != null && view.requestFocus()) {
 

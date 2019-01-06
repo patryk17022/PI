@@ -21,6 +21,7 @@ import pl.polsl.project.catalogex.display.ShowMainScreen
 import pl.polsl.project.catalogex.enums.DetailListMode
 import pl.polsl.project.catalogex.listElements.elementDetails.ElementDetailListViewAdapter
 
+//Klasa odpowiedzialna za obsługę ekranu dodawania przedmiotu
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, ElementDetailsInterface, ImageTakenInterface {
 
@@ -28,6 +29,7 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
     protected var element: Element? = null
     protected val inputText = TextInputDialog()
 
+    //Metoda wywoływana w momencie tworzenia instancji klasy podczas uruchomienia ekranu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_template_screen)
@@ -74,6 +76,7 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
         cancelButtonTemplate.setOnClickListener{view -> finish()}
     }
 
+    //Metoda odświeżająca informacje na ekranie
     open fun updateView(){
         val adapter = ElementDetailListViewAdapter(element!!.list, layoutInflater, this, DetailListMode.ADD_BUTTON)
         featureList.adapter = adapter
@@ -82,11 +85,13 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
         ratingBarElement.rating = element!!.indicator.toFloat()
     }
 
+    //Metoda wywoływana podczas naciśnięcia przycisku powrotu
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
     }
 
+    //Metoda wywoływana po wybraniu lub zrobieniu zdjęcia
     override fun imageHasBeenTaken(bitmap: Bitmap) {
 
         val newSize = 1024
@@ -104,17 +109,20 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
         deletePhotoButton.visibility = View.VISIBLE
     }
 
+    //Metoda wywoływana podczas naciśnięcia na ikonę dodawnia obrazu
     private fun onImageSelect(){
         val choosePhoto = CameraScreenChooseDialogFragment()
         choosePhoto.setArguments(this,packageManager)
         choosePhoto.show(supportFragmentManager, "photoGallery")
     }
 
+    //Metoda wywoływana podczas naciśnięcia przycisku edyowania nazwy przedmiotu
     private fun editNameButton(){
         inputText.setText(getString(R.string.name_label))
         inputText.show(supportFragmentManager, "textNameInput")
     }
 
+    //Metoda wywoływana podczas naciśnięcia przycisku dodania informacji dla atrybutu
     override fun onAddButton(position: Int){
         inputText.setText(element!!.list[position].title)
         inputText.setPosition(position)
@@ -122,6 +130,7 @@ open class CreateElementScreen : AppCompatActivity(), TextInputDialogInterface, 
 
     }
 
+    //Metoda wywoływana podczas naciśnięcia przycisku potwierdzającego dodanie przedmiotu
     override fun doPositiveClick(tag:String, input:String, position: Int){
         if(tag== "textInput") {
             element!!.list[position].detail = input

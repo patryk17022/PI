@@ -16,6 +16,7 @@ import pl.polsl.project.catalogex.R
 import android.graphics.BitmapFactory
 import pl.polsl.project.catalogex.interfaces.ImageTakenInterface
 
+//Klasa odpowiedzialna za obsługę okna dialogowego, wykorzystywanego do wyboru sposobu dodania obrazu
 @Suppress("UNUSED_ANONYMOUS_PARAMETER", "PrivatePropertyName")
 class CameraScreenChooseDialogFragment : DialogFragment() {
 
@@ -29,11 +30,13 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
         this.packageManager = packageManager
     }
 
+    //Metoda jest wywoływana podczas tworzenia widoku
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_choose_photo, container)
     }
 
+    //Metoda jest wywoływana po tworzeniu widoku
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -50,6 +53,7 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
         }
     }
 
+    //Metoda rozpatrująca wykonanie zdjęcia
     private fun dispatchTakePictureIntent() {
         if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -59,6 +63,7 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
         }
     }
 
+    //Metoda wykonująca zdjęcie
     private fun makePhoto(){
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
@@ -67,6 +72,7 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
         }
     }
 
+    //Metoda rozpatrująca wybranie zdjęcia z galerii
     private fun dispatchGetFromGalleryPictureIntent() {
 
         if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -78,12 +84,14 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
 
     }
 
+    //Metoda wybierająca zdjęcie z galerii
     private fun chooseFromGallery(){
         val photoPickerIntent = Intent(Intent.ACTION_PICK)
         photoPickerIntent.type = "image/*"
         startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG)
     }
 
+    //Metoda rozpatrująca wyniki otrzymane w skutek uruchomienia innego ekranu
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -103,6 +111,7 @@ class CameraScreenChooseDialogFragment : DialogFragment() {
 
     }
 
+    //Metoda rozpatrująca wyniki otrzymane w skutek decyzji dotyczącej uprawnień
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
 
         if(requestCode == REQUEST_IMAGE_CAPTURE && !grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)

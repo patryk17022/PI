@@ -10,6 +10,7 @@ import android.view.*
 import kotlinx.android.synthetic.main.dialog_show_photo.*
 import pl.polsl.project.catalogex.R
 
+//Klasa odpowiedzialna za obsługę okna dialogowego, wykorzystywanego do wyświetlania zdjęcia w dużym rozmiarze
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class ShowPhotoDialog : DialogFragment() {
 
@@ -21,11 +22,13 @@ class ShowPhotoDialog : DialogFragment() {
         this.image = image
     }
 
+    //Metoda jest wywoływana podczas tworzenia widoku
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_show_photo, container)
     }
 
+    //Metoda jest wywoływana po tworzeniu widoku
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

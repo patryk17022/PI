@@ -10,6 +10,7 @@ import pl.polsl.project.catalogex.interfaces.ElementDetailsInterface
 import pl.polsl.project.catalogex.data.Feature
 import pl.polsl.project.catalogex.enums.DetailListMode
 
+//Klasa obsługująca wyświetlane elementy w liście atrybutów dla przedmiotu
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class  ElementDetailListViewAdapter(private var detailList: ArrayList<Feature>, layoutInflater: LayoutInflater, activity: Activity, mode: DetailListMode) : BaseAdapter() {
 
@@ -17,6 +18,7 @@ class  ElementDetailListViewAdapter(private var detailList: ArrayList<Feature>, 
     private var mode : DetailListMode? = mode
     private var activity :Activity? = activity
 
+    //Funkcja wywoływana dla poszczególnych elementów listy w celu ustawienia ich wartości
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
         val view: View?

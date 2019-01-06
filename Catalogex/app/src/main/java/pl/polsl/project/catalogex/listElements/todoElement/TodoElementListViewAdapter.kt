@@ -14,6 +14,7 @@ import pl.polsl.project.catalogex.display.ShowElementInformationScreen
 import pl.polsl.project.catalogex.display.ShowMainScreen
 import pl.polsl.project.catalogex.display.ShowTodoScreen
 
+//Klasa obsługująca wyświetlane elementy w liście TO DO
 @SuppressLint("SetTextI18n")
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class  TodoElementListViewAdapter(private var categoryList: ArrayList<Element>, layoutInflater: LayoutInflater, activity: Activity) : BaseAdapter() {
@@ -31,7 +32,7 @@ class  TodoElementListViewAdapter(private var categoryList: ArrayList<Element>, 
         return selectedList
     }
 
-
+    //Funkcja wywoływana dla poszczególnych elementów listy w celu ustawienia ich wartości
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
         val view: View?

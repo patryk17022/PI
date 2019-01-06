@@ -12,6 +12,7 @@ import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.dialogs.FilterDialog
 import pl.polsl.project.catalogex.dialogs.SortDialog
 
+//Klasa odpowiedzialna za obsługę ekranu głównego menu
 @Suppress("UNUSED_PARAMETER")
 class ShowMainScreen : AppCompatActivity() {
 
@@ -28,6 +29,7 @@ class ShowMainScreen : AppCompatActivity() {
         val filterDialog = FilterDialog()
     }
 
+    //Metoda wywoływana w momencie tworzenia instancji klasy podczas uruchomienia ekranu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
@@ -35,6 +37,7 @@ class ShowMainScreen : AppCompatActivity() {
         initialize()
     }
 
+    //Metoda inicjalizująca strukturę danych oraz połączenie z bazą danych wraz z pobraniem informacji
     private fun initialize(){
         Utility.updateAllLists()
         listOfTemplate = Utility.getTemplates()

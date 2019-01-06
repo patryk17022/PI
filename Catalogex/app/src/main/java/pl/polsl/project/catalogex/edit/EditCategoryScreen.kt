@@ -9,11 +9,13 @@ import pl.polsl.project.catalogex.create.CreateCategoryScreen
 import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.database.Utility
 
+//Klasa odpowiedzialna za obsługę ekranu edycji kategorii
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class EditCategoryScreen : CreateCategoryScreen() {
 
     private var category: Category? = null
 
+    //Metoda wywoływana w momencie tworzenia instancji klasy podczas uruchomienia ekranu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,6 +40,7 @@ class EditCategoryScreen : CreateCategoryScreen() {
         updateView()
     }
 
+    //Metoda odświeżająca informacje na ekranie
     private fun updateView(){
 
         nameCategoryText.setText(category!!.title)

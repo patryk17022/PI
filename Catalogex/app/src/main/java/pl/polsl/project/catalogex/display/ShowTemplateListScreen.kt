@@ -21,7 +21,7 @@ import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
 
-
+//Klasa odpowiedzialna za obsługę ekranu wyświetlającego informacje o wzorze
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
@@ -30,6 +30,7 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     private var searchWindow : SearchView? = null
     private var isSelectionMode = false
 
+    //Metoda odświeżająca informacje na ekranie
     fun updateView(text: String = ""){
 
         displayedList.clear()
@@ -47,7 +48,7 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         listCategoryScreen.adapter = adapter
     }
 
-
+    //Metoda wywoływana w momencie tworzenia instancji klasy podczas uruchomienia ekranu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -120,6 +121,7 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         }
     }
 
+    //Metoda rozpatrująca wybór opcji z listy
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
@@ -140,6 +142,7 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         return super.onOptionsItemSelected(item)
     }
 
+    //Metoda rozpatrująca wybór opcji z menu
     override fun onMenuItemClick(item: MenuItem): Boolean {
 
         val temp = ShowMainScreen.listOfTemplate[menuPopupPosition]
@@ -156,6 +159,7 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     }
 
     companion object {
+        //Metoda usuwająca wzór
         fun deleteTemplate(template: Element) {
 
             deleteOtherConnectedElement(template,ShowMainScreen.mainCategory)
@@ -164,6 +168,7 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
             ShowMainScreen.listOfTemplate.remove(template)
         }
 
+        //Metoda usuwająca przedmioty korzystające z wzoru
         private fun deleteOtherConnectedElement(template: Element, category: Category) {
 
             for(cat in category.list)
@@ -209,6 +214,7 @@ class ShowTemplateListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList().clear()
     }
 
+    //Metoda rozpatrująca przycisk dodawania elementów
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
 
         when(item!!.itemId){

@@ -16,11 +16,13 @@ import pl.polsl.project.catalogex.edit.EditElementScreen
 import pl.polsl.project.catalogex.enums.DetailListMode
 import pl.polsl.project.catalogex.listElements.elementDetails.ElementDetailListViewAdapter
 
+//Klasa odpowiedzialna za obsługę ekranu wyświetlającego informacje o przedmiocie
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class ShowElementInformationScreen : AppCompatActivity() {
 
     private var element : Element? = null
 
+    //Metoda odświeżająca informacje na ekranie
     private fun updateView(){
 
         supportActionBar!!.title = element!!.title
@@ -46,6 +48,7 @@ class ShowElementInformationScreen : AppCompatActivity() {
         featureList.adapter = adapter
     }
 
+    //Metoda wywoływana w momencie tworzenia instancji klasy podczas uruchomienia ekranu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -82,6 +85,8 @@ class ShowElementInformationScreen : AppCompatActivity() {
         updateView()
     }
 
+
+    //Metoda rozpatrująca wybór opcji z listy rozwijanej
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {

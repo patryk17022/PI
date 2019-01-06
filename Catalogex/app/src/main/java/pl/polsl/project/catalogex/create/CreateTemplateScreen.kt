@@ -16,12 +16,14 @@ import pl.polsl.project.catalogex.display.ShowMainScreen
 import pl.polsl.project.catalogex.enums.DetailListMode
 import pl.polsl.project.catalogex.listElements.elementDetails.ElementDetailListViewAdapter
 
+//Klasa odpowiedzialna za obsługę ekranu tworzenia wzoru
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, TextInputDialogInterface {
 
     protected var template = Element()
     private val inputText = TextInputDialog()
 
+    //Metoda uruchomiana w momencie tworzenia instancji klasy podczas uruchomienia ekranu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_template_screen)
@@ -43,20 +45,24 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
         }
     }
 
+    //Metoda wyświetlająca listę atrybutów na ekranie
     private fun updateFeatureList(){
         val adapter = ElementDetailListViewAdapter(template.list, layoutInflater, this, DetailListMode.EDIT_DELETE_BUTTON)
         featureList.adapter = adapter
     }
 
+    //Metoda doodająca atrybut do wzoru
     private fun addFeatureToElement(){
         inputText.show(supportFragmentManager, "addFeature")
     }
 
+    //Metoda wywoływana podczas naciśnięcia przycisku powrotu
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
     }
 
+    //Metoda wywoływana podczas naciśnięcia przycisku potwierdzającego dodanie wzoru
     override fun doPositiveClick(tag: String, input: String, position: Int) {
         if(!input.isEmpty()) {
             when (tag) {
@@ -89,11 +95,13 @@ open class CreateTemplateScreen : AppCompatActivity(), ElementDetailsInterface, 
         }
     }
 
+    //Metoda wywoływana podczas naciśnięcia przycisku usuwania
     override fun onDeleteButton(position: Int){
         template.removeFeature(position)
         updateFeatureList()
     }
 
+    //Metoda wywoływana podczas naciśnięcia przycisku edycji
     override fun onEditButton(position: Int){
         inputText.setPosition(position)
         inputText.show(supportFragmentManager, "editFeature")

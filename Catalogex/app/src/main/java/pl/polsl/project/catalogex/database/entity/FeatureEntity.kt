@@ -3,6 +3,7 @@ package pl.polsl.project.catalogex.database.entity
 import android.arch.persistence.room.*
 import pl.polsl.project.catalogex.data.Feature
 
+//Klasa reprezentująca wiersz z tabeli features
 @Suppress("PropertyName")
 @Entity(tableName = "features")
 class FeatureEntity {
@@ -19,6 +20,7 @@ class FeatureEntity {
     var title: String = ""
     var detail: String = ""
 
+    //Metoda zamieniająca FeatureEntity na Feature
     fun toFeature() : Feature{
         val elem = Feature(this.title,this.detail)
         elem.id = this.id

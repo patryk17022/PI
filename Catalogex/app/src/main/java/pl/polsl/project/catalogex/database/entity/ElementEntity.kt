@@ -7,7 +7,7 @@ import pl.polsl.project.catalogex.data.Feature
 import android.arch.persistence.room.ColumnInfo
 import android.graphics.BitmapFactory
 
-
+//Klasa reprezentująca wiersz z tabeli elements
 @Suppress("PropertyName")
 @Entity(tableName = "elements")
 class ElementEntity{
@@ -28,6 +28,7 @@ class ElementEntity{
     var indicator: Int = 0
     var todo : Boolean = false
 
+    //Metoda zamieniająca ElementEntity na Element
     fun toElement(parentCategory: Category? = null ,childFeatureList: ArrayList<Feature>? = null) : Element{
         val elem = Element()
         elem.id = this.id

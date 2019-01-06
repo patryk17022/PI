@@ -13,6 +13,7 @@ import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.interfaces.ReturnDialogInterface
 import pl.polsl.project.catalogex.data.ListItem
 
+//Klasa odpowiedzialna za obsługę okna dialogowego, wykorzystywanego do ustawienia filtrowania
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class FilterDialog : DialogFragment() {
 
@@ -35,11 +36,13 @@ class FilterDialog : DialogFragment() {
         category = cat
     }
 
+    //Metoda jest wywoływana podczas tworzenia widoku
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_filter, container)
     }
 
+    //Metoda przygotowująca elementy dostępne w liście
     private fun prepareList(category: Category) {
 
         for (cat in category.list) {
@@ -73,6 +76,7 @@ class FilterDialog : DialogFragment() {
         }
     }
 
+    //Metoda inicjalizująca wartości spinnera
     private fun initializeSpinnerTitle() {
 
         var index = 0
@@ -93,6 +97,7 @@ class FilterDialog : DialogFragment() {
         filterBy.setSelection(index)
     }
 
+    //Metoda inicjalizująca wartości spinnera
     fun initializeSpinnerValue() {
 
         var index = 0
@@ -112,6 +117,7 @@ class FilterDialog : DialogFragment() {
         valueBy.setSelection(index)
     }
 
+    //Metoda jest wywoływana po tworzeniu widoku
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -163,6 +169,7 @@ class FilterDialog : DialogFragment() {
         }
     }
 
+    //Metoda wykorzystywana do filtrowania
     fun filter(array: ArrayList<ListItem>) {
 
         if(titleActual!= null) {
@@ -186,6 +193,7 @@ class FilterDialog : DialogFragment() {
         }
     }
 
+    //Metoda filtrująca categorie, znajduje czy istnieje w niej szukany element
     private fun filterCategories(array: ArrayList<ListItem>, rating: Int?) :Boolean{
 
         for (elem in array) {

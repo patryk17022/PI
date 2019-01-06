@@ -15,6 +15,7 @@ import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.display.ShowMainScreen
 
+//Klasa odpowiedzialna za obsługę ekranu tworzenia kategorii
 @Suppress("UNUSED_ANONYMOUS_PARAMETER", "PropertyName")
 open class CreateCategoryScreen : AppCompatActivity() {
 
@@ -22,6 +23,7 @@ open class CreateCategoryScreen : AppCompatActivity() {
     protected var templateList: ArrayList<Element>? = null
     protected val ADD_NEW_TEMPLATE = 1
 
+    //Metoda wywoływana w momencie tworzenia instancji klasy podczas uruchomienia ekranu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_category_screen)
@@ -88,6 +90,7 @@ open class CreateCategoryScreen : AppCompatActivity() {
         initializeSpinner()
     }
 
+    //Metoda inicjalizująca wartości spinnera na ekranie
     private fun initializeSpinner(){
 
         val spinnerTemplate = ArrayList<String>()
@@ -108,6 +111,7 @@ open class CreateCategoryScreen : AppCompatActivity() {
 
     }
 
+    //Metoda rozpatrująca wyniki otrzymane w skutek uruchomienia innego ekranu
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (requestCode == ADD_NEW_TEMPLATE) {

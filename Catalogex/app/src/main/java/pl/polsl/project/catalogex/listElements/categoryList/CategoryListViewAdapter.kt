@@ -7,6 +7,7 @@ import android.widget.BaseAdapter
 import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.data.ListItem
 
+//Klasa obsługująca wyświetlane elementy w liście kategorii
 class CategoryListViewAdapter(private var layoutInflater: LayoutInflater, private var categoryList: ArrayList<ListItem>) : BaseAdapter() {
 
     private var isSelectionMode : Boolean = false
@@ -20,6 +21,7 @@ class CategoryListViewAdapter(private var layoutInflater: LayoutInflater, privat
         return selectedList
     }
 
+    //Funkcja wywoływana dla poszczególnych elementów listy w celu ustawienia ich wartości
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
         val view: View?

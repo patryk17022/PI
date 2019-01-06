@@ -5,6 +5,7 @@ import pl.polsl.project.catalogex.data.Category
 import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 
+//Klasa reprezentująca wiersz z tabeli categories
 @Suppress("PropertyName")
 @Entity(tableName = "categories")
 class CategoryEntity{
@@ -26,6 +27,7 @@ class CategoryEntity{
 
     var title: String = ""
 
+    //Metoda zamieniająca CategoryEntity na Category
     fun toCategory(childList:ArrayList<ListItem>? = null, template:Element? = null): Category{
         val elem = Category()
         elem.id = this.id

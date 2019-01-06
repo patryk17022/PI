@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+//Klasa odpowiedzialna za obsługę ekranu przedstawiającego listę TO DO
 @Suppress("UNUSED_ANONYMOUS_PARAMETER", "PrivatePropertyName")
 class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
@@ -39,6 +40,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
     private var multiChoiceDelete = false
     private val REQUEST_EXPORT_PERMISSION = 1
 
+    //Metoda odświeżająca informacje na ekranie
     @Suppress("UNCHECKED_CAST")
     private fun updateView(){
 
@@ -55,6 +57,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
         listTodo.adapter = adapter
     }
 
+    //Metoda wywoływana w momencie tworzenia instancji klasy podczas uruchomienia ekranu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todo_screen)
@@ -81,6 +84,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
         updateView()
     }
 
+    //Metoda rozpatrująca wybór opcji z listy
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -131,6 +135,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
             exportTODO()
     }
 
+    //Metoda wykorzystywana w celu eksportu listy TO DO
     @Suppress("SpellCheckingInspection")
     @SuppressLint("SimpleDateFormat")
     private fun exportTODO(){
@@ -168,6 +173,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
 
     }
 
+    //Metoda rozpatrująca wybór opcji z menu
     override fun onMenuItemClick(item: MenuItem): Boolean {
 
         val elem = todoList!!.list[menuPopupPosition] as Element
@@ -196,6 +202,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
         return true
     }
 
+    //Metoda przenosząca przedmiot z TO DO do kategorii
     private fun moveFromTODO(elem:Element){
         todoList!!.list.remove(elem)
         elem.todo = false
@@ -203,6 +210,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
         elem.category!!.list.add(elem)
     }
 
+    //Metoda usuwająca element
     fun deleteElement(element: Element){
         Utility.deleteElement(element)
         todoList!!.list.remove(element)
@@ -232,6 +240,7 @@ class ShowTodoScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, A
         (listTodo.adapter as TodoElementListViewAdapter).getSelectedList().clear()
     }
 
+    //Metoda rozpatrująca przycisk dodawania elementów
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
 
         val selected = (listTodo.adapter as TodoElementListViewAdapter).getSelectedList()

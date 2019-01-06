@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import pl.polsl.project.catalogex.R
 
+//Klasa pobierająca elementy z widoku przedstawiającego elementy listy TO DO
 class TodoElementListViewHolder(view: View?) {
     val tvTitle: TextView = view?.findViewById(R.id.informationText) as TextView
     val info: TextView = view?.findViewById(R.id.informationTextCategory) as TextView

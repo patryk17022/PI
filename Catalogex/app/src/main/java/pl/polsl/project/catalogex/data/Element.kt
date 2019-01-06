@@ -7,6 +7,7 @@ import pl.polsl.project.catalogex.database.entity.ElementEntity
 import java.io.ByteArrayOutputStream
 import java.io.Serializable
 
+//Klasa przedstawiająca przedmiot
 @Suppress("ConvertToStringTemplate")
 class Element:ListItem, Serializable {
 
@@ -25,14 +26,17 @@ class Element:ListItem, Serializable {
         this.indicator = indicator
     }
 
+    //Metoda służąca do dodawania atrybutu
     fun addFeature(feature: Feature){
         list.add(feature)
     }
 
+    //Metoda służąca do usuwania atrybutu
     fun removeFeature(index:Int){
         list.removeAt(index)
     }
 
+    //Metoda służąca do kopiowania obiektu
     override fun copy():ListItem{
         val element = Element(title,category,indicator)
 
@@ -46,6 +50,7 @@ class Element:ListItem, Serializable {
         return element
     }
 
+    //Metoda służąca do przenoszenia wartości z innego elementu
      override fun insertValuesInto(elem: ListItem){
          val listElem = elem as Element
          listElem.title = title
@@ -56,6 +61,7 @@ class Element:ListItem, Serializable {
          listElem.todo = todo
     }
 
+    //Metoda zamieniająca Element na ElementEntity
     fun toElementEntity(parentId: Int? = null): ElementEntity {
         val elem = ElementEntity()
         elem.id = this.id
@@ -75,6 +81,7 @@ class Element:ListItem, Serializable {
         return elem
     }
 
+    //Metoda zamieniająca informacje zawarte w klasie na tekst
     fun exportToString(context: Context, asTemplate:Boolean=false) : String{
 
         var line = ""

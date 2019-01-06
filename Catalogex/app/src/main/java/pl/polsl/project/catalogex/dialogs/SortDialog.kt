@@ -12,6 +12,7 @@ import pl.polsl.project.catalogex.data.Element
 import pl.polsl.project.catalogex.data.ListItem
 import pl.polsl.project.catalogex.enums.SortMode
 
+//Klasa odpowiedzialna za obsługę okna dialogowego, wykorzystywanego do wyboru typu sortowania
 @Suppress("UNUSED_ANONYMOUS_PARAMETER", "MoveLambdaOutsideParentheses")
 class SortDialog : DialogFragment() {
 
@@ -28,11 +29,13 @@ class SortDialog : DialogFragment() {
         this.element=element
     }
 
+    //Metoda jest wywoływana podczas tworzenia widoku
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_sort, container)
     }
 
+    //Metoda jest wywoływana po tworzeniu widoku
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -80,6 +83,7 @@ class SortDialog : DialogFragment() {
     private fun selectorRating(p: Element): Int = p.indicator
     private fun selectorFeature(p: Element): String = p.list[whichFeatureSort].detail
 
+    //Metoda wykorzystywana do sortowania elementów w wyświetlanych tablicach (ekranach)
     fun sortTable(array : ArrayList<ListItem>){
         if(array.size > 1)
             when(mode){

@@ -31,6 +31,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+//Klasa odpowiedzialna za obsługę ekranu listy przedmiotów
 @Suppress("UNUSED_ANONYMOUS_PARAMETER", "PrivatePropertyName")
 class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
@@ -42,6 +43,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
     private var multiChoiceDelete = false
     private val REQUEST_EXPORT_PERMISSION = 1
 
+    //Metoda odświeżająca informacje na ekranie
     fun updateView(text: String = ""){
 
         displayedList.clear()
@@ -62,6 +64,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         supportActionBar!!.title = listOfElements!!.title
     }
 
+    //Metoda wywoływana w momencie tworzenia instancji klasy podczas uruchomienia ekranu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -123,6 +126,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         closeSearchWindow()
     }
 
+    //Metoda rozpatrująca wybór opcji z listy rozwijanej
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -178,6 +182,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
             exportCategory()
     }
 
+    //Metoda wykorzystywana w celu eksportu listy przedmiotów
     @Suppress("SpellCheckingInspection")
     @SuppressLint("SimpleDateFormat")
     private fun exportCategory(){
@@ -215,6 +220,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         }
     }
 
+    //Metoda rozpatrująca wybór opcji z menu
     override fun onMenuItemClick(item: MenuItem): Boolean {
 
         val elem = listOfElements!!.list[menuPopupPosition] as Element
@@ -242,6 +248,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         return true
     }
 
+    //Metoda przenosi przedmiot do listy TO DO
     private fun moveToTODO(elem:Element){
         listOfElements!!.list.remove(elem)
         elem.todo = true
@@ -249,6 +256,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         ShowMainScreen.todoList.list.add(elem)
     }
 
+    //Metoda usuwająca przedmiot
     fun deleteElement(element: Element){
         Utility.deleteElement(element)
         listOfElements!!.list.remove(element)
@@ -278,6 +286,7 @@ class ShowElementListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickList
         (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList().clear()
     }
 
+    //Metoda rozpatrująca przycisk dodawania elementów
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
 
         val selected = (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList()

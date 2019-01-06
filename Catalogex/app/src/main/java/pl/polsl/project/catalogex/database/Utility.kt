@@ -14,6 +14,7 @@ import pl.polsl.project.catalogex.R
 import pl.polsl.project.catalogex.display.ShowMainScreen
 import java.io.File
 
+//Klasa inicjalizująca połączenie z bazą danych oraz wykorzystywana do komunikacji z tabelami
 @Suppress("unused")
 class Utility : Application() {
 
@@ -22,6 +23,7 @@ class Utility : Application() {
         initialize()
     }
 
+    //Metoda otwiera połączenie z bazą danych oraz pobiera dane
     private fun initialize(){
         appContext = this
         db =  Room.databaseBuilder(applicationContext, AppDatabase::class.java, databaseName).allowMainThreadQueries().build()
@@ -42,6 +44,7 @@ class Utility : Application() {
         private var listElement : List<ElementEntity>? = null
         private var listFeature : List<FeatureEntity>? = null
 
+        //Metoda pobierająca wszystkie informacje z bazy danych
         fun updateAllLists(){
             listTemplates =  db!!.elementDAO().getTemplateAll()
             listCategories = db!!.categoryDAO().getAll()
@@ -50,6 +53,7 @@ class Utility : Application() {
             listFeature =  db!!.featureDAO().getAll()
         }
 
+        //Metoda pobierająca wzory z bazy
         fun getTemplates(): ArrayList<Element> {
 
             val list = ArrayList<Element>()
@@ -63,6 +67,7 @@ class Utility : Application() {
             return list
         }
 
+        //Metoda pobierająca główną kategorię oraz rekonstruuje cała strukutrę danych
         fun getMainCategory(template: ArrayList<Element>): Category {
 
             val category = Category()
@@ -122,6 +127,7 @@ class Utility : Application() {
             return category
         }
 
+        //Metoda pobierająca listę TO DO
         fun getToDoCategory(mainCategory: Category): Category {
 
             val todoList = Category()
@@ -139,6 +145,7 @@ class Utility : Application() {
             return todoList
         }
 
+        //Metoda pobierająca listę kategorii
         private fun getCategoryList(parentCategory: Category, template: ArrayList<Element>) : ArrayList<ListItem> {
 
             val list = ArrayList<ListItem>()
@@ -176,6 +183,7 @@ class Utility : Application() {
             return list
         }
 
+        //Metoda pobierająca listę elementów dla kategorii
         private fun getElementsList(parentCategory: Category) : ArrayList<Element>{
 
             val list = ArrayList<Element>()
@@ -193,6 +201,7 @@ class Utility : Application() {
             return list
         }
 
+        //Metoda pobierająca atrybuty dla elementu
         private fun getFeatureList(elemId: Int) : ArrayList<Feature>{
 
             val list = ArrayList<Feature>()
@@ -207,6 +216,7 @@ class Utility : Application() {
             return list
         }
 
+        //Metoda znajdująca kategorię
         private fun findCategory(index: Int, mainCategory: ListItem): Category? {
 
             if(mainCategory is Element)
@@ -226,10 +236,12 @@ class Utility : Application() {
             return find
         }
 
+        //metoda dodająca przedmiot do bazy
         fun insertElement(element: Element){
             insertElementsList(arrayListOf(element))
         }
 
+        //metoda dodająca listę przedmiotów do bazy
         private fun insertElementsList(listOfElements : ArrayList<Element>){
 
             for(temp in listOfElements){
@@ -245,6 +257,7 @@ class Utility : Application() {
             }
         }
 
+        //metoda dodająca kategorię do bazy
         fun insertCategories(category : Category, parentId: Int? = null, isMain: Boolean = false){
 
             if(category.template == null)
@@ -264,6 +277,7 @@ class Utility : Application() {
             }
         }
 
+        //metoda usuwająca kategorię z bazy
         fun deleteCategories(category : Category){
 
             for(temp in category.list){
@@ -278,10 +292,12 @@ class Utility : Application() {
             category.id = null
         }
 
+        //metoda usuwająca element z bazy
         fun deleteElement(element: Element){
             deleteElementList(arrayListOf(element))
         }
 
+        //metoda usuwająca listę elementów z bazy
         fun deleteElementList(listOfElements : ArrayList<Element>){
 
             for(temp in listOfElements){
@@ -294,11 +310,13 @@ class Utility : Application() {
             }
         }
 
+        //metoda usuwająca atrybut z bazy
         fun deleteFeature(feature: Feature){
             db!!.featureDAO().delete(feature.toFeatureEntity())
             feature.id = null
         }
 
+        //metoda usuwająca wzór z bazy
         fun deleteTemplate(temp: Element){
 
             updateAllLists()
@@ -343,6 +361,7 @@ class Utility : Application() {
             temp.id = null
         }
 
+        //metoda formatująca tekst do odpowiedniej długości
         private fun formatString(str:String, long:Int = 25):String{
             var out = str
             for(i in str.length-1 until long){
@@ -351,6 +370,7 @@ class Utility : Application() {
             return out
         }
 
+        //metoda wykorzystywana do debbugowania bazy danych, służy do wyświetlania jej zawartości
         fun printDB() :String{
 
             var str = ""
@@ -385,6 +405,7 @@ class Utility : Application() {
             return str
         }
 
+        //metoda wykorzystywana do debbugowania bazy danych, usuwa wszystkie jej pliki.
         fun deleteDatabaseFile() {
 
             val databases = File(dbPath)

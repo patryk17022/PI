@@ -5,6 +5,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import pl.polsl.project.catalogex.R
 
+//Klasa pobierająca elementy z widoku przedstawiającego elementy listy atrybutów dla przedmiotu
 class ElementDetailListViewHolder(view: View?) {
     val tvTitle: TextView = view?.findViewById(R.id.titleTextViewElement) as TextView
     val tvValue: TextView = view?.findViewById(R.id.contentTextViewElement) as TextView

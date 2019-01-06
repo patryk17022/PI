@@ -22,7 +22,7 @@ import pl.polsl.project.catalogex.database.Utility
 import pl.polsl.project.catalogex.edit.EditCategoryScreen
 import pl.polsl.project.catalogex.listElements.categoryList.CategoryListViewAdapter
 
-
+//Klasa odpowiedzialna za obsługę ekranu wyświetlającego listę kategorii
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickListener, AbsListView.MultiChoiceModeListener, ReturnDialogInterface {
 
@@ -32,6 +32,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
     private var searchWindow : SearchView? = null
     private var isSelectionMode = false
 
+    //Metoda odświeżająca informacje na ekranie
     fun updateView(text: String = ""){
 
         displayedList.clear()
@@ -54,6 +55,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         supportActionBar!!.title = listOfCategory!!.title
     }
 
+    //Metoda wywoływana w momencie tworzenia instancji klasy podczas uruchomienia ekranu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -132,6 +134,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         }
     }
 
+    //Metoda rozpatrująca wybór opcji z listy
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
@@ -164,6 +167,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         return super.onOptionsItemSelected(item)
     }
 
+    //Metoda rozpatrująca wybór opcji z menu
     override fun onMenuItemClick(item: MenuItem): Boolean {
 
         val category = listOfCategory!!.list[menuPopupPosition]
@@ -186,6 +190,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         return true
     }
 
+    //Metoda usuwająca kategorię
     private fun deleteCategory(category: Category){
         deleteFromTodo(category)
         Utility.deleteCategories(category)
@@ -193,6 +198,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         listOfCategory!!.list.remove(category)
     }
 
+    //Metoda usuwająca elementy z listy TO DP
     private fun deleteFromTodo(category:Category){
 
         if(category.template == null)
@@ -236,6 +242,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         (listCategoryScreen.adapter as CategoryListViewAdapter).getSelectedList().clear()
     }
 
+    //Metoda rozpatrująca przycisk dodawania elementów
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
 
         when(item!!.itemId){
@@ -257,6 +264,7 @@ class ShowCategoryListScreen : AppCompatActivity(), PopupMenu.OnMenuItemClickLis
         return true
     }
 
+    //Metoda wywoływana podczas powrotu z okna dialogowego
     override fun doReturn() {
         updateView()
     }
